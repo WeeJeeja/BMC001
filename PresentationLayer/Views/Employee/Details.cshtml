@@ -1,0 +1,64 @@
+﻿@model PresentationLayer.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>User</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.EmployeeNumber)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EmployeeNumber)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Forename)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Forename)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Surname)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Surname)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DateOfBirth)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DateOfBirth)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.JobTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.JobTitle)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsLineManager)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsLineManager)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IsAdministrator)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsAdministrator)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

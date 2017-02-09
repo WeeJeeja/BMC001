@@ -1,0 +1,50 @@
+﻿@model PresentationLayer.Models.Resource
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Resource</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Category)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Capacity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Capacity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Location)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Location)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ResourceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PresentationLayer.Models.Slot>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { slotId=item.SlotId }) |
+            @Html.ActionLink("Details", "Details", new { slotId=item.SlotId }) |
+            @Html.ActionLink("Delete", "Delete", new { slotId=item.SlotId })
+        </td>
+    </tr>
+}
+
+</table>
