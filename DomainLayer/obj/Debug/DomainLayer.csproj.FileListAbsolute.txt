@@ -22,3 +22,15 @@ E:\BMC001\DomainLayer\bin\Debug\EntityFramework.SqlServer.xml
 E:\BMC001\DomainLayer\obj\Debug\DomainLayer.csprojResolveAssemblyReference.cache
 E:\BMC001\DomainLayer\obj\Debug\DomainLayer.dll
 E:\BMC001\DomainLayer\obj\Debug\DomainLayer.pdb
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\DomainLayer.dll.config
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\DomainLayer.dll
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\DomainLayer.pdb
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\DataLayer.dll
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\EntityFramework.dll
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\DataLayer.pdb
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\EntityFramework.xml
+C:\Users\40104396\Desktop\BMC001\DomainLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\40104396\Desktop\BMC001\DomainLayer\obj\Debug\DomainLayer.csprojResolveAssemblyReference.cache
+C:\Users\40104396\Desktop\BMC001\DomainLayer\obj\Debug\DomainLayer.dll
+C:\Users\40104396\Desktop\BMC001\DomainLayer\obj\Debug\DomainLayer.pdb

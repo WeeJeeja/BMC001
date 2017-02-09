@@ -36,3 +36,5 @@ E:\BMC001\DataLayer\obj\Debug\DataLayer.pdb
 E:\BMC001\DataLayer\obj\Debug\DataLayer.Migrations.AddedAccountTable.resources
 D:\BMC001\DataLayer\obj\Debug\DataLayer.Migrations.AddedAccountTable.resources
 E:\BMC001\DataLayer\obj\Debug\DataLayer.csprojResolveAssemblyReference.cache
+C:\Users\40104396\Desktop\BMC001\DataLayer\obj\Debug\DataLayer.Migrations.RenamingTimetableToBookingTable.resources
+C:\Users\40104396\Desktop\BMC001\DataLayer\obj\Debug\DataLayer.Migrations.AddedAccountTable.resources

@@ -18,9 +18,11 @@ namespace PresentationLayer
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
-                        "~/Scripts/jquery-1.5.1.min.js",
-                        "~/Scripts/highcharts.js"));
+            
+            //Highchart bundle 
+            bundles.Add(new ScriptBundle("~/bundles/highchart").Include(
+                     "~/Scripts/Highcharts-4.0.1/js/highcharts*"
+                        ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

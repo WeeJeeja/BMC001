@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\ChartSampleController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\TransactionCount.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -366,7 +368,7 @@
     <Content Include="Views\Slot\Edit.cshtml" />
     <Content Include="Views\Slot\Create.cshtml" />
     <Content Include="Views\Slot\Details.cshtml" />
-    <Content Include="Views\TransactionCount\Index.cshtml" />
+    <Content Include="Views\ChartSample\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

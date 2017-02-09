@@ -22,3 +22,15 @@ E:\BMC001\ConsoleTests\bin\Debug\EntityFramework.SqlServer.xml
 E:\BMC001\ConsoleTests\obj\Debug\ConsoleTests.csprojResolveAssemblyReference.cache
 E:\BMC001\ConsoleTests\obj\Debug\ConsoleTests.exe
 E:\BMC001\ConsoleTests\obj\Debug\ConsoleTests.pdb
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\ConsoleTests.exe.config
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\ConsoleTests.exe
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\ConsoleTests.pdb
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\DataLayer.dll
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\EntityFramework.dll
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\DataLayer.pdb
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\EntityFramework.xml
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\obj\Debug\ConsoleTests.csprojResolveAssemblyReference.cache
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\obj\Debug\ConsoleTests.exe
+C:\Users\40104396\Desktop\BMC001\ConsoleTests\obj\Debug\ConsoleTests.pdb
