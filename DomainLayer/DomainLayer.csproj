@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AccountService.cs" />
     <Compile Include="BookingService.cs" />
+    <Compile Include="IBookingService.cs" />
     <Compile Include="ISlotService.cs" />
     <Compile Include="ITeamService.cs" />
     <Compile Include="TeamService.cs" />

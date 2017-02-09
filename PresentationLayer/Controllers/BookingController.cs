@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DomainLayer;
+using PresentationLayer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +10,39 @@ namespace PresentationLayer.Controllers
 {
     public class BookingController : Controller
     {
+        #region Fields
+
+        IBookingService service = new BookingService();
+
+        #endregion
+
         //
         // GET: /Booking/
 
         public ActionResult Index()
         {
-            return View();
+            ViewBag.Message = "Need to be able to add, edit and delete bookings";
+
+            var userId = Session["UserId"].ToString();
+
+            var data = service.GetThisWeeksBookings(new Guid(userId));
+            var bookings = new List<Booking>();
+
+            foreach (DomainLayer.WrapperModels.Booking b in data)
+            {
+                var slot = new Booking
+                {
+                    BookingId = b.BookingId,
+                    Date = b.Date,
+                    Capacity = b.Capacity,
+                    Resource = b.Resource,
+                    User = b.User,
+                    Slot = b.Slot,
+                };
+                slots.Add(slot);
+            }
+
+            return View(slots);
         }
 
         //

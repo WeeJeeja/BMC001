@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-    public class BookingService
+    public class BookingService : IBookingService
     {
 
         ModelConversitions converter = new ModelConversitions();
@@ -18,11 +18,24 @@ namespace DomainLayer
         /// Gets a list of all bookings for a particular user and week
         /// </summary>
         /// <returns>Returns a list of all of a user's bookings for a particular week</returns>
-        public List<Booking> GetWeeklyBookings(DateTime startDate)
+        public List<Booking> GetThisWeeksBookings(Guid? userId)
         {
+            //work out the start of the week
+            var date = DateTime.Today;
+            while (!date.DayOfWeek.Equals("Monday"))
+            {
+                date = date.AddDays(-1);
+            }
+
+            //db connection
             var db = new ReScrumEntities();
 
-            var data = db.Booking.Where(b => b.Date >= startDate && b.Date <= startDate.AddDays(7)).ToList();
+            //get this weeks bookings
+            var data = db.Booking.Where(b => b.Date >= date && b.Date < date.AddDays(7)).ToList();
+
+            //the booking s that belong to the user
+            data = data.Where(u => u.User.UserId == userId).ToList();
+
             var bookings = new List<Booking>();
 
             foreach(DataLayer.Models.Booking b in data)
