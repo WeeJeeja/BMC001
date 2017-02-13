@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace PresentationLayer.Controllers
         #region Fields
 
         IBookingService service = new BookingService();
+        IUserService userService = new UserService();
+        ModelConversitions converter = new ModelConversitions(); 
 
         #endregion
 
@@ -30,19 +33,19 @@ namespace PresentationLayer.Controllers
 
             foreach (DomainLayer.WrapperModels.Booking b in data)
             {
-                var slot = new Booking
+                var booking = new Booking
                 {
                     BookingId = b.BookingId,
-                    Date = b.Date,
-                    Capacity = b.Capacity,
-                    Resource = b.Resource,
-                    User = b.User,
-                    Slot = b.Slot,
+                    Date      = b.Date,
+                    Capacity  = b.Capacity,
+                    Resource  = converter.ConvertResourceFromWrapper(b.Resource),
+                    User      = converter.ConvertUserFromWrapper(b.User),
+                    Slot      = converter.ConvertSlotFromWrapper(b.Slot),
                 };
-                slots.Add(slot);
+                bookings.Add(booking);
             }
 
-            return View(slots);
+            return View(bookings);
         }
 
         //
@@ -69,7 +72,15 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                var booking = new DomainLayer.WrapperModels.Booking();
+                UpdateModel(booking, collection);
+
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                booking.User = user;
+
+                service.AddBooking(booking);
 
                 return RedirectToAction("Index");
             }

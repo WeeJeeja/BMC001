@@ -53,7 +53,7 @@ namespace PresentationLayer.Controllers
                 cookie.Value = authId;
                 Response.Cookies.Add(cookie);
 
-                var user = service.GetUser(new Guid("F60A0932-17EE-E611-BEA7-813A5DF7738B"));
+                var user = service.GetUser(model.Email);
 
                 Session["UserId"] = user.UserId;
                 Session["Username"] = user.Forename + "Yessss!";
@@ -108,17 +108,17 @@ namespace PresentationLayer.Controllers
                     }
                     var user = new wrapper.User
                     {
-                        EmployeeNumber = model.EmployeeNumber,
-                        Forename = model.Forename,
-                        Surname = model.Surname,
-                        Email = model.Email,
-                        JobTitle = model.JobTitle,
-                        IsLineManager = model.IsLineManager,
+                        EmployeeNumber  = model.EmployeeNumber,
+                        Forename        = model.Forename,
+                        Surname         = model.Surname,
+                        Email           = model.Email,
+                        JobTitle        = model.JobTitle,
+                        IsLineManager   = model.IsLineManager,
                         IsAdministrator = model.IsAdministrator,
                     };
                     service.AddUserAndAccount(user, model.Password);
-                    WebSecurity.Login(model.Email, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    
+                    return RedirectToAction("Login");
                 }
                 catch (MembershipCreateUserException e)
                 {

@@ -22,16 +22,52 @@ namespace DomainLayer
         {
             //work out the start of the week
             var date = DateTime.Today;
-            while (!date.DayOfWeek.Equals("Monday"))
+
+            switch(date.DayOfWeek)
             {
-                date = date.AddDays(-1);
+                case DayOfWeek.Monday:
+                    {
+                        break;
+                    }
+                case DayOfWeek.Tuesday:
+                    {
+                        date = date.AddDays(-1);
+                        break;
+                    }
+                case DayOfWeek.Wednesday:
+                    {
+                        date = date.AddDays(-2);
+                        break;
+                    }
+                case DayOfWeek.Thursday:
+                    {
+                        date = date.AddDays(-3);
+                        break;
+                    }
+                case DayOfWeek.Friday:
+                    {
+                        date = date.AddDays(-4);
+                        break;
+                    }
+                case DayOfWeek.Saturday:
+                    {
+                        date = date.AddDays(-5);
+                        break;
+                    }
+                case DayOfWeek.Sunday:
+                    {
+                        date = date.AddDays(-6);
+                        break;
+                    }
             }
+
+            var endDate = date.AddDays(7);
 
             //db connection
             var db = new ReScrumEntities();
 
             //get this weeks bookings
-            var data = db.Booking.Where(b => b.Date >= date && b.Date < date.AddDays(7)).ToList();
+            var data = db.Booking.Where(b => b.Date >= date && b.Date < endDate).ToList();
 
             //the booking s that belong to the user
             data = data.Where(u => u.User.UserId == userId).ToList();
@@ -78,24 +114,23 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new resource to the database
+        /// Adds a new booking to the database
         /// </summary>
-        /// <param name="resource">The new resource to be added</param>
-        public void AddResource(Resource resource)
+        /// <param name="resource">The new booking to be added</param>
+        public void AddBooking(Booking booking)
         {
             var db = new ReScrumEntities();
 
-            var newResource = new DataLayer.Models.Resource
+            var newBooking = new DataLayer.Models.Booking
             {
-                ResourceId = resource.ResourceId,
-                Name = resource.Name,
-                Description = resource.Description,
-                Category = resource.Category,
-                Capacity = resource.Capacity,
-                Location = resource.Location,
+                Date     = booking.Date,
+                Slot     = converter.ConvertWrapperSlotToData(booking.Slot),
+                Resource = converter.ConvertWrapperResourceToData(booking.Resource),
+                User     = converter.ConvertWrapperUserToData(booking.User),
+                Capacity = booking.Capacity,
             };
 
-            db.Resources.Add(newResource);
+            db.Booking.Add(newBooking);
 
             db.SaveChanges();
         }

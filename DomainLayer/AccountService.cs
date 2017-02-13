@@ -15,19 +15,21 @@ namespace DomainLayer
         /// Gets the user using the id
         /// </summary>
         /// <returns>Returns the user</returns>
-        public User GetUser(Guid userId)
+        public User GetUser(String email)
         {
             var db = new ReScrumEntities();
 
-            var data = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            var data = db.Users.Where(u => u.Email == email).FirstOrDefault();
 
             var user = new User
             {
-                EmployeeNumber = data.EmployeeNumber,
-                Forename = data.Forename,
-                Surname = data.Surname,
-                JobTitle = data.JobTitle,
-                IsLineManager = data.IsLineManager,
+                UserId          = data.UserId,
+                EmployeeNumber  = data.EmployeeNumber,
+                Forename        = data.Forename,
+                Surname         = data.Surname,
+                Email           = data.Email,
+                JobTitle        = data.JobTitle,
+                IsLineManager   = data.IsLineManager,
                 IsAdministrator = data.IsAdministrator,
             };
 

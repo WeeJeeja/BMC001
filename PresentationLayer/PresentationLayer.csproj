@@ -189,7 +189,7 @@
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\SlotController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="App_Start\Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -370,6 +370,8 @@
     <Content Include="Views\Slot\Create.cshtml" />
     <Content Include="Views\Slot\Details.cshtml" />
     <Content Include="Views\ChartSample\Index.cshtml" />
+    <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Booking\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
