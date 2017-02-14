@@ -124,9 +124,9 @@ namespace DomainLayer
             var newBooking = new DataLayer.Models.Booking
             {
                 Date     = booking.Date,
-                Slot     = converter.ConvertWrapperSlotToData(booking.Slot),
-                Resource = converter.ConvertWrapperResourceToData(booking.Resource),
-                User     = converter.ConvertWrapperUserToData(booking.User),
+                Slot     = converter.ConvertSlotFromWrapper(booking.Slot),
+                Resource = converter.ConvertResourceFromWrapper(booking.Resource),
+                User     = converter.ConvertUserFromWrapper(booking.User),
                 Capacity = booking.Capacity,
             };
 

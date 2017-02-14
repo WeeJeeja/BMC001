@@ -22,6 +22,22 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Resource)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Resource)
+            @Html.ValidationMessageFor(model => model.Resource)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Slots)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Slots)
+            @Html.ValidationMessageFor(model => model.Slots)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.Capacity)
         </div>
         <div class="editor-field">

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PresentationLayer.Models
 {
@@ -17,6 +18,8 @@ namespace PresentationLayer.Models
         public DateTime Date { get; set; }
 
         [Required]
+        public IEnumerable<SelectListItem> Slots { get; set; }
+
         public Slot Slot { get; set; }
 
         [Required]

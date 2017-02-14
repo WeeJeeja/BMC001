@@ -1,11 +1,12 @@
 ﻿using DomainLayer;
-using HelperMethods;
+using wrapper = DomainLayer.WrapperModels;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PresentationLayer.HelperMethods;
 
 namespace PresentationLayer.Controllers
 {
@@ -15,6 +16,7 @@ namespace PresentationLayer.Controllers
 
         IBookingService service = new BookingService();
         IUserService userService = new UserService();
+        ISlotService slotService = new SlotService();
         ModelConversitions converter = new ModelConversitions(); 
 
         #endregion
@@ -31,7 +33,7 @@ namespace PresentationLayer.Controllers
             var data = service.GetThisWeeksBookings(new Guid(userId));
             var bookings = new List<Booking>();
 
-            foreach (DomainLayer.WrapperModels.Booking b in data)
+            foreach (wrapper.Booking b in data)
             {
                 var booking = new Booking
                 {
@@ -61,7 +63,22 @@ namespace PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            List<SelectListItem> slots = new List<SelectListItem>();
+            var slotData = slotService.GetSlots();
+            foreach (wrapper.Slot data in slotData)
+            {
+                slots.Add(new SelectListItem
+                {
+                    Text = data.Time,
+                    Value = data.SlotId.ToString(),
+                });
+            }
+
+            var model = new Booking
+            {
+                Slots = slots,
+            };
+            return View(model);
         }
 
         //
@@ -80,7 +97,7 @@ namespace PresentationLayer.Controllers
 
                 booking.User = user;
 
-                service.AddBooking(booking);
+                //service.AddBooking(booking);
 
                 return RedirectToAction("Index");
             }

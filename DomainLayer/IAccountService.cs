@@ -4,7 +4,7 @@ namespace DomainLayer
 {
     public interface IAccountService
     {
-        User GetUser(Guid userId);
+        User GetUser(String email);
         bool CheckEmailIsUnique(String email);
         void AddUserAndAccount(User user, string password);
 

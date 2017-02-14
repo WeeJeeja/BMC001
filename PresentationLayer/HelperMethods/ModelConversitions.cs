@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using PresentationLayer.Models;
 
-namespace HelperMethods
+namespace PresentationLayer.HelperMethods
 {
     public class ModelConversitions
     {
