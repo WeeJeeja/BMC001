@@ -8,3 +8,10 @@ ConsoleTests/bin/Debug/ConsoleTests.exe
 ConsoleTests/bin/Debug/ConsoleTests.pdb
 ConsoleTests/bin/Debug
 ConsoleTests/bin/Debug
+PresentationLayer/obj
+PresentationLayer/bin
+PresentationLayer.Tests/obj
+DomainLayer/obj
+DomainLayer/bin
+ConsoleTests/obj
+ConsoleTests/bin
