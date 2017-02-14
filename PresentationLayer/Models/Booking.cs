@@ -17,10 +17,12 @@ namespace PresentationLayer.Models
         [Required]
         public DateTime Date { get; set; }
 
-        [Required]
         public IEnumerable<SelectListItem> Slots { get; set; }
 
+        [Required]
         public Slot Slot { get; set; }
+
+        public IEnumerable<SelectListItem> Resources { get; set; }
 
         [Required]
         public Resource Resource { get; set; }
