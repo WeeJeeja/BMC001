@@ -22,23 +22,13 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Resources)
+            @Html.LabelFor(model => model.Slots)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Resources)
-            @Html.ValidationMessageFor(model => model.Resources)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Slot)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(m => m.Slot,
+            @Html.DropDownListFor(m => m.Slots,
                        new SelectList(Model.Slots, "Value", "Text"))
-            @Html.ValidationMessageFor(model => model.Slot)
+            @Html.ValidationMessageFor(model => model.Slots)
         </div>
-
-        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Capacity)

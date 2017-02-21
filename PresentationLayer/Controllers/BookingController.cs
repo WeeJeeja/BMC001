@@ -69,15 +69,20 @@ namespace PresentationLayer.Controllers
             {
                 slots.Add(new SelectListItem
                 {
-                    Text = data.Time,
+                    Text  = data.Time,
                     Value = data.SlotId.ToString(),
                 });
             }
 
+            var userId = Session["UserId"].ToString();
+            var user   = userService.GetUser(new Guid(userId));
+
             var model = new Booking
             {
                 Slots = slots,
+                User  = converter.ConvertUserFromWrapper(user),
             };
+
             return View(model);
         }
 
@@ -85,7 +90,51 @@ namespace PresentationLayer.Controllers
         // POST: /Booking/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Booking booking)
+        {
+            try
+            {
+
+
+                return RedirectToAction("StepTwo", booking);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Booking/StepTwo
+
+        public ActionResult StepTwo(Booking model)
+        {
+            List<SelectListItem> resources = new List<SelectListItem>();
+            
+            
+            //Get the avilable resources
+
+
+
+            //var slotData = slotService.GetSlots();
+            //foreach (wrapper.Slot data in slotData)
+            //{
+            //    slots.Add(new SelectListItem
+            //    {
+            //        Text = data.Time,
+            //        Value = data.SlotId.ToString(),
+            //    });
+            //}
+
+
+            return View(model);
+        }
+
+        //
+        // POST: /Booking/StepTwo
+
+        [HttpPost]
+        public ActionResult StepTwo(FormCollection collection)
         {
             try
             {
@@ -97,9 +146,8 @@ namespace PresentationLayer.Controllers
 
                 booking.User = user;
 
-                //service.AddBooking(booking);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("StepTwo");
             }
             catch
             {

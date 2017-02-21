@@ -8,7 +8,6 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using PresentationLayer.Filters;
 using PresentationLayer.Models;
 using DomainLayer;
 using wrapper = DomainLayer.WrapperModels;
@@ -17,7 +16,6 @@ using HelperMethods;
 namespace PresentationLayer.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
 
