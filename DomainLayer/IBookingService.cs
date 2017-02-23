@@ -7,7 +7,7 @@ namespace DomainLayer
     {
         void DeleteResource(Guid? resourceId);
 
-        List<Resource> GetAvailableResources(DateTime date, string time);
+        List<Resource> GetAvailableResources(DateTime date, Guid time);
         Resource GetResource(Guid resourceId);
         System.Collections.Generic.List<Booking> GetThisWeeksBookings(Guid? userId);
         void UpdateResource(Resource data);

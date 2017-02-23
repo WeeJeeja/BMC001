@@ -90,13 +90,13 @@ namespace DomainLayer
             return bookings;
         }
 
-        public List<Resource> GetAvailableResources(DateTime date, string time)
+        public List<Resource> GetAvailableResources(DateTime date, Guid time)
         {
             var db = new ReScrumEntities();
 
             var unavailableResources = db.Booking.Where(b =>
                 b.Date == date &&
-                b.Slot.Time == time).Select(r => r.Resource).ToList();
+                b.Slot.SlotId == time).Select(r => r.Resource).ToList();
 
             var availableResources = db.Resources.Except(unavailableResources).ToList();
 

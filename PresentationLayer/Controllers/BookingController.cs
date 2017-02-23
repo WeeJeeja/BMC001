@@ -69,17 +69,17 @@ namespace PresentationLayer.Controllers
             {
                 slots.Add(new Slot
                 {
-                    Time  = data.Time,
+                    Time = data.Time,
                     SlotId = data.SlotId,
                 });
             }
 
             var userId = Session["UserId"].ToString();
-            var user   = userService.GetUser(new Guid(userId));
+            var user = userService.GetUser(new Guid(userId));
 
             var model = new Booking
             {
-                User  = converter.ConvertUserFromWrapper(user),
+                User = converter.ConvertUserFromWrapper(user),
                 Slots = slots
             };
 
@@ -90,31 +90,10 @@ namespace PresentationLayer.Controllers
         // POST: /Booking/Create
 
         [HttpPost]
-        public ActionResult Create(Booking booking)
+        public ActionResult RetrieveAvailableResources(DateTime date, Guid slotId)
         {
-            try
-            {
-                //var resourceData = service.GetAvailableResources(booking.Date, booking.Slot);
-                ///*foreach (wrapper.Resource data in resourceData)
-                //{
-                //   * booking.Resources.Add(new Resource
-                //        {
-                //            ResourceId  = data.ResourceId,
-                //            Name        = data.Name,
-                //            Description = data.Description,
-                //            Capacity    = data.Capacity,
-                //            Category    = data.Category,
-                //        });
-                //}*/
-
-                //booking.Slots = getSlots();
-
-                return View(booking);
-            }
-            catch
-            {
-                return View();
-            }
+            var availableResources = service.GetAvailableResources(date, slotId);
+            return PartialView("_resources.cshtml");
         }
 
         //
