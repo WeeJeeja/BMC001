@@ -17,7 +17,7 @@ namespace PresentationLayer.Controllers
         IBookingService service = new BookingService();
         IUserService userService = new UserService();
         ISlotService slotService = new SlotService();
-        ModelConversitions converter = new ModelConversitions(); 
+        ModelConversitions converter = new ModelConversitions();
 
         #endregion
 
@@ -38,11 +38,11 @@ namespace PresentationLayer.Controllers
                 var booking = new Booking
                 {
                     BookingId = b.BookingId,
-                    Date      = b.Date,
-                    Capacity  = b.Capacity,
-                    Resource  = converter.ConvertResourceFromWrapper(b.Resource),
-                    User      = converter.ConvertUserFromWrapper(b.User),
-                    Slot      = converter.ConvertSlotFromWrapper(b.Slot),
+                    Date = b.Date,
+                    Capacity = b.Capacity,
+                    Resource = converter.ConvertResourceFromWrapper(b.Resource),
+                    User = converter.ConvertUserFromWrapper(b.User),
+                    Slot = converter.ConvertSlotFromWrapper(b.Slot),
                 };
                 bookings.Add(booking);
             }
@@ -69,18 +69,18 @@ namespace PresentationLayer.Controllers
             {
                 slots.Add(new SelectListItem
                 {
-                    Text  = data.Time,
+                    Text = data.Time,
                     Value = data.SlotId.ToString(),
                 });
             }
 
             var userId = Session["UserId"].ToString();
-            var user   = userService.GetUser(new Guid(userId));
+            var user = userService.GetUser(new Guid(userId));
 
             var model = new Booking
             {
                 Slots = slots,
-                User  = converter.ConvertUserFromWrapper(user),
+                User = converter.ConvertUserFromWrapper(user),
             };
 
             return View(model);
@@ -94,9 +94,22 @@ namespace PresentationLayer.Controllers
         {
             try
             {
+                var resourceData = service.GetAvailableResources(booking.Date, booking.Slot.Time);
+                foreach (wrapper.Resource data in resourceData)
+                {
+                    booking.Resources.Add(new Resource
+                        {
+                            ResourceId = data.ResourceId,
+                            Name = data.Name,
+                            Description = data.Description,
+                            Capacity = data.Capacity,
+                            Category = data.Category,
+                        });
+                }
 
+                booking.Slots = getSlots();
 
-                return RedirectToAction("StepTwo", booking);
+                return View(booking);
             }
             catch
             {
@@ -110,21 +123,7 @@ namespace PresentationLayer.Controllers
         public ActionResult StepTwo(Booking model)
         {
             List<SelectListItem> resources = new List<SelectListItem>();
-            
-            
-            //Get the avilable resources
 
-
-
-            //var slotData = slotService.GetSlots();
-            //foreach (wrapper.Slot data in slotData)
-            //{
-            //    slots.Add(new SelectListItem
-            //    {
-            //        Text = data.Time,
-            //        Value = data.SlotId.ToString(),
-            //    });
-            //}
 
 
             return View(model);
@@ -206,5 +205,27 @@ namespace PresentationLayer.Controllers
                 return View();
             }
         }
+
+
+        #region HelperMethods
+
+        private List<SelectListItem> getSlots()
+        {
+            List<SelectListItem> slots = new List<SelectListItem>();
+            var slotData = slotService.GetSlots();
+            foreach (wrapper.Slot data in slotData)
+            {
+                slots.Add(new SelectListItem
+                {
+                    Text = data.Time,
+                    Value = data.SlotId.ToString(),
+                });
+            }
+
+            return slots;
+        }
+
+        #endregion
+
     }
 }

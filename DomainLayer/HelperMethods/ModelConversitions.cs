@@ -36,6 +36,26 @@ namespace HelperMethods
             return resource;
         }
 
+        public ICollection<wrapper.Resource> ConvertDataResourceListToWrapper(ICollection<data.Resource> entry)
+        {
+            var resources = new List<wrapper.Resource>();
+
+            foreach (data.Resource data in entry)
+            {
+                var resource = new wrapper.Resource
+                {
+                    ResourceId  = data.ResourceId,
+                    Name        = data.Name,
+                    Description = data.Description,
+                    Category    = data.Category,
+                    Capacity    = data.Capacity,
+                    Location    = data.Location,
+                };
+                resources.Add(resource);
+            };
+            return resources;
+        }
+
         public wrapper.User ConvertDataUserToWrapper(data.User entry)
         {
             var user = new wrapper.User

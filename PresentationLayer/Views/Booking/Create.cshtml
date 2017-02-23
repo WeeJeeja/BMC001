@@ -4,11 +4,15 @@
     ViewBag.Title = "Create";
 }
 
+
+<script src="~/Scripts/testing.js"></script>
+
 <h2>Create</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
 
     <fieldset>
         <legend>Booking</legend>
@@ -30,6 +34,8 @@
             @Html.ValidationMessageFor(model => model.Slots)
         </div>
 
+        @Html.HiddenFor(m => m.Slot)
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Capacity)
         </div>
@@ -39,11 +45,63 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Filter" />
         </p>
     </fieldset>
-}
 
+    //list of resources available
+    if(Model.Resources == null)
+    {
+        <p>Enter search criteria</p>
+    }
+    else
+    {
+    <table>
+        <tr>
+            <th>
+                "Resource"
+            </th>
+            <th>
+                "Description"
+            </th>
+            <th>
+                "Category"
+            </th>
+            <th>
+                "Capacity"
+            </th>
+            <th>
+                "Location"
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Resources) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.ActionLink("Book", "Book", new { resourceId=item.ResourceId }) |
+                    @Html.ActionLink("Details", "Details", new { resourceId = item.ResourceId })
+                </td>
+            </tr>
+        }
+    </table>
+    }
+}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

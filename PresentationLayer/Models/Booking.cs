@@ -22,7 +22,7 @@ namespace PresentationLayer.Models
         [Required]
         public Slot Slot { get; set; }
 
-        public IEnumerable<SelectListItem> Resources { get; set; }
+        public ICollection<Resource> Resources { get; set; }
 
         [Required]
         public Resource Resource { get; set; }
