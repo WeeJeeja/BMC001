@@ -32,6 +32,26 @@ namespace PresentationLayer.HelperMethods
             return resource;
         }
 
+        public ICollection<Resource> ConvertResourceListFromWrapper(ICollection<wrapper.Resource> entry)
+        {
+            var resources = new List<Resource>();
+
+            foreach (wrapper.Resource data in entry)
+            {
+                var resource = new Resource
+                {
+                    ResourceId  = data.ResourceId,
+                    Name        = data.Name,
+                    Description = data.Description,
+                    Category    = data.Category,
+                    Capacity    = data.Capacity,
+                    Location    = data.Location,
+                };
+                resources.Add(resource);
+            };
+            return resources;
+        }
+
         public User ConvertUserFromWrapper(wrapper.User entry)
         {
             var user = new User

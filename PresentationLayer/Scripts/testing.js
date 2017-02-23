@@ -6,6 +6,12 @@ $(document).ready(function () {
             $("#Slot").val(option);
         }
     });
+    $("#Date").change(function () {
+        if ($("#Date").val()) {
+            var date = $("#Date").val();
+            $("#Slot").val(option);
+        }
+    });
 });
 
 //$(document).ready(function () {

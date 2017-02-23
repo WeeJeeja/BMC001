@@ -86,14 +86,14 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Booking/Create
-
-        [HttpPost]
-        public ActionResult RetrieveAvailableResources(DateTime date, Guid slotId)
+        public PartialViewResult RetrieveAvailableResources()
         {
-            var availableResources = service.GetAvailableResources(date, slotId);
-            return PartialView("_resources.cshtml");
+            //var availableResources = service.GetAvailableResources(date, slotId);
+            var rs = new ResourceService();
+            var data = rs.GetResources();
+            var resources = converter.ConvertResourceListFromWrapper(data);
+
+            return PartialView("_resources", resources);
         }
 
         //

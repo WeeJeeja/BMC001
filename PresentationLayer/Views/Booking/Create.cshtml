@@ -9,11 +9,14 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm("RetrieveAvailableResources", "Booking", new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace, 
+        UpdateTargetId = "resources",
+    }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
 
     <fieldset>
         <legend>Booking</legend>
@@ -47,27 +50,14 @@
         <p>
             <input type="submit" value="Filter" />
 
-            @Ajax.ActionLink(
-    "load partial view",
-    "RetrieveAvailableResources",
-    "Booking",
-    new { date = Model.Date, slotId = Model.Slot },
-    new AjaxOptions { UpdateTargetId = "resources" }
-)
-
         </p>
     </fieldset>
-
-    //list of resources available
-    if (Model.Resources == null)
-    {
-        <p>Enter search criteria</p>
-    }
-    else
-    {
-        <div id="resouces"></div>
-    }
 }
+
+    @*List of resources available*@
+        <div id="resources"></div>
+        @Html.Partial("_resources", new List<PresentationLayer.Models.Resource>())
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
