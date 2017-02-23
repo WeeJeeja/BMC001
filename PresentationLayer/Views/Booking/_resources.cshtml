@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PresentationLayer.Models.Resource>
+﻿@model PresentationLayer.Models.Booking
 
  @*List of resources available*@
-    @if (Model.Count() == 0)
+    @if (Model.Resources.Count() == 0)
     {
         <p>Enter search criteria</p>
     }
@@ -10,24 +10,24 @@
         <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Resources.First().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Resources.First().Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Resources.First().Category)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Capacity)
+            @Html.DisplayNameFor(model => model.Resources.First().Capacity)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Location)
+            @Html.DisplayNameFor(model => model.Resources.First().Location)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Resources) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -45,6 +45,15 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
+            @Html.BeginForm("Book", "Booking", FormMethod.Post)
+            {
+                @Html.HiddenFor(m => m.Date)
+                @Html.HiddenFor(m => m.Slot)
+                @Html.HiddenFor(m => m.Capacity)
+                @Html.Hidden("Resource", item.ResourceId)
+
+                <input type="submit" value="Book" />
+            }
             @Html.ActionLink("Book", "Edit", new { resourceId=item.ResourceId }) |
             @Html.ActionLink("Details", "Details", new { resourceId = item.ResourceId }) 
         </td>

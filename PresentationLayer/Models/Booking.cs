@@ -12,6 +12,11 @@ namespace PresentationLayer.Models
 {
     public class Booking
     {
+
+        public Booking()
+        {
+            Resources = new List<Resource>();
+        }
         public Guid? BookingId { get; set; }
 
         [Required]
@@ -24,8 +29,7 @@ namespace PresentationLayer.Models
 
         public ICollection<Resource> Resources { get; set; }
 
-       /* [Required]
-        public Resource Resource { get; set; }*/
+        public Guid Resource { get; set; }
 
         [Required]
         public User User { get; set; }

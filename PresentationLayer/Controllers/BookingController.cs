@@ -86,14 +86,24 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        public PartialViewResult RetrieveAvailableResources()
+        public PartialViewResult RetrieveAvailableResources(Booking booking)
         {
-            //var availableResources = service.GetAvailableResources(date, slotId);
+            var availableResources = service.GetAvailableResources(booking.Date, booking.Slot);
             var rs = new ResourceService();
-            var data = rs.GetResources();
-            var resources = converter.ConvertResourceListFromWrapper(data);
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
 
-            return PartialView("_resources", resources);
+            if (booking == null) booking = new Booking();
+
+            return PartialView("_resources", booking);
+        }
+
+        [HttpPost]
+        public RedirectToRouteResult Book(Booking booking)
+        {
+            // Add booking to database here
+
+            return RedirectToAction("Index");
         }
 
         //
