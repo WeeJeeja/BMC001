@@ -90,6 +90,21 @@ namespace DomainLayer
             return bookings;
         }
 
+        public List<Resource> GetAvailableResources(DateTime date, string time)
+        {
+            var db = new ReScrumEntities();
+
+            var unavailableResources = db.Booking.Where(b =>
+                b.Date == date &&
+                b.Slot.Time == time).Select(r => r.Resource).ToList();
+
+            var availableResources = db.Resources.Except(unavailableResources).ToList();
+
+            var resources = converter.ConvertDataResourceListToWrapper(availableResources);
+
+            return resources.ToList(); ;
+        }
+
         /// <summary>
         /// Gets the resource using the resourceId
         /// </summary>
