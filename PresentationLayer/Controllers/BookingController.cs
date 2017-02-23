@@ -94,20 +94,20 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                //var resourceData = service.GetAvailableResources(booking.Date, booking.Slot);
-                ///*foreach (wrapper.Resource data in resourceData)
-                //{
-                //   * booking.Resources.Add(new Resource
-                //        {
-                //            ResourceId  = data.ResourceId,
-                //            Name        = data.Name,
-                //            Description = data.Description,
-                //            Capacity    = data.Capacity,
-                //            Category    = data.Category,
-                //        });
-                //}*/
+                var resourceData = service.GetAvailableResources(booking.Date, booking.Slot);
+                foreach (wrapper.Resource data in resourceData)
+                {
+                   booking.Resources.Add(new Resource
+                        {
+                            ResourceId  = data.ResourceId,
+                            Name        = data.Name,
+                            Description = data.Description,
+                            Capacity    = data.Capacity,
+                            Category    = data.Category,
+                        });
+                }
 
-                //booking.Slots = getSlots();
+                booking.Slots = getSlots();
 
                 return View(booking);
             }
@@ -212,16 +212,16 @@ namespace PresentationLayer.Controllers
 
         #region HelperMethods
 
-        private List<SelectListItem> getSlots()
+        private IEnumerable<Slot> getSlots()
         {
-            List<SelectListItem> slots = new List<SelectListItem>();
+            List<Slot> slots = new List<Slot>();
             var slotData = slotService.GetSlots();
             foreach (wrapper.Slot data in slotData)
             {
-                slots.Add(new SelectListItem
+                slots.Add(new Slot
                 {
-                    Text = data.Time,
-                    Value = data.SlotId.ToString(),
+                    Time = data.Time,
+                    SlotId = data.SlotId,
                 });
             }
 

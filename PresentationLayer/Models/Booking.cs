@@ -22,7 +22,7 @@ namespace PresentationLayer.Models
 
         public Guid Slot { get; set; }
 
-        public IEnumerable<Resource> Resources { get; set; }
+        public ICollection<Resource> Resources { get; set; }
 
        /* [Required]
         public Resource Resource { get; set; }*/
