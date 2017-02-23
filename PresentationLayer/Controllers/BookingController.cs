@@ -40,9 +40,9 @@ namespace PresentationLayer.Controllers
                     BookingId = b.BookingId,
                     Date = b.Date,
                     Capacity = b.Capacity,
-                    Resource = converter.ConvertResourceFromWrapper(b.Resource),
+                    //Resource = converter.ConvertResourceFromWrapper(b.Resource),
                     User = converter.ConvertUserFromWrapper(b.User),
-                    Slot = converter.ConvertSlotFromWrapper(b.Slot),
+                    //Slot = converter.ConvertSlotFromWrapper(b.Slot),
                 };
                 bookings.Add(booking);
             }
@@ -63,24 +63,24 @@ namespace PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            List<SelectListItem> slots = new List<SelectListItem>();
+            List<Slot> slots = new List<Slot>();
             var slotData = slotService.GetSlots();
             foreach (wrapper.Slot data in slotData)
             {
-                slots.Add(new SelectListItem
+                slots.Add(new Slot
                 {
-                    Text = data.Time,
-                    Value = data.SlotId.ToString(),
+                    Time  = data.Time,
+                    SlotId = data.SlotId,
                 });
             }
 
             var userId = Session["UserId"].ToString();
-            var user = userService.GetUser(new Guid(userId));
+            var user   = userService.GetUser(new Guid(userId));
 
             var model = new Booking
             {
-                Slots = slots,
-                User = converter.ConvertUserFromWrapper(user),
+                User  = converter.ConvertUserFromWrapper(user),
+                Slots = slots
             };
 
             return View(model);
@@ -94,20 +94,20 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                var resourceData = service.GetAvailableResources(booking.Date, booking.Slot.Time);
-                foreach (wrapper.Resource data in resourceData)
-                {
-                    booking.Resources.Add(new Resource
-                        {
-                            ResourceId = data.ResourceId,
-                            Name = data.Name,
-                            Description = data.Description,
-                            Capacity = data.Capacity,
-                            Category = data.Category,
-                        });
-                }
+                //var resourceData = service.GetAvailableResources(booking.Date, booking.Slot);
+                ///*foreach (wrapper.Resource data in resourceData)
+                //{
+                //   * booking.Resources.Add(new Resource
+                //        {
+                //            ResourceId  = data.ResourceId,
+                //            Name        = data.Name,
+                //            Description = data.Description,
+                //            Capacity    = data.Capacity,
+                //            Category    = data.Category,
+                //        });
+                //}*/
 
-                booking.Slots = getSlots();
+                //booking.Slots = getSlots();
 
                 return View(booking);
             }
@@ -124,6 +124,9 @@ namespace PresentationLayer.Controllers
         {
             List<SelectListItem> resources = new List<SelectListItem>();
 
+            //add user to booking
+            //check user does not already have a booking for this date/time
+            //add booking to db
 
 
             return View(model);

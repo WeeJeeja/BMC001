@@ -15,17 +15,17 @@ namespace PresentationLayer.Models
         public Guid? BookingId { get; set; }
 
         [Required]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
-        public IEnumerable<SelectListItem> Slots { get; set; }
+        public IEnumerable<Slot> Slots { get; set; }
 
-        [Required]
-        public Slot Slot { get; set; }
+        public Guid Slot { get; set; }
 
-        public ICollection<Resource> Resources { get; set; }
+        public IEnumerable<Resource> Resources { get; set; }
 
-        [Required]
-        public Resource Resource { get; set; }
+       /* [Required]
+        public Resource Resource { get; set; }*/
 
         [Required]
         public User User { get; set; }

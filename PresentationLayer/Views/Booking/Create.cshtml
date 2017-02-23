@@ -29,12 +29,11 @@
             @Html.LabelFor(model => model.Slots)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(m => m.Slots,
-                       new SelectList(Model.Slots, "Value", "Text"))
+            @Html.DropDownList("Slot",
+                       new SelectList(Model.Slots, "SlotId", "Time"))
             @Html.ValidationMessageFor(model => model.Slots)
         </div>
 
-        @Html.HiddenFor(m => m.Slot)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Capacity)
