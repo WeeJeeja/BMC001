@@ -27,12 +27,10 @@ namespace PresentationLayer
             AuthConfig.RegisterAuth();
         }
 
-        protected void Application_BeginRequest(Object sender, EventArgs e)
+
+        protected void Application_BeginRequest()
         {
-            CultureInfo newCulture = (CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            newCulture.DateTimeFormat.ShortDatePattern = "dd-MMM-yyyy";
-            newCulture.DateTimeFormat.DateSeparator = "/";
-            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-GB");
         }
     }
 }

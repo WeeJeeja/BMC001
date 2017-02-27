@@ -3,10 +3,11 @@
  @*List of resources available*@
     @if (Model.Resources.Count() == 0)
     {
-        <p>Enter search criteria</p>
+        <p>No resources found, please enter serach criteria.</p>
     }
     else
     {
+        <p>@Model.Resources.Count() found for @Model.Date at @Model.Time</p>
         <table>
     <tr>
         <th>

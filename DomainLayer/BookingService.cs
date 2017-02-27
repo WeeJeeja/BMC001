@@ -90,7 +90,7 @@ namespace DomainLayer
             return bookings;
         }
 
-        public List<Resource> GetAvailableResources(DateTime date, Guid time)
+        public List<Resource> GetAvailableResources(DateTime date, Guid? time)
         {
             var db = new ReScrumEntities();
 

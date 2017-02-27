@@ -30,19 +30,19 @@ namespace PresentationLayer.Controllers
 
             var userId = Session["UserId"].ToString();
 
-            var data = service.GetThisWeeksBookings(new Guid(userId));
+            var data     = service.GetThisWeeksBookings(new Guid(userId));
             var bookings = new List<Booking>();
 
             foreach (wrapper.Booking b in data)
             {
                 var booking = new Booking
                 {
-                    BookingId = b.BookingId,
-                    Date = b.Date,
-                    Capacity = b.Capacity,
-                    //Resource = converter.ConvertResourceFromWrapper(b.Resource),
-                    User = converter.ConvertUserFromWrapper(b.User),
-                    //Slot = converter.ConvertSlotFromWrapper(b.Slot),
+                    BookingId    = b.BookingId,
+                    Date         = b.Date,
+                    Capacity     = b.Capacity,
+                    ResourceName = b.Resource.Name,
+                    User         = converter.ConvertUserFromWrapper(b.User),
+                    Time         = b.Slot.Time,
                 };
                 bookings.Add(booking);
             }
@@ -69,17 +69,13 @@ namespace PresentationLayer.Controllers
             {
                 slots.Add(new Slot
                 {
-                    Time = data.Time,
+                    Time   = data.Time,
                     SlotId = data.SlotId,
                 });
             }
 
-            var userId = Session["UserId"].ToString();
-            var user = userService.GetUser(new Guid(userId));
-
             var model = new Booking
             {
-                User = converter.ConvertUserFromWrapper(user),
                 Slots = slots
             };
 
@@ -93,58 +89,31 @@ namespace PresentationLayer.Controllers
             var resources = converter.ConvertResourceListFromWrapper(availableResources);
             booking.Resources = resources;
 
-            if (booking == null) booking = new Booking();
+            booking.Time = slotService.GetSlot(booking.Slot).Time;
 
             return PartialView("_resources", booking);
         }
 
         [HttpPost]
-        public RedirectToRouteResult Book(Booking booking)
-        {
-            // Add booking to database here
-
-            return RedirectToAction("Index");
-        }
-
-        //
-        // GET: /Booking/StepTwo
-
-        public ActionResult StepTwo(Booking model)
-        {
-            List<SelectListItem> resources = new List<SelectListItem>();
-
-            //add user to booking
-            //check user does not already have a booking for this date/time
-            //add booking to db
-
-
-            return View(model);
-        }
-
-        //
-        // POST: /Booking/StepTwo
-
-        [HttpPost]
-        public ActionResult StepTwo(FormCollection collection)
+        public ActionResult Book(Booking booking)
         {
             try
             {
-                var booking = new DomainLayer.WrapperModels.Booking();
-                UpdateModel(booking, collection);
-
                 var userId = Session["UserId"].ToString();
                 var user = userService.GetUser(new Guid(userId));
 
-                booking.User = user;
+                booking.User = converter.ConvertUserFromWrapper(user);
 
-
-                return RedirectToAction("StepTwo");
+                service.AddBooking(converter.ConvertBookingToWrapper(booking));
+            
+                return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
         }
+
 
         //
         // GET: /Booking/Edit/5

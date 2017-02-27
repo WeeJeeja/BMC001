@@ -374,7 +374,6 @@
     <Content Include="Views\ChartSample\Index.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
-    <Content Include="Views\Booking\StepTwo.cshtml" />
     <Content Include="Views\Booking\_resources.cshtml" />
   </ItemGroup>
   <ItemGroup>

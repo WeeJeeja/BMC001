@@ -42,7 +42,7 @@ namespace DomainLayer
         /// Gets the resource using the resourceId
         /// </summary>
         /// <returns>Returns the resource</returns>
-        public Resource GetResource(Guid resourceId)
+        public Resource GetResource(Guid? resourceId)
         {
             var db = new ReScrumEntities();
 

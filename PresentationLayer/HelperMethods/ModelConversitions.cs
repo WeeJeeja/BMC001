@@ -1,11 +1,16 @@
 ﻿using wrapper = DomainLayer.WrapperModels;
 using System.Collections.Generic;
 using PresentationLayer.Models;
+using DomainLayer;
 
 namespace PresentationLayer.HelperMethods
 {
     public class ModelConversitions
     {
+        ISlotService slotService = new SlotService();
+        IResourceService resourceService = new ResourceService();
+
+        #region Convert View models to wrappers
         public Slot ConvertSlotFromWrapper(wrapper.Slot entry)
         {
             var slot = new Slot
@@ -88,6 +93,47 @@ namespace PresentationLayer.HelperMethods
             };
             return users;
         }
+
+        #endregion
+
+        #region Convert View models to wrappers
+
+        public wrapper.User ConvertUserToWrapper(User entry)
+        {
+            var user = new wrapper.User
+            {
+                UserId          = entry.UserId,
+                EmployeeNumber  = entry.EmployeeNumber,
+                Forename        = entry.Forename,
+                Surname         = entry.Surname,
+                JobTitle        = entry.JobTitle,
+                IsLineManager   = entry.IsLineManager,
+                IsAdministrator = entry.IsAdministrator,
+            };
+
+            return user;
+        }
+
+        public wrapper.Booking ConvertBookingToWrapper(Booking entry)
+        {
+            var slot = slotService.GetSlot(entry.Slot);
+            var resource = resourceService.GetResource(entry.Resource);
+
+
+            var booking = new wrapper.Booking
+            {
+                BookingId = entry.BookingId,
+                Capacity  = entry.Capacity,
+                Slot      = slot,
+                Resource  = resource,
+                User      = ConvertUserToWrapper(entry.User),
+            };
+
+            return booking;
+        }
+
+
+        #endregion
     }
         
 }

@@ -16,7 +16,7 @@ namespace DomainLayer
         /// </summary>
         /// <param name="resourceId">The resource to be retrived</param>
         /// <returns>Returns the resource</returns>
-        Resource GetResource(Guid resourceId);
+        Resource GetResource(Guid? resourceId);
 
         /// <summary>
         /// Adds a new resource to the database
