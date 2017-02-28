@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,12 +26,18 @@ namespace PresentationLayer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings =
+              new JsonSerializerSettings
+              {
+                  DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                  DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                  Culture = CultureInfo.GetCultureInfo("en-GB")
+              };
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
         }
 
 
-        protected void Application_BeginRequest()
-        {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-GB");
-        }
     }
 }

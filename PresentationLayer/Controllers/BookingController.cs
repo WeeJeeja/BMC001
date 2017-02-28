@@ -104,7 +104,9 @@ namespace PresentationLayer.Controllers
 
                 booking.User = converter.ConvertUserFromWrapper(user);
 
-                service.AddBooking(converter.ConvertBookingToWrapper(booking));
+                var convertedBooking = converter.ConvertBookingToWrapper(booking);
+
+                service.AddBooking(convertedBooking);
             
                 return RedirectToAction("Index");
             }

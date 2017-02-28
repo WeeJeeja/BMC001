@@ -123,6 +123,7 @@ namespace PresentationLayer.HelperMethods
             var booking = new wrapper.Booking
             {
                 BookingId = entry.BookingId,
+                Date      = entry.Date,
                 Capacity  = entry.Capacity,
                 Slot      = slot,
                 Resource  = resource,

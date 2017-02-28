@@ -20,7 +20,7 @@ namespace PresentationLayer.Models
         public Guid? BookingId { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
         public IEnumerable<Slot> Slots { get; set; }
