@@ -1,0 +1,85 @@
+﻿@model PresentationLayer.Models.Timetable
+
+@{
+    ViewBag.Title = "Timetable";
+}
+
+<h2>Timetable</h2>
+
+<table>
+    <tr>
+        <th>
+            Time
+        </th>
+        <th>
+            Monday
+        </th>
+        <th>
+            Tuesday
+        </th>
+        <th>
+            Wednesday
+        </th>
+        <th>
+            Thursday
+        </th>
+        <th>
+            Friday
+        </th>
+        <th></th>
+    </tr>
+
+@*@foreach (var item in Model) {*@
+    <tr>
+        <td>
+            @foreach (var entry in Model.Slots)
+            {
+                @Html.DisplayFor(modelItem => entry.Time)
+            }
+        </td>
+        <td>
+            @foreach (var entry in Model.MondayEntries)
+            {
+                @Html.DisplayFor(modelItem => entry.ResourceName)
+            }
+        </td>
+        <td>
+            @foreach (var entry in Model.TuesdayEntries)
+            {
+                @Html.DisplayFor(modelItem => entry.ResourceName)
+            }
+        </td>
+        <td>
+            @foreach (var entry in Model.WednesdayEntries)
+            {
+                @Html.DisplayFor(modelItem => entry.ResourceName)
+            }
+        </td>
+        <td>
+            @foreach (var entry in Model.ThursdayEntries)
+            {
+                @Html.DisplayFor(modelItem => entry.ResourceName)
+            }
+        </td>
+        <td>
+            @foreach (var entry in Model.FridayEntries)
+            {
+                @Html.DisplayFor(modelItem => entry.ResourceName)
+            }
+        </td>
+        <td>
+        </td>
+    </tr>
+
+
+@*@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}*@
+
+</table>

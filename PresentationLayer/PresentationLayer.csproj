@@ -200,6 +200,8 @@
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\Timetable.cs" />
+    <Compile Include="Models\TimetableEntry.cs" />
     <Compile Include="Models\TransactionCount.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -375,6 +377,7 @@
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\_resources.cshtml" />
+    <Content Include="Views\Booking\Timetable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

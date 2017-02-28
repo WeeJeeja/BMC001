@@ -30,24 +30,90 @@ namespace PresentationLayer.Controllers
 
             var userId = Session["UserId"].ToString();
 
-            var data     = service.GetThisWeeksBookings(new Guid(userId));
+            var data = service.GetThisWeeksBookings(new Guid(userId));
             var bookings = new List<Booking>();
 
             foreach (wrapper.Booking b in data)
             {
                 var booking = new Booking
                 {
-                    BookingId    = b.BookingId,
-                    Date         = b.Date,
-                    Capacity     = b.Capacity,
+                    BookingId = b.BookingId,
+                    Date = b.Date,
+                    Capacity = b.Capacity,
                     ResourceName = b.Resource.Name,
-                    User         = converter.ConvertUserFromWrapper(b.User),
-                    Time         = b.Slot.Time,
+                    User = converter.ConvertUserFromWrapper(b.User),
+                    Time = b.Slot.Time,
                 };
                 bookings.Add(booking);
             }
 
             return View(bookings);
+        }
+
+        public ActionResult Timetable()
+        {
+            var userId = Session["UserId"].ToString();
+
+            var data = service.GetThisWeeksBookings(new Guid(userId));
+            var bookings = new List<Booking>();
+
+            var slots = getSlots();
+
+            foreach (wrapper.Booking b in data)
+            {
+                var booking = new Booking
+                {
+                    BookingId = b.BookingId,
+                    Date = b.Date,
+                    Capacity = b.Capacity,
+                    ResourceName = b.Resource.Name,
+                    User = converter.ConvertUserFromWrapper(b.User),
+                    Time = b.Slot.Time,
+                };
+                bookings.Add(booking);
+            }
+
+            var timetable = new Timetable();
+
+
+            //get slots
+
+            var dataSlots = slotService.GetSlots();
+
+            foreach(wrapper.Slot slot in dataSlots)
+            {
+                timetable.Slots.Add(new Slot
+                    {
+                        SlotId = slot.SlotId,
+                        Time   = slot.Time
+                    });
+                timetable.MondayEntries.Add(new TimetableEntry
+                {
+                    Time = slot.Time,
+                });
+
+                timetable.TuesdayEntries.Add(new TimetableEntry
+                {
+                    Time = slot.Time,
+                });
+
+                timetable.WednesdayEntries.Add(new TimetableEntry
+                {
+                    Time = slot.Time,
+                });
+
+                timetable.ThursdayEntries.Add(new TimetableEntry
+                {
+                    Time = slot.Time,
+                });
+
+                timetable.FridayEntries.Add(new TimetableEntry
+                {
+                    Time = slot.Time,
+                });
+                    
+            }
+            return View(timetable);
         }
 
         //
