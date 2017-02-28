@@ -107,131 +107,131 @@ namespace DataLayer.Migrations
 
             #endregion
 
-            #region Adding bookings
+            //#region Adding bookings
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("09:00 - 10:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
-                    Capacity = 1
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("09:00 - 10:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
+            //        Capacity = 1
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("10:00 - 11:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
-                    Capacity = 1
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("10:00 - 11:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
+            //        Capacity = 1
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("11:00 - 12:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
-                    Capacity = 1
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("11:00 - 12:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Desk 1")).FirstOrDefault(),
+            //        Capacity = 1
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("09:00 - 10:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("09:00 - 10:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("10:00 - 11:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("10:00 - 11:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("11:00 - 12:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("11:00 - 12:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("12:00 - 13:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("12:00 - 13:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("13:00 - 14:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("13:00 - 14:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("14:00 - 15:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("14:00 - 15:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("15:00 - 16:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("15:00 - 16:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("16:00 - 17:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("16:00 - 17:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.Booking.AddOrUpdate(t => t.BookingId,
-                new Booking
-                {
-                    Date = new DateTime(2016, 12, 5),
-                    Slot = context.Slots.Where(s => s.Time.Equals("17:00 - 18:00")).FirstOrDefault(),
-                    User = user1,
-                    Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
-                    Capacity = 100
-                });
+            //context.Booking.AddOrUpdate(t => t.BookingId,
+            //    new Booking
+            //    {
+            //        Date = new DateTime(2016, 12, 5),
+            //        Slot = context.Slots.Where(s => s.Time.Equals("17:00 - 18:00")).FirstOrDefault(),
+            //        User = user1,
+            //        Resource = context.Resources.Where(s => s.Name.Equals("Room 1")).FirstOrDefault(),
+            //        Capacity = 100
+            //    });
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
-            #endregion
+            //#endregion
         }
     }
 }

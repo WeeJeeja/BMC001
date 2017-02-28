@@ -13,6 +13,9 @@ namespace DomainLayer
     {
 
         ModelConversitions converter = new ModelConversitions();
+        ISlotService slotService = new SlotService();
+        IUserService userService = new UserService();
+        IResourceService resourceService = new ResourceService();
 
         /// <summary>
         /// Gets a list of all bookings for a particular user and week
@@ -69,10 +72,12 @@ namespace DomainLayer
             //get this weeks bookings
             var data = db.Booking.Where(b => b.Date >= date && b.Date < endDate).ToList();
 
-            //the booking s that belong to the user
-            data = data.Where(u => u.User.UserId == userId).ToList();
-
             var bookings = new List<Booking>();
+
+            if (data.Count < 1) return bookings;
+
+            //the bookings that belong to the user
+            data = data.Where(u => u.User.UserId == userId).ToList();
 
             foreach(DataLayer.Models.Booking b in data)
             {
@@ -136,12 +141,16 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
+            var slot = db.Slots.Where( s => s.SlotId == booking.Slot.SlotId).FirstOrDefault();
+            var user = db.Users.Where(u => u.UserId == booking.User.UserId).FirstOrDefault();
+            var resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
+
             var newBooking = new DataLayer.Models.Booking
             {
                 Date     = booking.Date,
-                Slot     = converter.ConvertSlotFromWrapper(booking.Slot),
-                Resource = converter.ConvertResourceFromWrapper(booking.Resource),
-                User     = converter.ConvertUserFromWrapper(booking.User),
+                Slot     = slot,
+                Resource = resource,
+                User     = user,
                 Capacity = booking.Capacity,
             };
 

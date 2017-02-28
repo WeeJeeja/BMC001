@@ -15,7 +15,7 @@ namespace HelperMethods
             var slot = new wrapper.Slot
             {
                 SlotId = entry.SlotId,
-                Time = entry.Time,
+                Time   = entry.Time,
             };
 
             return slot;
@@ -25,12 +25,12 @@ namespace HelperMethods
         {
             var resource = new wrapper.Resource
             {
-                ResourceId = entry.ResourceId,
-                Name = entry.Name,
+                ResourceId  = entry.ResourceId,
+                Name        = entry.Name,
                 Description = entry.Description,
-                Category = entry.Category,
-                Capacity = entry.Capacity,
-                Location = entry.Location,
+                Category    = entry.Category,
+                Capacity    = entry.Capacity,
+                Location    = entry.Location,
             };
 
             return resource;
@@ -60,18 +60,20 @@ namespace HelperMethods
         {
             var user = new wrapper.User
             {
-                UserId = entry.UserId,
-                EmployeeNumber = entry.EmployeeNumber,
-                Forename = entry.Forename,
-                Surname = entry.Surname,
-                JobTitle = entry.JobTitle,
-                IsLineManager = entry.IsLineManager,
+                UserId          = entry.UserId,
+                EmployeeNumber  = entry.EmployeeNumber,
+                Forename        = entry.Forename,
+                Surname         = entry.Surname,
+                JobTitle        = entry.JobTitle,
+                IsLineManager   = entry.IsLineManager,
                 IsAdministrator = entry.IsAdministrator,
             };
 
             return user;
         }
 
+
+        //**delete this
         public ICollection<wrapper.User> ConvertDataUserListToWrapper(ICollection<data.User> entry)
         {
             var users = new List<wrapper.User>();
@@ -80,12 +82,12 @@ namespace HelperMethods
             {
                 var user = new wrapper.User
                 {
-                    UserId          = data.UserId,
-                    EmployeeNumber  = data.EmployeeNumber,
-                    Forename        = data.Forename,
-                    Surname         = data.Surname,
-                    JobTitle        = data.JobTitle,
-                    IsLineManager   = data.IsLineManager,
+                    UserId = data.UserId,
+                    EmployeeNumber = data.EmployeeNumber,
+                    Forename = data.Forename,
+                    Surname = data.Surname,
+                    JobTitle = data.JobTitle,
+                    IsLineManager = data.IsLineManager,
                     IsAdministrator = data.IsAdministrator,
                 };
                 users.Add(user);
@@ -93,47 +95,47 @@ namespace HelperMethods
             return users;
         }
 
-        public data.Slot ConvertSlotFromWrapper(wrapper.Slot entry)
-        {
-            var slot = new data.Slot
-            {
-                SlotId = entry.SlotId,
-                Time = entry.Time,
-            };
+        //public data.Slot ConvertSlotFromWrapper(wrapper.Slot entry)
+        //{
+        //    var slot = new data.Slot
+        //    {
+        //        SlotId = entry.SlotId,
+        //        Time   = entry.Time,
+        //    };
 
-            return slot;
-        }
+        //    return slot;
+        //}
 
-        public data.Resource ConvertResourceFromWrapper(wrapper.Resource entry)
-        {
-            var resource = new data.Resource
-            {
-                ResourceId = entry.ResourceId,
-                Name = entry.Name,
-                Description = entry.Description,
-                Category = entry.Category,
-                Capacity = entry.Capacity,
-                Location = entry.Location,
-            };
+        //public data.Resource ConvertResourceFromWrapper(wrapper.Resource entry)
+        //{
+        //    var resource = new data.Resource
+        //    {
+        //        ResourceId  = entry.ResourceId,
+        //        Name        = entry.Name,
+        //        Description = entry.Description,
+        //        Category    = entry.Category,
+        //        Capacity    = entry.Capacity,
+        //        Location    = entry.Location,
+        //    };
 
-            return resource;
-        }
+        //    return resource;
+        //}
 
-        public data.User ConvertUserFromWrapper(wrapper.User entry)
-        {
-            var user = new data.User
-            {
-                UserId = entry.UserId,
-                EmployeeNumber = entry.EmployeeNumber,
-                Forename = entry.Forename,
-                Surname = entry.Surname,
-                JobTitle = entry.JobTitle,
-                IsLineManager = entry.IsLineManager,
-                IsAdministrator = entry.IsAdministrator,
-            };
+        //public data.User ConvertUserFromWrapper(wrapper.User entry)
+        //{
+        //    var user = new data.User
+        //    {
+        //        UserId          = entry.UserId,
+        //        EmployeeNumber  = entry.EmployeeNumber,
+        //        Forename        = entry.Forename,
+        //        Surname         = entry.Surname,
+        //        JobTitle        = entry.JobTitle,
+        //        IsLineManager   = entry.IsLineManager,
+        //        IsAdministrator = entry.IsAdministrator,
+        //    };
 
-            return user;
-        }
+        //    return user;
+        //}
     }
         
 }
