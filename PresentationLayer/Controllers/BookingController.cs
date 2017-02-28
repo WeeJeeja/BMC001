@@ -112,7 +112,7 @@ namespace PresentationLayer.Controllers
             }
             catch
             {
-                return View();
+                return View("Create");
             }
         }
 

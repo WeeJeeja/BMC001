@@ -14,11 +14,11 @@ namespace DataLayer.Models
 
         public DateTime Date { get; set; }
 
-        public Slot Slot { get; set; }
+        public virtual Slot Slot { get; set; }
 
-        public Resource Resource { get; set; }
+        public virtual Resource Resource { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int Capacity { get; set; }
     }
