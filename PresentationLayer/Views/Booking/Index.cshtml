@@ -1,10 +1,10 @@
-﻿@model IEnumerable<PresentationLayer.Models.Booking>
+﻿@model IEnumerable<PresentationLayer.Models.TimetableEntry>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Timetable3";
 }
 
-<h2>Index</h2>
+<h2>Timetable3</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -12,10 +12,16 @@
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.Time)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Capacity)
+            @Html.DisplayNameFor(model => model.MondayResource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TuesdayResource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WednesdayResource)
         </th>
         <th></th>
     </tr>
@@ -23,19 +29,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Capacity)
+            @Html.DisplayFor(modelItem => item.MondayResource)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookingId })
+            @Html.DisplayFor(modelItem => item.TuesdayResource)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WednesdayResource)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }
 
-    @Html.ActionLink("TIMETABLE", "Timetable")
-    @Html.ActionLink("TIMETABLE2", "Timetable2")
 </table>

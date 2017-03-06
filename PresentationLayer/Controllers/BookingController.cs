@@ -38,32 +38,6 @@ namespace PresentationLayer.Controllers
             {
                 var booking = new Booking
                 {
-                    BookingId = b.BookingId,
-                    Date = b.Date,
-                    Capacity = b.Capacity,
-                    ResourceName = b.Resource.Name,
-                    User = converter.ConvertUserFromWrapper(b.User),
-                    Time = b.Slot.Time,
-                };
-                bookings.Add(booking);
-            }
-
-            return View(bookings);
-        }
-
-        public ActionResult Timetable()
-        {
-            var userId = Session["UserId"].ToString();
-
-            var data = service.GetThisWeeksBookings(new Guid(userId));
-            var bookings = new List<Booking>();
-
-            var slots = slotService.GetSlots();
-
-            foreach (wrapper.Booking b in data)
-            {
-                var booking = new Booking
-                {
                     BookingId    = b.BookingId,
                     Date         = b.Date,
                     Capacity     = b.Capacity,
@@ -73,6 +47,8 @@ namespace PresentationLayer.Controllers
                 };
                 bookings.Add(booking);
             }
+
+            var slots = slotService.GetSlots();
 
             var timetable = new List<TimetableEntry>();
 
@@ -86,9 +62,9 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "09:00 - 10:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
+                                Time              = "09:00 - 10:00",
+                                MondayResource    = "---",
+                                TuesdayResource   = "---",
                                 WednesdayResource = "---",
                             });
                             break;
@@ -97,9 +73,9 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "10:00 - 11:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
+                                Time              = "10:00 - 11:00",
+                                MondayResource    = "---",
+                                TuesdayResource   = "---",
                                 WednesdayResource = "---",
                             });
                             break;
@@ -108,9 +84,9 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "11:00 - 12:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
+                                Time              = "11:00 - 12:00",
+                                MondayResource    = "---",
+                                TuesdayResource   = "---",
                                 WednesdayResource = "---",
                             });
                             break;
@@ -154,7 +130,7 @@ namespace PresentationLayer.Controllers
             }
 
             #endregion
-            
+
             return View(timetable);
         }
 
@@ -185,9 +161,9 @@ namespace PresentationLayer.Controllers
         public PartialViewResult RetrieveAvailableResources(Booking booking)
         {
             var availableResources = service.GetAvailableResources(booking.Date, booking.Slot);
-            var rs = new ResourceService();
-            var resources = converter.ConvertResourceListFromWrapper(availableResources);
-            booking.Resources = resources;
+            var rs                 = new ResourceService();
+            var resources          = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources      = resources;
 
             booking.Time = slotService.GetSlot(booking.Slot).Time;
 
@@ -200,7 +176,7 @@ namespace PresentationLayer.Controllers
             try
             {
                 var userId = Session["UserId"].ToString();
-                var user = userService.GetUser(new Guid(userId));
+                var user   = userService.GetUser(new Guid(userId));
 
                 booking.User = converter.ConvertUserFromWrapper(user);
 
@@ -215,7 +191,6 @@ namespace PresentationLayer.Controllers
                 return View("Create");
             }
         }
-
 
         //
         // GET: /Booking/Edit/5
@@ -268,7 +243,6 @@ namespace PresentationLayer.Controllers
                 return View();
             }
         }
-
 
         #region HelperMethods
 
