@@ -44,7 +44,7 @@ namespace DomainLayer
             var db = new ReScrumEntities();
 
             var data = db.Slots.Where(s => s.SlotId == slotId).FirstOrDefault();
-
+            
             var slot = new Slot
             {
                 SlotId = data.SlotId,

@@ -200,7 +200,6 @@
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetableEntry.cs" />
     <Compile Include="Models\TransactionCount.cs" />
     <Compile Include="Models\User.cs" />
@@ -412,9 +411,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>59565</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52621/</IISUrl>
+          <IISUrl>http://localhost:8000/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

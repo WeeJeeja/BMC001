@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PresentationLayer.HelperMethods;
+using System.Data;
 
 namespace PresentationLayer.Controllers
 {
@@ -57,71 +58,104 @@ namespace PresentationLayer.Controllers
             var data = service.GetThisWeeksBookings(new Guid(userId));
             var bookings = new List<Booking>();
 
-            var slots = getSlots();
+            var slots = slotService.GetSlots();
 
             foreach (wrapper.Booking b in data)
             {
                 var booking = new Booking
                 {
-                    BookingId = b.BookingId,
-                    Date = b.Date,
-                    Capacity = b.Capacity,
+                    BookingId    = b.BookingId,
+                    Date         = b.Date,
+                    Capacity     = b.Capacity,
                     ResourceName = b.Resource.Name,
-                    User = converter.ConvertUserFromWrapper(b.User),
-                    Time = b.Slot.Time,
+                    User         = converter.ConvertUserFromWrapper(b.User),
+                    Time         = b.Slot.Time,
                 };
                 bookings.Add(booking);
             }
 
-            var timetable = new Timetable();
+            var timetable = new List<TimetableEntry>();
 
+            #region Add entries to timetable
 
-            //get slots
-
-            var dataSlots = slotService.GetSlots();
-
-            foreach(wrapper.Slot slot in dataSlots)
+            foreach (wrapper.Slot slot in slots)
             {
-                timetable.Slots.Add(new Slot
-                    {
-                        SlotId = slot.SlotId,
-                        Time   = slot.Time
-                    });
-                timetable.MondayEntries.Add(new TimetableEntry
+                switch (slot.Time)
                 {
-                    Time = slot.Time,
-                });
-
-                timetable.TuesdayEntries.Add(new TimetableEntry
-                {
-                    Time = slot.Time,
-                });
-
-                timetable.WednesdayEntries.Add(new TimetableEntry
-                {
-                    Time = slot.Time,
-                });
-
-                timetable.ThursdayEntries.Add(new TimetableEntry
-                {
-                    Time = slot.Time,
-                });
-
-                timetable.FridayEntries.Add(new TimetableEntry
-                {
-                    Time = slot.Time,
-                });
-                    
+                    case "09:00 - 10:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "09:00 - 10:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                            });
+                            break;
+                        }
+                    case "10:00 - 11:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "10:00 - 11:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                            });
+                            break;
+                        }
+                    case "11:00 - 12:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "11:00 - 12:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                            });
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
             }
+            #endregion
+
+            #region Add bookings to timetable
+
+            foreach (Booking booking in bookings)
+            {
+                var entry = timetable.Where(e => e.Time.Equals(booking.Time)).FirstOrDefault();
+
+                switch (booking.Date.DayOfWeek.ToString())
+                {
+                    case "Monday":
+                        {
+                            entry.MondayResource = booking.ResourceName;
+                            break;
+                        }
+                    case "Tuesday":
+                        {
+                            entry.TuesdayResource = booking.ResourceName;
+                            break;
+                        }
+                    case "Wednesday":
+                        {
+                            entry.WednesdayResource = booking.ResourceName;
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+
+            #endregion
+            
             return View(timetable);
-        }
-
-        //
-        // GET: /Booking/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         //
