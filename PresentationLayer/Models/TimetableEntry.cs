@@ -13,12 +13,16 @@ namespace PresentationLayer.Models
         [Display(Name="Monday")]
         public string MondayResource { get; set; }
 
-
         [Display(Name = "Tuesday")]
         public string TuesdayResource { get; set; }
 
-
         [Display(Name = "Wednesday")]
         public string WednesdayResource { get; set; }
+
+        [Display(Name = "Thursday")]
+        public string ThursdayResource { get; set; }
+
+        [Display(Name = "Friday")]
+        public string FridayResource { get; set; }
     }
 }

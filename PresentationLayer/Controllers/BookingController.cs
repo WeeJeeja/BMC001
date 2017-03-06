@@ -50,54 +50,7 @@ namespace PresentationLayer.Controllers
 
             var slots = slotService.GetSlots();
 
-            var timetable = new List<TimetableEntry>();
-
-            #region Add entries to timetable
-
-            foreach (wrapper.Slot slot in slots)
-            {
-                switch (slot.Time)
-                {
-                    case "09:00 - 10:00":
-                        {
-                            timetable.Add(new TimetableEntry
-                            {
-                                Time              = "09:00 - 10:00",
-                                MondayResource    = "---",
-                                TuesdayResource   = "---",
-                                WednesdayResource = "---",
-                            });
-                            break;
-                        }
-                    case "10:00 - 11:00":
-                        {
-                            timetable.Add(new TimetableEntry
-                            {
-                                Time              = "10:00 - 11:00",
-                                MondayResource    = "---",
-                                TuesdayResource   = "---",
-                                WednesdayResource = "---",
-                            });
-                            break;
-                        }
-                    case "11:00 - 12:00":
-                        {
-                            timetable.Add(new TimetableEntry
-                            {
-                                Time              = "11:00 - 12:00",
-                                MondayResource    = "---",
-                                TuesdayResource   = "---",
-                                WednesdayResource = "---",
-                            });
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
-                }
-            }
-            #endregion
+            var timetable = CreateEmptyTimetable();
 
             #region Add bookings to timetable
 
@@ -120,6 +73,18 @@ namespace PresentationLayer.Controllers
                     case "Wednesday":
                         {
                             entry.WednesdayResource = booking.ResourceName;
+                            break;
+                        }
+
+                    case "Thursday":
+                        {
+                            entry.ThursdayResource = booking.ResourceName;
+                            break;
+                        }
+
+                    case "Friday":
+                        {
+                            entry.FridayResource = booking.ResourceName;
                             break;
                         }
                     default:
@@ -260,6 +225,128 @@ namespace PresentationLayer.Controllers
             }
 
             return slots;
+        }
+
+        private List<TimetableEntry> CreateEmptyTimetable()
+        {
+            var slots = slotService.GetSlots();
+            var timetable = new List<TimetableEntry>();
+
+            foreach (wrapper.Slot slot in slots)
+            {
+                switch (slot.Time)
+                {
+                    case "09:00 - 10:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "09:00 - 10:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "10:00 - 11:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "10:00 - 11:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "11:00 - 12:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "11:00 - 12:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "12:00 - 13:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "12:00 - 13:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "13:00 - 14:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "13:00 - 14:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "14:00 - 15:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "14:00 - 15:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "15:00 - 16:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "15:00 - 16:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    case "16:00 - 17:00":
+                        {
+                            timetable.Add(new TimetableEntry
+                            {
+                                Time = "16:00 - 17:00",
+                                MondayResource = "---",
+                                TuesdayResource = "---",
+                                WednesdayResource = "---",
+                                ThursdayResource = "---",
+                                FridayResource = "---",
+                            });
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+            return timetable;
         }
 
         #endregion
