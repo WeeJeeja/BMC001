@@ -99,12 +99,11 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var unavailableResources = db.Booking.Where(b =>
-                b.Date == date &&
-                b.Slot.SlotId == time).Select(r => r.Resource).ToList();
+            var unavailableResources  = db.Booking.Where(b =>
+                    b.Date            == date &&
+                    b.Slot.SlotId     == time).Select(r => r.Resource).ToList();
 
             var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
-
 
             var resources = converter.ConvertDataResourceListToWrapper(availableResources);
 
