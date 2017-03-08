@@ -103,7 +103,8 @@ namespace DomainLayer
                 b.Date == date &&
                 b.Slot.SlotId == time).Select(r => r.Resource).ToList();
 
-            var availableResources = db.Resources.Except(unavailableResources).ToList();
+            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+
 
             var resources = converter.ConvertDataResourceListToWrapper(availableResources);
 
