@@ -46,17 +46,15 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            @Html.BeginForm("Book", "Booking", FormMethod.Post)
+            @using(Html.BeginForm("Book", "Booking", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Date)
                 @Html.HiddenFor(m => m.Slot)
                 @Html.HiddenFor(m => m.Capacity)
                 @Html.Hidden("Resource", item.ResourceId)
-
+                
                 <input type="submit" value="Book" />
             }
-            @Html.ActionLink("Book", "Edit", new { resourceId=item.ResourceId }) |
-            @Html.ActionLink("Details", "Details", new { resourceId = item.ResourceId }) 
         </td>
     </tr>
     }
