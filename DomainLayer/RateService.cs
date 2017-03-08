@@ -138,5 +138,55 @@ namespace DomainLayer
             utilisationRate = utilisationRate / resources.Count();
             return utilisationRate;
         }
+
+        /// <summary>
+        /// Calculates the frequency rate for the company between a given date range
+        /// </summary>
+        /// <param name="startDate">The start date to search from</param>
+        /// <param name="endDate">The end date to search to</param>
+        /// <returns>The frequency rate for the company</returns>
+        public float CalculateFrequencyRate(DateTime startDate, DateTime endDate)
+        {
+            var db        = new ReScrumEntities();
+            var resources = db.Resources.ToList();
+
+            /// Frequency rate: percentage of time space is used compared to its availability
+            float frequencyRate = 0;
+
+            foreach (DataLayer.Models.Resource data in resources)
+            {
+                var resource   = converter.ConvertDataResourceToWrapper(data);
+                frequencyRate += CalculateResourceFrequencyRate(startDate, endDate, resource);
+            }
+
+            frequencyRate = frequencyRate / resources.Count();
+            return frequencyRate;
+        }
+
+        /// <summary>
+        /// Calculates the occupnacy rate for the company between a given date range
+        /// </summary>
+        /// <param name="startDate">The start date to search from</param>
+        /// <param name="endDate">The end date to search to</param>
+        /// <returns>The occupancy rate for the company</returns>
+        public float CalculateOccupancyRate(DateTime startDate, DateTime endDate)
+        {
+            var db        = new ReScrumEntities();
+            var resources = db.Resources.ToList();
+
+            /// Occupancy rate: how full the space is compared to its capacity
+            float occupancyRate = 0;
+
+            foreach (DataLayer.Models.Resource data in resources)
+            {
+                var resource   = converter.ConvertDataResourceToWrapper(data);
+                occupancyRate += CalculateResourceOccupancyRate(startDate, endDate, resource);
+            }
+
+            occupancyRate = occupancyRate / resources.Count();
+            return occupancyRate;
+        }
+
+
     }
 }

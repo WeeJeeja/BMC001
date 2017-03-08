@@ -50,5 +50,21 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <returns>The utilisation rate for the company</returns>
         float CalculateUtilisationRate(DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// Calculates the frequency rate for the company between a given date range
+        /// </summary>
+        /// <param name="startDate">The start date to search from</param>
+        /// <param name="endDate">The end date to search to</param>
+        /// <returns>The frequency rate for the company</returns>
+        float CalculateFrequencyRate(DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// Calculates the occupnacy rate for the company between a given date range
+        /// </summary>
+        /// <param name="startDate">The start date to search from</param>
+        /// <param name="endDate">The end date to search to</param>
+        /// <returns>The occupancy rate for the company</returns>
+        float CalculateOccupancyRate(DateTime startDate, DateTime endDate);
     }
 }
