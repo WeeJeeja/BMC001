@@ -106,9 +106,36 @@ namespace DomainLayer
             var frequencyRate = CalculateResourceFrequencyRate(startDate, endDate, resource);
             var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resource);
 
-            Console.WriteLine("------ Utilisation rate for " + resource.Name + " -----");
             var utilisationRate = frequencyRate * occupancyRate;
-            Console.WriteLine("The utilisation rate for " + resource.Name + " is: " + utilisationRate * 100 + "%");
+
+            return utilisationRate;
+        }
+
+        /// <summary>
+        /// Calculates the utilisation rate for the compnay between a given date range
+        /// </summary>
+        /// <param name="startDate">The start date to search from</param>
+        /// <param name="endDate">The end date to search to</param>
+        /// <returns>The utilisation rate for the company</returns>
+        public float CalculateUtilisationRate(DateTime startDate, DateTime endDate)
+        {
+            var db        = new ReScrumEntities();
+            var resources = db.Resources.ToList();
+
+            //Utilisation rate: frequency rate * occupancy rate
+            float frequencyRate   = 0;
+            float occupancyRate   = 0;
+            float utilisationRate = 0;
+
+            foreach(DataLayer.Models.Resource data in resources)
+            {
+                var resource     = converter.ConvertDataResourceToWrapper(data);
+                frequencyRate   += CalculateResourceFrequencyRate(startDate, endDate, resource);
+                occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource);
+                utilisationRate += frequencyRate * occupancyRate;
+            }
+
+            utilisationRate = utilisationRate / resources.Count();
             return utilisationRate;
         }
     }
