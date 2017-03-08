@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace DomainLayer
 {
-    interface IRateService
+    public interface IRateService
     {
         /// <summary>
         /// Calculates the number of slots (hours) the resource was in use

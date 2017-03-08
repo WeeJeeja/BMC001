@@ -1,4 +1,5 @@
-﻿using DotNet.Highcharts;
+﻿using DomainLayer;
+using DotNet.Highcharts;
 using DotNet.Highcharts.Helpers;
 using DotNet.Highcharts.Options;
 using System;
@@ -12,23 +13,24 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
+        IRateService service = new RateService();
+
+
         public ActionResult Index()
         {
-            //ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            var frequency = service.CalculateFrequencyRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 10));
 
-            //return View();
+            var occupancy = service.CalculateOccupancyRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 10));
 
-            Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
-        .SetXAxis(new XAxis
-        {
-            Categories = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
-        })
-        .SetSeries(new Series
-        {
-            Data = new Data(new object[] { 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4 })
-        });
+            var utilisation = service.CalculateUtilisationRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 10));
 
-            return View(chart);
+
+            ViewBag.Message = "Frequency rate is:" + frequency.ToString("0.##\\%") +
+                              " Occupancy rate is:" + occupancy.ToString("0.##\\%") +
+                              " Utilisation rate is:" + utilisation.ToString("0.##\\%");
+
+
+            return View();
         }
 
         public ActionResult About()

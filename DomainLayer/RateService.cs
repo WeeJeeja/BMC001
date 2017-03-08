@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-    public class RateService : DomainLayer.IRateService
+    public class RateService : IRateService
     {
         ModelConversitions converter = new ModelConversitions();
 
@@ -24,7 +24,7 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var bookings = db.Booking.Where(r => r.Resource.Equals(resource) &&
+            var bookings = db.Booking.Where(r => r.Resource.ResourceId == resource.ResourceId &&
                                             r.Date >= startDate &&
                                             r.Date <= endDate).ToList();
             return bookings;
