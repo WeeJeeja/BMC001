@@ -136,13 +136,14 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
+        //single booking
         public ActionResult Book(Booking booking)
         {
             try
             {
                 var userId = Session["UserId"].ToString();
                 var user   = userService.GetUser(new Guid(userId));
-
+                booking.Capacity = 1;
                 booking.User = converter.ConvertUserFromWrapper(user);
 
                 var convertedBooking = converter.ConvertBookingToWrapper(booking);

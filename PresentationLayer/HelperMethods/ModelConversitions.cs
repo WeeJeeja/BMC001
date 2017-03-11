@@ -133,6 +133,22 @@ namespace PresentationLayer.HelperMethods
             return booking;
         }
 
+        public wrapper.Booking ConvertSingleBookingToWrapper(CreateBooking entry)
+        {
+            var slot     = slotService.GetSlot(entry.SingleBooking.Slot);
+            var resource = resourceService.GetResource(entry.Resource);
+
+            var booking = new wrapper.Booking
+            {
+                Date     = entry.SingleBooking.Date,
+                Capacity = 1,
+                Slot     = slot,
+                Resource = resource,
+                User     = ConvertUserToWrapper(entry.User),
+            };
+
+            return booking;
+        }
 
         #endregion
     }

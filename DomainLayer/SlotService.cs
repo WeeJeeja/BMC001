@@ -48,8 +48,8 @@ namespace DomainLayer
             var slot = new Slot
             {
                 SlotId     = data.SlotId,
-                Time       = data.Time
-                TimeFormat = data.TimeFormat,,
+                Time       = data.Time,
+                TimeFormat = data.TimeFormat,
             };
             return slot;
         }

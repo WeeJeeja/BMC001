@@ -1,8 +1,10 @@
 ﻿using DomainLayer;
+using wrapper = DomainLayer.WrapperModels;
 using DotNet.Highcharts;
 using DotNet.Highcharts.Enums;
 using DotNet.Highcharts.Helpers;
 using DotNet.Highcharts.Options;
+using PresentationLayer.HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,17 @@ namespace PresentationLayer.Controllers
 {
     public class ChartSampleController : Controller
     {
+
+        #region Fields
+
+        IBookingService bookingService = new BookingService();
+        IUserService userService = new UserService();
+        ISlotService slotService = new SlotService();
+
         IRateService service = new RateService();
+        ModelConversitions converter = new ModelConversitions();
+
+        #endregion
         //
         // GET: /ChartSample/
 
@@ -170,12 +182,41 @@ namespace PresentationLayer.Controllers
             return View(chart);
         }
 
-        //
-        // GET: /ChartSample/Create
-
-        public ActionResult Create()
+        public PartialViewResult RetrieveAvailableResources(CreateBooking booking)
         {
-            return View();
+            var availableResources = bookingService.GetAvailableResources(booking.SingleBooking.Date, booking.SingleBooking.Slot);
+            var rs = new ResourceService();
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
+
+            booking.SingleBooking.Time = slotService.GetSlot(booking.SingleBooking.Slot).Time;
+
+            ViewBag.Message = booking.Resources.Count() + " found for " +
+                booking.SingleBooking.Date + " at " + booking.SingleBooking.Time;
+
+            return PartialView("_resources", booking);
+        }
+
+        [HttpPost]
+        public ActionResult Book(CreateBooking booking)
+        {
+            try
+            {
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                booking.User = converter.ConvertUserFromWrapper(user);
+
+                var convertedBooking = converter.ConvertSingleBookingToWrapper(booking);
+
+                bookingService.AddBooking(convertedBooking);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Create");
+            }
         }
 
         //
@@ -199,9 +240,72 @@ namespace PresentationLayer.Controllers
         //
         // GET: /ChartSample/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            return View();
+            List<Slot> slots = new List<Slot>();
+            var slotData = slotService.GetSlots();
+            foreach (wrapper.Slot data in slotData)
+            {
+                slots.Add(new Slot
+                {
+                    Time = data.Time,
+                    SlotId = data.SlotId,
+                });
+            }
+
+            var model = new CreateBooking
+            {
+                Slots = slots
+            };
+
+            return View(model);
+        }
+
+
+        public PartialViewResult RetrieveAvailableResourcesForBlockBooking(CreateBooking booking)
+        {
+            var availableResources = bookingService.GetAvailableResourcesForBlockBooking(
+                booking.BlockBooking.StartDate, 
+                booking.BlockBooking.EndDate, 
+                booking.BlockBooking.StartSlot, 
+                booking.BlockBooking.EndSlot);
+
+            var rs = new ResourceService();
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
+
+            var startTime = slotService.GetSlot(booking.BlockBooking.StartSlot).TimeFormat;
+            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).TimeFormat;
+
+            ViewBag.Message = booking.Resources.Count() + " resources are available from " +
+                booking.BlockBooking.StartDate + " to " + booking.BlockBooking.EndDate +
+                " between " + startTime.ToString() + " - " + endTime.ToString();
+
+            return PartialView("_blockResources", booking);
+        }
+
+        [HttpPost]
+        public ActionResult BookBlock(CreateBooking booking)
+        {
+            try
+            {
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                bookingService.AddBlockBooking(
+                    booking.BlockBooking.StartDate, 
+                    booking.BlockBooking.EndDate, 
+                    booking.BlockBooking.StartSlot, 
+                    booking.BlockBooking.EndSlot, 
+                    booking.Resource, 
+                    user.UserId);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Create");
+            }
         }
 
         //

@@ -1,0 +1,63 @@
+﻿@model PresentationLayer.Models.CreateBooking
+
+ @*List of resources available*@
+    @if (Model.Resources.Count() == 0)
+    {
+        <p>No resources found, please enter serach criteria.</p>
+    }
+    else
+    {
+        <h2>@ViewBag.Message</h2>
+        <table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Location)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Resources) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @using(Html.BeginForm("BookBlock", "ChartSample", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.BlockBooking.StartDate)
+                @Html.HiddenFor(m => m.BlockBooking.EndDate)
+                @Html.HiddenFor(m => m.BlockBooking.StartSlot)
+                @Html.HiddenFor(m => m.BlockBooking.EndSlot)
+                @Html.Hidden("Resource", item.ResourceId)
+                
+                <input type="submit" value="Book" />
+            }
+        </td>
+    </tr>
+    }
+</table>
+}

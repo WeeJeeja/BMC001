@@ -110,6 +110,27 @@ namespace DomainLayer
             return resources.ToList(); ;
         }
 
+        public List<Resource> GetAvailableResourcesForBlockBooking(DateTime startDate, DateTime endDate, Guid? startSlot, Guid? endSlot)
+        {
+            var db = new ReScrumEntities();
+
+            var slotService = new SlotService();
+            var startTime = slotService.GetSlot(startSlot);
+            var endTime = slotService.GetSlot(endSlot);
+
+            var unavailableResources = db.Booking.Where(b =>
+                    b.Date >= startDate &&
+                    b.Date <= endDate &&
+                    b.Slot.TimeFormat >= startTime.TimeFormat &&
+                    b.Slot.TimeFormat <= endTime.TimeFormat).Select(r => r.Resource).ToList();
+
+            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+
+            var resources = converter.ConvertDataResourceListToWrapper(availableResources);
+
+            return resources.ToList(); ;
+        }
+
         /// <summary>
         /// Gets the resource using the resourceId
         /// </summary>
@@ -155,6 +176,47 @@ namespace DomainLayer
             };
 
             db.Booking.Add(newBooking);
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds a new booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        public void AddBlockBooking(DateTime startDate, DateTime endDate, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId)
+        {
+            var db = new ReScrumEntities();
+
+            var startSlot = db.Slots.Where(s => s.SlotId == startTime).FirstOrDefault();
+            var endSlot = db.Slots.Where(s => s.SlotId == endTime).FirstOrDefault();
+            var user = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            var resource = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
+
+            var slotList = db.Slots.Where(s => s.TimeFormat >= startSlot.TimeFormat &&
+                                                s.TimeFormat <= endSlot.TimeFormat).ToList();
+
+            // If run on October 20, 2006, the example produces the following output:
+            //    CompareTo method returns 1: 10/20/2006 is later than 10/20/2005
+            //    CompareTo method returns -1: 10/20/2006 is earlier than 10/20/2007
+            var date = startDate;
+            while (date <= endDate)
+            {
+                foreach (DataLayer.Models.Slot slot in slotList)
+                {
+                    var booking = new DataLayer.Models.Booking
+                    {
+                        Date     = date,
+                        Slot     = slot,
+                        Resource = resource,
+                        User     = user,
+                        Capacity = 1,
+                    };
+
+                    db.Booking.Add(booking);
+                }
+                date = date.AddDays(1);
+            }
 
             db.SaveChanges();
         }
