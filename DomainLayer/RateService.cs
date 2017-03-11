@@ -134,9 +134,9 @@ namespace DomainLayer
                 occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource);
                 utilisationRate += frequencyRate * occupancyRate;
             }
-
+            if (float.IsNaN(utilisationRate)) return 0;
             utilisationRate = utilisationRate / resources.Count();
-            return utilisationRate;
+            return utilisationRate * 100;
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace DomainLayer
                 var resource   = converter.ConvertDataResourceToWrapper(data);
                 frequencyRate += CalculateResourceFrequencyRate(startDate, endDate, resource);
             }
-
+            if (float.IsNaN(frequencyRate)) return 0;
             frequencyRate = frequencyRate / resources.Count();
-            return frequencyRate;
+            return frequencyRate * 100;
         }
 
         /// <summary>
@@ -182,9 +182,9 @@ namespace DomainLayer
                 var resource   = converter.ConvertDataResourceToWrapper(data);
                 occupancyRate += CalculateResourceOccupancyRate(startDate, endDate, resource);
             }
-
+            if (float.IsNaN(occupancyRate)) return 0;
             occupancyRate = occupancyRate / resources.Count();
-            return occupancyRate;
+            return occupancyRate * 100;
         }
 
 
