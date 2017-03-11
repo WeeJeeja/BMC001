@@ -13,6 +13,8 @@ namespace DomainLayer.WrapperModels
 
         public string Time { get; set; }
 
-        public TimeSpan TimeFormat { get; set; }
+        public TimeSpan StartTime { get; set; }
+
+        public TimeSpan EndTime { get; set; }
     }
 }

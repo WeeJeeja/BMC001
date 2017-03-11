@@ -274,8 +274,8 @@ namespace PresentationLayer.Controllers
             var resources = converter.ConvertResourceListFromWrapper(availableResources);
             booking.Resources = resources;
 
-            var startTime = slotService.GetSlot(booking.BlockBooking.StartSlot).TimeFormat;
-            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).TimeFormat;
+            var startTime = slotService.GetSlot(booking.BlockBooking.StartSlot).StartTime;
+            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).StartTime;
 
             ViewBag.Message = booking.Resources.Count() + " resources are available from " +
                 booking.BlockBooking.StartDate + " to " + booking.BlockBooking.EndDate +

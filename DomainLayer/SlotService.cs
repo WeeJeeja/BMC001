@@ -49,7 +49,8 @@ namespace DomainLayer
             {
                 SlotId     = data.SlotId,
                 Time       = data.Time,
-                TimeFormat = data.TimeFormat,
+                StartTime  = data.StartTime,
+                EndTime    = data.EndTime,
             };
             return slot;
         }

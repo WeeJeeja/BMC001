@@ -121,8 +121,8 @@ namespace DomainLayer
             var unavailableResources = db.Booking.Where(b =>
                     b.Date >= startDate &&
                     b.Date <= endDate &&
-                    b.Slot.TimeFormat >= startTime.TimeFormat &&
-                    b.Slot.TimeFormat <= endTime.TimeFormat).Select(r => r.Resource).ToList();
+                    b.Slot.StartTime >= startTime.StartTime &&
+                    b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
 
             var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
 
@@ -193,8 +193,8 @@ namespace DomainLayer
             var user = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
             var resource = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
 
-            var slotList = db.Slots.Where(s => s.TimeFormat >= startSlot.TimeFormat &&
-                                                s.TimeFormat <= endSlot.TimeFormat).ToList();
+            var slotList = db.Slots.Where(s => s.StartTime >= startSlot.StartTime &&
+                                                s.EndTime <= endSlot.EndTime).ToList();
 
             // If run on October 20, 2006, the example produces the following output:
             //    CompareTo method returns 1: 10/20/2006 is later than 10/20/2005
