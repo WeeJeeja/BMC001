@@ -30,6 +30,8 @@ namespace PresentationLayer.Controllers
                               " Utilisation rate is:" + utilisation.ToString("0.##\\%");
 
 
+
+
             return View();
         }
 
