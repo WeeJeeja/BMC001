@@ -21,15 +21,14 @@ namespace DataLayer.Migrations
             #region Adding slots
 
             context.Slots.AddOrUpdate(s => s.SlotId,
-                new Slot { Time = "09:00 - 10:00" },
-                new Slot { Time = "10:00 - 11:00" },
-                new Slot { Time = "11:00 - 12:00" },
-                new Slot { Time = "12:00 - 13:00" },
-                new Slot { Time = "13:00 - 14:00" },
-                new Slot { Time = "14:00 - 15:00" },
-                new Slot { Time = "15:00 - 16:00" },
-                new Slot { Time = "16:00 - 17:00" },
-                new Slot { Time = "17:00 - 18:00" });
+                new Slot { Time = "09:00 - 10:00", TimeFormat = TimeSpan.FromHours(9) },
+                new Slot { Time = "10:00 - 11:00", TimeFormat = TimeSpan.FromHours(10) },
+                new Slot { Time = "11:00 - 12:00", TimeFormat = TimeSpan.FromHours(11) },
+                new Slot { Time = "12:00 - 13:00", TimeFormat = TimeSpan.FromHours(12) },
+                new Slot { Time = "13:00 - 14:00", TimeFormat = TimeSpan.FromHours(13) },
+                new Slot { Time = "14:00 - 15:00", TimeFormat = TimeSpan.FromHours(14) },
+                new Slot { Time = "15:00 - 16:00", TimeFormat = TimeSpan.FromHours(15) },
+                new Slot { Time = "16:00 - 17:00", TimeFormat = TimeSpan.FromHours(16) });
 
             #endregion
 

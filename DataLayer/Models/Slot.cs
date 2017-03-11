@@ -13,5 +13,7 @@ namespace DataLayer.Models
         public Guid? SlotId { get; set; }
 
         public string Time { get; set; }
+
+        public TimeSpan TimeFormat { get; set; }
     }
 }

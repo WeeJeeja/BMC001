@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201702061358598_AddedAccountTable.Designer.cs">
       <DependentUpon>201702061358598_AddedAccountTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703111931173_AddedTimeSpanToSlotTable.cs" />
+    <Compile Include="Migrations\201703111931173_AddedTimeSpanToSlotTable.Designer.cs">
+      <DependentUpon>201703111931173_AddedTimeSpanToSlotTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Office.cs" />
@@ -86,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702061358598_AddedAccountTable.resx">
       <DependentUpon>201702061358598_AddedAccountTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703111931173_AddedTimeSpanToSlotTable.resx">
+      <DependentUpon>201703111931173_AddedTimeSpanToSlotTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
