@@ -46,10 +46,12 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            @using(Html.BeginForm("Book", "ChartSample", FormMethod.Post))
+            @using(Html.BeginForm("BookBlock", "Booking", FormMethod.Post))
             {
-                @Html.HiddenFor(m => m.SingleBooking.Date)
-                @Html.HiddenFor(m => m.SingleBooking.Slot)
+                @Html.HiddenFor(m => m.BlockBooking.StartDate)
+                @Html.HiddenFor(m => m.BlockBooking.EndDate)
+                @Html.HiddenFor(m => m.BlockBooking.StartSlot)
+                @Html.HiddenFor(m => m.BlockBooking.EndSlot)
                 @Html.Hidden("Resource", item.ResourceId)
                 
                 <input type="submit" value="Book" />

@@ -1,4 +1,4 @@
-﻿@model PresentationLayer.Models.Booking
+﻿@model PresentationLayer.Models.CreateBooking
 
  @*List of resources available*@
     @if (Model.Resources.Count() == 0)
@@ -7,7 +7,7 @@
     }
     else
     {
-        <p>@Model.Resources.Count() found for @Model.Date at @Model.Time</p>
+        <h2>@ViewBag.Message</h2>
         <table>
     <tr>
         <th>
@@ -48,9 +48,8 @@
         <td>
             @using(Html.BeginForm("Book", "Booking", FormMethod.Post))
             {
-                @Html.HiddenFor(m => m.Date)
-                @Html.HiddenFor(m => m.Slot)
-                @Html.HiddenFor(m => m.Capacity)
+                @Html.HiddenFor(m => m.SingleBooking.Date)
+                @Html.HiddenFor(m => m.SingleBooking.Slot)
                 @Html.Hidden("Resource", item.ResourceId)
                 
                 <input type="submit" value="Book" />

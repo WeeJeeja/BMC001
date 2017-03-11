@@ -378,13 +378,11 @@
     <Content Include="Views\Slot\Details.cshtml" />
     <Content Include="Views\ChartSample\Index.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
-    <Content Include="Views\Booking\_resources.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
-    <Content Include="Views\ChartSample\Edit.cshtml" />
-    <Content Include="Views\ChartSample\_basicBooking.cshtml" />
-    <Content Include="Views\ChartSample\_resources.cshtml" />
-    <Content Include="Views\ChartSample\_blockBooking.cshtml" />
-    <Content Include="Views\ChartSample\_blockResources.cshtml" />
+    <Content Include="Views\Booking\_resources.cshtml" />
+    <Content Include="Views\Booking\_basicBooking.cshtml" />
+    <Content Include="Views\Booking\_blockBooking.cshtml" />
+    <Content Include="Views\Booking\_blockResources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

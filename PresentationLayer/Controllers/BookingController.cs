@@ -110,12 +110,12 @@ namespace PresentationLayer.Controllers
             {
                 slots.Add(new Slot
                 {
-                    Time   = data.Time,
+                    Time = data.Time,
                     SlotId = data.SlotId,
                 });
             }
 
-            var model = new Booking
+            var model = new CreateBooking
             {
                 Slots = slots
             };
@@ -123,33 +123,21 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        public PartialViewResult RetrieveAvailableResources(Booking booking)
-        {
-            var availableResources = service.GetAvailableResources(booking.Date, booking.Slot);
-            var rs                 = new ResourceService();
-            var resources          = converter.ConvertResourceListFromWrapper(availableResources);
-            booking.Resources      = resources;
-
-            booking.Time = slotService.GetSlot(booking.Slot).Time;
-
-            return PartialView("_resources", booking);
-        }
 
         [HttpPost]
-        //single booking
-        public ActionResult Book(Booking booking)
+        public ActionResult Book(CreateBooking booking)
         {
             try
             {
                 var userId = Session["UserId"].ToString();
-                var user   = userService.GetUser(new Guid(userId));
-                booking.Capacity = 1;
+                var user = userService.GetUser(new Guid(userId));
+
                 booking.User = converter.ConvertUserFromWrapper(user);
 
-                var convertedBooking = converter.ConvertBookingToWrapper(booking);
+                var convertedBooking = converter.ConvertSingleBookingToWrapper(booking);
 
                 service.AddBooking(convertedBooking);
-            
+
                 return RedirectToAction("Index");
             }
             catch
@@ -158,55 +146,49 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Booking/Edit/5
-
-        public ActionResult Edit(int id)
+        public PartialViewResult RetrieveAvailableResourcesForBlockBooking(CreateBooking booking)
         {
-            return View();
+            var availableResources = service.GetAvailableResourcesForBlockBooking(
+                booking.BlockBooking.StartDate,
+                booking.BlockBooking.EndDate,
+                booking.BlockBooking.StartSlot,
+                booking.BlockBooking.EndSlot);
+
+            var rs = new ResourceService();
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
+
+            var startTime = slotService.GetSlot(booking.BlockBooking.StartSlot).StartTime;
+            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).EndTime;
+
+            ViewBag.Message = booking.Resources.Count() + " resources are available from " +
+                booking.BlockBooking.StartDate.ToShortDateString() + " to " + booking.BlockBooking.EndDate.ToShortDateString() +
+                " between " + string.Format("{0:hh\\:mm}", startTime) + " - " + string.Format("{0:hh\\:mm}", endTime);
+
+            return PartialView("_blockResources", booking);
         }
 
-        //
-        // POST: /Booking/Edit/5
-
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult BookBlock(CreateBooking booking)
         {
             try
             {
-                // TODO: Add update logic here
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                service.AddBlockBooking(
+                    booking.BlockBooking.StartDate,
+                    booking.BlockBooking.EndDate,
+                    booking.BlockBooking.StartSlot,
+                    booking.BlockBooking.EndSlot,
+                    booking.Resource,
+                    user.UserId);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Booking/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Booking/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                return View("Create");
             }
         }
 
