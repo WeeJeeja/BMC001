@@ -189,10 +189,10 @@ namespace PresentationLayer.Controllers
             var resources = converter.ConvertResourceListFromWrapper(availableResources);
             booking.Resources = resources;
 
-            booking.SingleBooking.Time = slotService.GetSlot(booking.SingleBooking.Slot).Time;
+            var time = slotService.GetSlot(booking.SingleBooking.Slot).StartTime;
 
             ViewBag.Message = booking.Resources.Count() + " found for " +
-                booking.SingleBooking.Date + " at " + booking.SingleBooking.Time;
+                booking.SingleBooking.Date.ToShortDateString() + " at " + string.Format("{0:hh\\:mm}", time);
 
             return PartialView("_resources", booking);
         }
@@ -275,11 +275,11 @@ namespace PresentationLayer.Controllers
             booking.Resources = resources;
 
             var startTime = slotService.GetSlot(booking.BlockBooking.StartSlot).StartTime;
-            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).StartTime;
+            var endTime = slotService.GetSlot(booking.BlockBooking.EndSlot).EndTime;
 
             ViewBag.Message = booking.Resources.Count() + " resources are available from " +
-                booking.BlockBooking.StartDate + " to " + booking.BlockBooking.EndDate +
-                " between " + startTime.ToString() + " - " + endTime.ToString();
+                booking.BlockBooking.StartDate.ToShortDateString() + " to " + booking.BlockBooking.EndDate.ToShortDateString() +
+                " between " + string.Format("{0:hh\\:mm}", startTime) + " - " + string.Format("{0:hh\\:mm}", endTime);
 
             return PartialView("_blockResources", booking);
         }

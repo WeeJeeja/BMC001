@@ -50,7 +50,6 @@
             {
                 @Html.HiddenFor(m => m.SingleBooking.Date)
                 @Html.HiddenFor(m => m.SingleBooking.Slot)
-                @Html.HiddenFor(m => m.SingleBooking.Capacity)
                 @Html.Hidden("Resource", item.ResourceId)
                 
                 <input type="submit" value="Book" />

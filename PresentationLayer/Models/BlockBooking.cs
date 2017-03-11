@@ -22,8 +22,10 @@ namespace PresentationLayer.Models
         [Display(Name = "End date")]
         public DateTime EndDate { get; set; }
 
+        [Display(Name = "Start time")]
         public Guid? StartSlot { get; set; }
 
+        [Display(Name = "End time")]
         public Guid? EndSlot { get; set; }
 
         [Required]
