@@ -18,10 +18,13 @@ namespace PresentationLayer.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        #region Fields
 
-        IAccountService service = new AccountService();
+        ITeamService teamService     = new TeamService();
+        IAccountService service      = new AccountService();
         ModelConversitions converter = new ModelConversitions();
 
+        #endregion
 
         //
         // GET: /Account/Login
@@ -83,7 +86,22 @@ namespace PresentationLayer.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            List<Team> teams = new List<Team>();
+            var teamData = teamService.GetTeams();
+            foreach (wrapper.Team data in teamData)
+            {
+                teams.Add(new Team
+                {
+                    Name   = data.Name,
+                    Colour = data.Colour,
+                });
+            }
+
+            var model = new RegisterModel
+            {
+                Teams = teams,
+            };
+            return View(model);
         }
 
         //
@@ -111,6 +129,7 @@ namespace PresentationLayer.Controllers
                         Surname         = model.Surname,
                         Email           = model.Email,
                         JobTitle        = model.JobTitle,
+                        
                         IsLineManager   = model.IsLineManager,
                         IsAdministrator = model.IsAdministrator,
                     };

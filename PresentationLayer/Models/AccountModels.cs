@@ -65,6 +65,10 @@ namespace PresentationLayer.Models
 
         public bool IsAdministrator { get; set; }
 
+        public IEnumerable<Team> Teams { get; set; }
+
+        public Guid? Team { get; set; }
+
         public User LineManager { get; set; }
 
         [Required]
