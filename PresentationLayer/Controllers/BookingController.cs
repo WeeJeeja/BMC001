@@ -123,6 +123,23 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
+        public PartialViewResult RetrieveAvailableResources(CreateBooking booking)
+        {
+            var availableResources = service.GetAvailableResources(booking.SingleBooking.Date, booking.SingleBooking.Slot);
+
+            var rs = new ResourceService();
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
+
+            var time = slotService.GetSlot(booking.SingleBooking.Slot).StartTime;
+
+            ViewBag.Message = booking.Resources.Count() + " resources are available on " +
+                booking.SingleBooking.Date.ToShortDateString() + 
+                " at " + string.Format("{0:hh\\:mm}", time);
+
+            return PartialView("_resources", booking);
+        }
+
 
         [HttpPost]
         public ActionResult Book(CreateBooking booking)

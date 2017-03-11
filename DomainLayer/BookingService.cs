@@ -166,16 +166,18 @@ namespace DomainLayer
             var user = db.Users.Where(u => u.UserId == booking.User.UserId).FirstOrDefault();
             var resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
 
-            var newBooking = new DataLayer.Models.Booking
-            {
-                Date     = booking.Date,
-                Slot     = slot,
-                Resource = resource,
-                User     = user,
-                Capacity = booking.Capacity,
-            };
+            var newBooking = db.Booking.Where(b => b.User.UserId == user.UserId &&
+                                                b.Slot.SlotId == slot.SlotId &&
+                                                b.Date == booking.Date).FirstOrDefault();
+            if (newBooking == null) newBooking = new DataLayer.Models.Booking();
 
-            db.Booking.Add(newBooking);
+            newBooking.Date     = booking.Date;
+            newBooking.Slot     = slot;
+            newBooking.Resource = resource;
+            newBooking.User     = user;
+            newBooking.Capacity = booking.Capacity;
+
+            if (newBooking.BookingId == null)  db.Booking.Add(newBooking);
 
             db.SaveChanges();
         }
@@ -204,16 +206,18 @@ namespace DomainLayer
             {
                 foreach (DataLayer.Models.Slot slot in slotList)
                 {
-                    var booking = new DataLayer.Models.Booking
-                    {
-                        Date     = date,
-                        Slot     = slot,
-                        Resource = resource,
-                        User     = user,
-                        Capacity = 1,
-                    };
+                    var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
+                                                b.Slot.SlotId == slot.SlotId &&
+                                                b.Date == date).FirstOrDefault();
+                    if (booking == null) booking = new DataLayer.Models.Booking();
+                    
+                    booking.Date     = date;
+                    booking.Slot     = slot;
+                    booking.Resource = resource;
+                    booking.User     = user;
+                    booking.Capacity = 1;
 
-                    db.Booking.Add(booking);
+                    if (booking.BookingId == null) db.Booking.Add(booking);
                 }
                 date = date.AddDays(1);
             }
