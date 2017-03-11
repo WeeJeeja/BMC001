@@ -55,6 +55,8 @@ namespace DomainLayer
             //Number of slots the space was in use/Number of slots available = frequency rate %
             var frequencyRate = ((float)hoursUsed / (float)availability);
 
+            if (float.IsNaN(frequencyRate)) return 0;
+
             return frequencyRate;
         }
 
@@ -68,9 +70,6 @@ namespace DomainLayer
         /// <returns>The occupancy rate for the resource</returns>
         public float CalculateResourceOccupancyRate(DateTime startDate, DateTime endDate, Resource resource)
         {
-            //Calculate how many days
-            var dateRange = endDate.DayOfYear - startDate.DayOfYear + 1;
-
             //Resource capacity
             float capacity = resource.Capacity;
 
@@ -88,7 +87,7 @@ namespace DomainLayer
             //Occupancy rate = occupants / (capacity * hoursResourceWasInUse)
             var occupancyRate = (occupants / (capacity * hoursResourceWasInUse));
 
-            Console.WriteLine("The occupancy rate for " + resource.Name + " is: " + occupancyRate * 100 + "%");
+            if (float.IsNaN(occupancyRate)) return 0;
 
             return occupancyRate;
         }
@@ -108,6 +107,8 @@ namespace DomainLayer
 
             var utilisationRate = frequencyRate * occupancyRate;
 
+
+            if (float.IsNaN(utilisationRate)) return 0;
             return utilisationRate;
         }
 
