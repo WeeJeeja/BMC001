@@ -93,7 +93,7 @@ namespace PresentationLayer.Controllers
                 teams.Add(new Team
                 {
                     Name   = data.Name,
-                    Colour = data.Colour,
+                    TeamId = data.TeamId,
                 });
             }
 
@@ -129,7 +129,7 @@ namespace PresentationLayer.Controllers
                         Surname         = model.Surname,
                         Email           = model.Email,
                         JobTitle        = model.JobTitle,
-                        
+                        Team            = model.Team,
                         IsLineManager   = model.IsLineManager,
                         IsAdministrator = model.IsAdministrator,
                     };

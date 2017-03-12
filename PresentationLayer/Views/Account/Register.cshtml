@@ -56,7 +56,7 @@
         </li>
 
         <li class="editor-label">
-            @Html.LabelFor(model => model.Team)
+            @Html.LabelFor(model => model.Teams)
         </li>
         <li class="editor-field">
             @Html.DropDownList("Team",
@@ -88,6 +88,14 @@
                 @Html.PasswordFor(m => m.ConfirmPassword)
             </li>
         </ol>
+
+        @*@using(Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Team)
+                //@Html.Hidden("Resource", item.ResourceId)
+                
+                <input type="submit" value="Register" />
+            }*@
         <input type="submit" value="Register" />
     </fieldset>
 }

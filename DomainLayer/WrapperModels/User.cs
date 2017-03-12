@@ -24,7 +24,9 @@ namespace DomainLayer.WrapperModels
 
         public bool IsAdministrator { get; set; }
 
-        public virtual User LineManager { get; set; }
+        public Guid? Team { get; set; }
+
+        public User LineManager { get; set; }
 
         public string Password { get; set; }
     }
