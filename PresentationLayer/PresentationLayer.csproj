@@ -200,6 +200,7 @@
     <Compile Include="Models\ChartData.cs" />
     <Compile Include="Models\BlockBooking.cs" />
     <Compile Include="Models\CreateBooking.cs" />
+    <Compile Include="Models\GroupBooking.cs" />
     <Compile Include="Models\SingleBooking.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\Slot.cs" />

@@ -32,5 +32,7 @@ namespace PresentationLayer.Models
 
         public BlockBooking BlockBooking { get; set; }
 
+        public GroupBooking GroupBooking { get; set; }
+
     }
 }
