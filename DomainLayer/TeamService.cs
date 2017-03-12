@@ -116,5 +116,28 @@ namespace DomainLayer
 
             db.SaveChanges();
         }
+
+        /// <summary>
+        /// Gets all of the members on a team
+        /// </summary>
+        /// <returns>Returns a list of users</returns>
+        public List<User> GetTeamMembers(Guid? teamId)
+        {
+            var db = new ReScrumEntities();
+
+            var users = db.Users.Where(t => t.Team.TeamId == teamId).ToList();
+            var userList = new List<User>();
+
+            foreach (DataLayer.Models.User data in users)
+            {
+                var user = new User
+                {
+                    UserId = data.UserId,
+                };
+                userList.Add(user);
+            }
+
+            return userList;
+        }
     }
 }

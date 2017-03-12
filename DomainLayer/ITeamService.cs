@@ -1,12 +1,15 @@
-﻿using System;
+﻿using DomainLayer.WrapperModels;
+using System;
+using System.Collections.Generic;
 namespace DomainLayer
 {
     public interface ITeamService
     {
-        void AddTeam(DomainLayer.WrapperModels.Team team);
+        void AddTeam(Team team);
         void DeleteTeam(Guid? teamId);
-        DomainLayer.WrapperModels.Team GetTeam(Guid? teamId);
-        System.Collections.Generic.List<DomainLayer.WrapperModels.Team> GetTeams();
-        void UpdateTeam(DomainLayer.WrapperModels.Team data);
+        Team GetTeam(Guid? teamId);
+        List<Team> GetTeams();
+        void UpdateTeam(Team data);
+        List<User> GetTeamMembers(Guid? teamId);
     }
 }
