@@ -18,6 +18,7 @@ namespace PresentationLayer.Controllers
         IBookingService service = new BookingService();
         IUserService userService = new UserService();
         ISlotService slotService = new SlotService();
+        ITeamService teamService = new TeamService();
         ModelConversitions converter = new ModelConversitions();
 
         #endregion
@@ -104,21 +105,68 @@ namespace PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            List<Slot> slots = new List<Slot>();
-            var slotData = slotService.GetSlots();
-            foreach (wrapper.Slot data in slotData)
-            {
-                slots.Add(new Slot
+            #region populate slots
+                List<Slot> slots = new List<Slot>();
+                var slotData = slotService.GetSlots();
+                foreach (wrapper.Slot data in slotData)
                 {
-                    Time = data.Time,
-                    SlotId = data.SlotId,
-                });
-            }
+                    slots.Add(new Slot
+                    {
+                        Time = data.Time,
+                        SlotId = data.SlotId,
+                    });
+                }
+            #endregion
 
-            var model = new CreateBooking
-            {
-                Slots = slots
-            };
+            #region populate attendees
+                List<User> attendees = new List<User>();
+                var attendeeData = userService.GetUsers();
+                foreach (wrapper.User data in attendeeData)
+                {
+                    attendees.Add(new User
+                    {
+                        Forename = data.Forename,
+                        Surname  = data.Surname,
+                        JobTitle = data.JobTitle,
+                        Checked  = false,
+                        UserId   = data.UserId,
+                    });
+                }
+            #endregion
+
+            #region populate teams
+                List<Team> teams = new List<Team>();
+                var teamData = teamService.GetTeams();
+                
+                foreach (wrapper.Team data in teamData)
+                {
+                    teams.Add(new Team
+                    {
+                        Name     = data.Name,
+                        Checked  = false,
+                        TeamId   = data.TeamId,
+                    });
+                    var teamMembers = converter.ConvertUserListFromWrapper(teamService.GetTeamMembers(data.TeamId));
+                    foreach (User user in teamMembers)
+                    {
+                        var team = teams.Where(t => t.TeamId == data.TeamId).FirstOrDefault();
+                        team.Members.Add(user);
+                    }
+                    
+                }
+
+            #endregion
+
+                var model = new CreateBooking
+                {
+                    Slots        = slots,
+                    GroupBooking = new GroupBooking
+                    {
+                        Attendees = attendees,
+                        Teams     = teams,
+                    }
+                };
+            
 
             return View(model);
         }
@@ -207,6 +255,28 @@ namespace PresentationLayer.Controllers
             {
                 return View("Create");
             }
+        }
+
+        public PartialViewResult RetrieveAvailableResourcesForGroupBooking(CreateBooking booking)
+        {
+            var availableResources = service.GetAvailableResourcesForGroupBooking(
+                booking.GroupBooking.Date,
+                booking.GroupBooking.StartTime,
+                booking.GroupBooking.EndTime,
+                booking.GroupBooking.Capacity);
+
+            var rs = new ResourceService();
+            var resources = converter.ConvertResourceListFromWrapper(availableResources);
+            booking.Resources = resources;
+
+            var startTime = slotService.GetSlot(booking.GroupBooking.StartTime).StartTime;
+            var endTime = slotService.GetSlot(booking.GroupBooking.EndTime).EndTime;
+
+            ViewBag.Message = booking.Resources.Count() + " resources are available on " +
+                booking.GroupBooking.Date.ToShortDateString() +
+                " between " + string.Format("{0:hh\\:mm}", startTime) + " - " + string.Format("{0:hh\\:mm}", endTime);
+
+            return PartialView("_blockResources", booking);
         }
 
         #region HelperMethods
