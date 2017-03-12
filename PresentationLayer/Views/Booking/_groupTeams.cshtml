@@ -1,0 +1,51 @@
+﻿@model PresentationLayer.Models.CreateBooking
+
+ @*List of resources available*@
+    @if (Model.GroupBooking.Teams.Count() == 0)
+    {
+        <p>No resources found, please enter serach criteria.</p>
+    }
+    else
+    {
+        <h2>@ViewBag.Message</h2>
+        <table>
+    <tr>
+        <th>
+            Team
+        </th>
+        <th>
+            Members
+        </th>
+        <th>
+            Select
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.GroupBooking.Teams)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Members.Count)
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => item.Checked)
+        </td>
+@*        <td>
+            @using(Html.BeginForm("Book", "Booking", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.SingleBooking.Date)
+                @Html.HiddenFor(m => m.SingleBooking.Slot)
+                @Html.Hidden("Resource", item.ResourceId)
+                
+                <input type="submit" value="Book" />
+            }
+        </td>*@
+    </tr>
+    }
+</table>
+}

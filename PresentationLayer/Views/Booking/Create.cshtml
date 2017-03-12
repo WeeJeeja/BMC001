@@ -13,9 +13,9 @@
 <div id="tabs">
 
 <ul>
-    <li><a href="#tabs-1">Individual book</a></li>
-    <li><a href="#tabs-2">Block book</a></li>
-    <li><a href="#tabs-3">Book room</a></li>
+    <li><a href="#tabs-1">Individual booking</a></li>
+    <li><a href="#tabs-2">Block booking</a></li>
+    <li><a href="#tabs-3">Group booking</a></li>
 </ul>
 
 <div id="tabs-1">
@@ -29,11 +29,8 @@ Content for Tab 2 goes here.<br/>
 </div>
 
 <div id="tabs-3">
-Content for Tab 3 goes here.<br/>
--> Select people to add to booking
--> Select capacity
--> Select guests
--> select resource
+Room booking.<br/>
+@Html.Partial("_groupBooking", Model)
 </div>
 
 </div>

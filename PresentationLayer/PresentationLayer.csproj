@@ -384,6 +384,10 @@
     <Content Include="Views\Booking\_basicBooking.cshtml" />
     <Content Include="Views\Booking\_blockBooking.cshtml" />
     <Content Include="Views\Booking\_blockResources.cshtml" />
+    <Content Include="Views\Booking\_groupBookingCriteria.cshtml" />
+    <Content Include="Views\Booking\_groupResources.cshtml" />
+    <Content Include="Views\Booking\_groupTeams.cshtml" />
+    <Content Include="Views\Booking\_groupBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
