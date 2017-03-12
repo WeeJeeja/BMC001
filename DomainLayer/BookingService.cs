@@ -131,6 +131,28 @@ namespace DomainLayer
             return resources.ToList(); ;
         }
 
+        public List<Resource> GetAvailableResourcesForGroupBooking(DateTime date, Guid? startSlot, Guid? endSlot, int capacity)
+        {
+            var db = new ReScrumEntities();
+
+            var slotService = new SlotService();
+            var startTime = slotService.GetSlot(startSlot);
+            var endTime = slotService.GetSlot(endSlot);
+
+            var unavailableResources = db.Booking.Where(b =>
+                    b.Date == date &&
+                    b.Slot.StartTime >= startTime.StartTime &&
+                    b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
+
+            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+
+            availableResources.RemoveAll(r => r.Capacity < capacity);
+
+            var resources = converter.ConvertDataResourceListToWrapper(availableResources);
+
+            return resources.ToList(); ;
+        }
+
         /// <summary>
         /// Gets the resource using the resourceId
         /// </summary>
