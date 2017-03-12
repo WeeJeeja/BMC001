@@ -29,7 +29,6 @@ namespace PresentationLayer.Models
 
         public SingleBooking SingleBooking { get; set; }
 
-
         public BlockBooking BlockBooking { get; set; }
 
         public GroupBooking GroupBooking { get; set; }
