@@ -9,8 +9,9 @@ namespace PresentationLayer.Models
     {
         public GroupBooking()
         {
-            Attendees = new List<User>();
-            Teams     = new List<Team>();
+            Attendees     = new List<User>();
+            Teams         = new List<Team>();
+            SelectedTeams = new List<string>();
         }
         public DateTime Date { get; set; }
 
@@ -19,6 +20,8 @@ namespace PresentationLayer.Models
         public Guid? EndTime { get; set; }
 
         public ICollection<User> Attendees { get; set; }
+
+        public IList<string> SelectedTeams { get; set; }
 
         public ICollection<Team> Teams { get; set; }
 

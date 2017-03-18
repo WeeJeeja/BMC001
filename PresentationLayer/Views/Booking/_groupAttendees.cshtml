@@ -47,18 +47,10 @@
             @Html.DisplayFor(modelItem => item.JobTitle)
         </td>
         <td>
-            @Html.EditorFor(modelItem => item.Checked)
         </td>
-        @*<td>
-            @using(Html.BeginForm("Book", "Booking", FormMethod.Post))
-            {
-                @Html.HiddenFor(m => m.SingleBooking.Date)
-                @Html.HiddenFor(m => m.SingleBooking.Slot)
-                @Html.Hidden("Resource", item.ResourceId)
-                
-                <input type="submit" value="Book" />
-            }
-        </td>*@
+        <td>
+
+        </td>
     </tr>
     }
 </table>

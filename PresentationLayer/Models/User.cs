@@ -31,7 +31,5 @@ namespace PresentationLayer.Models
         public bool IsAdministrator { get; set; }
 
         public User LineManager { get; set; }
-
-        public bool Checked { get; set; }
     }
 }

@@ -5,36 +5,38 @@
 }
 
 <h2>Overview</h2>
-
 <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
-<script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
 
+@Styles.Render("~/Content/themes/base/css")
 <div id="tabs">
 
-<ul>
-    <li><a href="#tabs-1">Individual booking</a></li>
-    <li><a href="#tabs-2">Block booking</a></li>
-    <li><a href="#tabs-3">Group booking</a></li>
-</ul>
+    <ul>
+        <li><a href="#tabs-1">Individual booking</a></li>
+        <li><a href="#tabs-2">Block booking</a></li>
+        <li><a href="#tabs-3">Group booking</a></li>
+    </ul>
 
-<div id="tabs-1">
-Book a single slot<br/>
-@Html.Partial("_basicBooking", Model)
+    <div id="tabs-1">
+        Book a single slot<br />
+        @Html.Partial("_basicBooking", Model)
+    </div>
+
+    <div id="tabs-2">
+        Content for Tab 2 goes here.<br />
+        @Html.Partial("_blockBooking", Model)
+    </div>
+
+    <div id="tabs-3">
+        Room booking.<br />
+        @Html.Partial("_groupBooking", Model)
+    </div>
+
 </div>
-
-<div id="tabs-2">
-Content for Tab 2 goes here.<br/>
-@Html.Partial("_blockBooking", Model)
-</div>
-
-<div id="tabs-3">
-Room booking.<br/>
-@Html.Partial("_groupBooking", Model)
-</div>
-
-</div>
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+}
 <script type="text/javascript">
     $(function () {
         $("#tabs").tabs();

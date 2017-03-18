@@ -129,7 +129,6 @@ namespace PresentationLayer.Controllers
                         Forename       = data.Forename,
                         Surname        = data.Surname,
                         JobTitle       = data.JobTitle,
-                        Checked        = false,
                         UserId         = data.UserId,
                     });
                 }
@@ -144,7 +143,6 @@ namespace PresentationLayer.Controllers
                     teams.Add(new Team
                     {
                         Name     = data.Name,
-                        Checked  = false,
                         TeamId   = data.TeamId,
                     });
                     var teamMembers = converter.ConvertUserListFromWrapper(teamService.GetTeamMembers(data.TeamId));

@@ -33,7 +33,5 @@ namespace PresentationLayer.Models
                 Count = Members.Count();
             }
         }
-
-        public bool Checked { get; set; }
     }
 }
