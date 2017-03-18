@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create...</h2>
 
 <html lang="en">
 <head>
@@ -25,18 +25,32 @@
   </script>
 </head>
 <body>
- 
+
+@using (Ajax.BeginForm("RetrieveAvailableResourcesForGroupBooking", "Booking", new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "groupResources",
+    }))
+{
 <div id="accordion">
   <h3>Add teams</h3>
   <div>
     <p>
-        @Html.Partial("_groupTeams", Model)
+        @Html.Partial("_Team", Model.GroupBooking.Teams, new ViewDataDictionary(ViewData)
+        {
+            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "GroupBooking.Teams" }
+        })
+
     </p>
   </div>
   <h3>      Add Attendees</h3>
   <div>
     <p>
-    List te users here
+        @*@Html.Partial("_groupAttendees", Model.GroupBooking.Attendees, new ViewDataDictionary(ViewData)
+        {
+            TemplateInfo = new TemplateInfo { HtmlFieldPrefix = "GroupBooking.Attendees" }
+        })*@
+        @Html.Partial("_groupAttendees", Model)
     </p>
   </div>
   <h3>  Booking criteria</h3>
@@ -50,21 +64,20 @@
       <li>List item three</li>
     </ul>
   </div>
-  <h3>Section 4</h3>
-  <div>
-    <p>
-    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-    mauris vel est.
-    </p>
-    <p>
-    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos.
-    </p>
-  </div>
 </div>
+
+    <p>
+        @Html.HiddenFor(m => m.GroupBooking.Teams)
+        @Html.HiddenFor(m => m.GroupBooking.Attendees)
+        
+        <input type="submit" value="Filter" />
+    </p>
+}
+
+     @*List of resources available*@
+        <div id="groupResources">
+        @Html.Partial("_groupResources")
+        </div>
  
  
 </body>

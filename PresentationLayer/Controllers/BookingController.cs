@@ -125,11 +125,12 @@ namespace PresentationLayer.Controllers
                 {
                     attendees.Add(new User
                     {
-                        Forename = data.Forename,
-                        Surname  = data.Surname,
-                        JobTitle = data.JobTitle,
-                        Checked  = false,
-                        UserId   = data.UserId,
+                        EmployeeNumber = data.EmployeeNumber,
+                        Forename       = data.Forename,
+                        Surname        = data.Surname,
+                        JobTitle       = data.JobTitle,
+                        Checked        = false,
+                        UserId         = data.UserId,
                     });
                 }
             #endregion
@@ -257,6 +258,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult BookGroup(CreateBooking booking)
+        {
+            
+                return RedirectToAction("Index");
+           
+        }
+
+
         public PartialViewResult RetrieveAvailableResourcesForGroupBooking(CreateBooking booking)
         {
             var availableResources = service.GetAvailableResourcesForGroupBooking(
@@ -276,7 +286,7 @@ namespace PresentationLayer.Controllers
                 booking.GroupBooking.Date.ToShortDateString() +
                 " between " + string.Format("{0:hh\\:mm}", startTime) + " - " + string.Format("{0:hh\\:mm}", endTime);
 
-            return PartialView("_blockResources", booking);
+            return PartialView("_groupResources", booking);
         }
 
         #region HelperMethods

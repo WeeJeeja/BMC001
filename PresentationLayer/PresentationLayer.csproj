@@ -388,6 +388,8 @@
     <Content Include="Views\Booking\_groupResources.cshtml" />
     <Content Include="Views\Booking\_groupTeams.cshtml" />
     <Content Include="Views\Booking\_groupBooking.cshtml" />
+    <Content Include="Views\Booking\_groupAttendees.cshtml" />
+    <Content Include="Views\Booking\_Team.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
