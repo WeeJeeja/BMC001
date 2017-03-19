@@ -47,6 +47,13 @@
             @Html.DisplayFor(modelItem => item.JobTitle)
         </td>
         <td>
+            <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                               name="GroupBooking.SelectedAttendees"
+                               value="@item.UserId" />
+                        </label>
+                    </div>
         </td>
         <td>
 

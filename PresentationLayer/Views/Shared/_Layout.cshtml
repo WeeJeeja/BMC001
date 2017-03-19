@@ -8,6 +8,7 @@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
+
         @RenderSection("scripts", required: false)
     </head>
     <body>
@@ -29,6 +30,8 @@
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
                             <li>@Html.ActionLink("Bookings", "Index", "Booking")</li>
                             <li>@Html.ActionLink("Wee chart", "Index", "ChartSample")</li>
+                            <li>@Html.ActionLink("Here", "Test", "ChartSample")</li>
+                            <li>@Html.ActionLink("Script", "Test2", "ChartSample")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>
                     </nav>
