@@ -18,5 +18,8 @@ namespace DomainLayer
         List<Resource> GetAvailableResourcesForGroupBooking(DateTime date, Guid? startSlot, Guid? endSlot, int capacity);
         
         void AddBooking(Booking booking);
+
+        void AddGroupBooking(DateTime date, List<string> users, List<string> teams, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId);
+        
     }
 }

@@ -287,8 +287,8 @@ namespace PresentationLayer.Controllers
 
                 service.AddGroupBooking(
                     booking.GroupBooking.Date,
-                    booking.GroupBooking.SelectedAttendees,
-                    booking.GroupBooking.SelectedTeams,
+                    booking.GroupBooking.SelectedAttendees.ToList(),
+                    booking.GroupBooking.SelectedTeams.ToList(),
                     booking.GroupBooking.StartTime,
                     booking.GroupBooking.EndTime,
                     booking.Resource,
