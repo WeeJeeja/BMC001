@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Drawing;
 
 namespace PresentationLayer.Controllers
 {
@@ -194,46 +195,42 @@ namespace PresentationLayer.Controllers
             Series Hestavollane = new Series
             {
                 Name = "Test",
-                Data = new Data(series)
+                Data = new Data(series),
+                Color = Color.White,
+                UpColor = Color.Blue,
+                
+
             };
+
 
             var chart = new Highcharts("chart")
                 //define the type of chart 
-                        .InitChart(new Chart { Type = ChartTypes.Heatmap, DefaultSeriesType = ChartTypes.Heatmap })
+                        .InitChart(new Chart { Type = ChartTypes.Heatmap, DefaultSeriesType = ChartTypes.Heatmap , PlotBorderWidth = 1})
                 //overall Title of the chart 
                         .SetTitle(new Title { Text = "Test heatmap" })
                 //small label below the main Title
                         .SetSubtitle(new Subtitle { Text = "Subtitle" })
                 //load the X values
                         .SetXAxis(new XAxis { Categories = new String[] { "Alexander", "Marie", "Maximilian", "Sophia", "Lukas", "Maria", "Leon", "Anna", "Tim", "Laura" }})
-                //set the Y title
-                .SetPlotOptions(new PlotOptions
-                {
-                    Heatmap = new PlotOptions
-                    {
-                        Heatmap = new YAxisPlotBands
+                        //set the Y title
+                        .SetYAxis(new YAxis
                         {
-                            Events
-                        }
-                    }
-                    Line = new PlotOptionsLine
-                    {
-                        DataLabels = new PlotOptionsLineDataLabels
-                        {
-                            Enabled = true
-                        },
-                        EnableMouseTracking = false
-                    }
-                })
-                        .SetYAxis(new YAxis { Title = new YAxisTitle { Text = "Rate %" },
-                            Categories = new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" }
-                            
+                            Title = new YAxisTitle { Text = "Rate %" },
+                            Categories = new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" },
+                            //Min = 0,
+                            //MinColor = Color.White,         
+                            //MaxColor = Color.Blue,
                         })
-    //                    .SetLegend(new Legend
-    //                    {
-    //                        M
-    //                    })
-
+                        .SetLegend(new Legend
+                        {
+                            Enabled = true,
+                            Align = HorizontalAligns.Right,
+                            Layout = Layouts.Vertical,
+                            Margin = 0,
+                            VerticalAlign = VerticalAligns.Top,
+                            Y = 25,
+                            SymbolHeight = 280,
+                        })
 
 
     //                    colorAxis: {
