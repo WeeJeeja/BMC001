@@ -41,7 +41,6 @@ namespace PresentationLayer.Controllers
                 {
                     BookingId    = b.BookingId,
                     Date         = b.Date,
-                    Capacity     = b.Capacity,
                     ResourceName = b.Resource.Name,
                     User         = converter.ConvertUserFromWrapper(b.User),
                     Time         = b.Slot.Time,

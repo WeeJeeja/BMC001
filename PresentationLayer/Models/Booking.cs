@@ -34,9 +34,6 @@ namespace PresentationLayer.Models
         [Required]
         public User User { get; set; }
 
-        [Required]
-        public int Capacity { get; set; }
-
         //Index display
 
         public string ResourceName { get; set; }

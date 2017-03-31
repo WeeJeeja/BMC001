@@ -124,7 +124,6 @@ namespace PresentationLayer.HelperMethods
             {
                 BookingId = entry.BookingId,
                 Date      = entry.Date,
-                Capacity  = entry.Capacity,
                 Slot      = slot,
                 Resource  = resource,
                 User      = ConvertUserToWrapper(entry.User),
@@ -141,7 +140,6 @@ namespace PresentationLayer.HelperMethods
             var booking = new wrapper.Booking
             {
                 Date     = entry.SingleBooking.Date,
-                Capacity = 1,
                 Slot     = slot,
                 Resource = resource,
                 User     = ConvertUserToWrapper(entry.User),

@@ -19,7 +19,5 @@ namespace DataLayer.Models
         public virtual Resource Resource { get; set; }
 
         public virtual User User { get; set; }
-
-        public int Capacity { get; set; }
     }
 }

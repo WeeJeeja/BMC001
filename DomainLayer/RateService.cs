@@ -76,7 +76,7 @@ namespace DomainLayer
             //Total number of people occupaying resource
             var scheduleEntries = GetSlotsUtilised(startDate, endDate, resource);
 
-            float occupants = scheduleEntries.Sum(r => r.Capacity);
+            float occupants = scheduleEntries.Count();
 
             Console.WriteLine(occupants + " employees have used this resource during this time period.");
 

@@ -88,7 +88,6 @@ namespace DomainLayer
                     Slot       = converter.ConvertDataSlotToWrapper(b.Slot),
                     Resource   = converter.ConvertDataResourceToWrapper(b.Resource),
                     User       = converter.ConvertDataUserToWrapper(b.User),
-                    Capacity   = b.Capacity,
                 };
                 bookings.Add(booking);
             }
@@ -197,7 +196,6 @@ namespace DomainLayer
             newBooking.Slot     = slot;
             newBooking.Resource = resource;
             newBooking.User     = user;
-            newBooking.Capacity = booking.Capacity;
 
             if (newBooking.BookingId == null)  db.Booking.Add(newBooking);
 
@@ -237,7 +235,6 @@ namespace DomainLayer
                     booking.Slot     = slot;
                     booking.Resource = resource;
                     booking.User     = user;
-                    booking.Capacity = 1;
 
                     if (booking.BookingId == null) db.Booking.Add(booking);
                 }

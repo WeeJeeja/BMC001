@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201703112202431_AddedStartAndEndTimeToSlotTable.Designer.cs">
       <DependentUpon>201703112202431_AddedStartAndEndTimeToSlotTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703311547001_RemovedCapacityFromBooking.cs" />
+    <Compile Include="Migrations\201703311547001_RemovedCapacityFromBooking.Designer.cs">
+      <DependentUpon>201703311547001_RemovedCapacityFromBooking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Office.cs" />
@@ -100,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703112202431_AddedStartAndEndTimeToSlotTable.resx">
       <DependentUpon>201703112202431_AddedStartAndEndTimeToSlotTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703311547001_RemovedCapacityFromBooking.resx">
+      <DependentUpon>201703311547001_RemovedCapacityFromBooking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

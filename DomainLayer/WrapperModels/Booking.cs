@@ -18,7 +18,5 @@ namespace DomainLayer.WrapperModels
         public Resource Resource { get; set; }
 
         public User User { get; set; }
-
-        public int Capacity { get; set; }
     }
 }
