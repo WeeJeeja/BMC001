@@ -248,6 +248,74 @@ namespace DomainLayer
         }
 
         /// <summary>
+        /// Adds a new group booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        public void AddGroupBooking(DateTime date, List<string> users, List<string> teams,  Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId)
+        {
+            var db = new ReScrumEntities();
+
+            var startSlot = db.Slots.Where(s => s.SlotId == startTime).FirstOrDefault();
+            var endSlot   = db.Slots.Where(s => s.SlotId == endTime).FirstOrDefault();
+            var user      = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            var resource  = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
+
+            var slotList = db.Slots.Where(s => s.StartTime >= startSlot.StartTime &&
+                                                s.EndTime <= endSlot.EndTime).ToList();
+
+            //Add booking for user (the person who created the boooking)
+            AddBooking(slotList, user, resource, date);
+
+            //Add booking for Attendees
+            foreach (string data in users)
+            {
+                var attendee = db.Users.Where(u => u.UserId == new Guid(data)).FirstOrDefault();
+                AddBooking(slotList, attendee, resource, date);
+            }
+
+            //Add booking for team memebers
+            foreach (string data in teams)
+            {
+                var team = db.Teams.Where(u => u.TeamId == new Guid(data)).FirstOrDefault();
+                foreach (DataLayer.Models.User member in team.Members)
+                {
+                    AddBooking(slotList, member, resource, date);
+                }
+            }
+                
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds a new booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        public void AddBooking(List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date)
+        {
+            var db = new ReScrumEntities();
+
+            foreach (DataLayer.Models.Slot slot in slots)
+            {
+                var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
+                                            b.Slot.SlotId == slot.SlotId &&
+                                            b.Date == date).FirstOrDefault();
+                if (booking == null) booking = new DataLayer.Models.Booking();
+
+                booking.Date     = date;
+                booking.Slot     = slot;
+                booking.Resource = resource;
+                booking.User     = user;
+
+                if (booking.BookingId == null) db.Booking.Add(booking);
+            }
+
+            db.SaveChanges();
+        }
+
+
+
+        /// <summary>
         /// Updates an existing resource
         /// </summary>
         /// <param name="data">The new resource details</param>

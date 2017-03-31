@@ -187,7 +187,6 @@ namespace PresentationLayer.Controllers
             return PartialView("_resources", booking);
         }
 
-
         [HttpPost]
         public ActionResult Book(CreateBooking booking)
         {
@@ -256,15 +255,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult BookGroup(CreateBooking booking)
-        {
-            
-                return RedirectToAction("Index");
-           
-        }
-
-
         public PartialViewResult RetrieveAvailableResourcesForGroupBooking(CreateBooking booking)
         {
             var availableResources = service.GetAvailableResourcesForGroupBooking(
@@ -285,6 +275,32 @@ namespace PresentationLayer.Controllers
                 " between " + string.Format("{0:hh\\:mm}", startTime) + " - " + string.Format("{0:hh\\:mm}", endTime);
 
             return PartialView("_groupResources", booking);
+        }
+
+        [HttpPost]
+        public ActionResult BookGroup(CreateBooking booking)
+        {
+            try
+            {
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                service.AddGroupBooking(
+                    booking.GroupBooking.Date,
+                    booking.GroupBooking.SelectedAttendees,
+                    booking.GroupBooking.SelectedTeams,
+                    booking.GroupBooking.StartTime,
+                    booking.GroupBooking.EndTime,
+                    booking.Resource,
+                    user.UserId);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Create");
+            }
+
         }
 
         #region HelperMethods
