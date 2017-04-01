@@ -9,6 +9,10 @@ namespace DataLayer.Models
 {
     public class User
     {
+        public User()
+        {
+            Teams = new List<Team>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid? UserId { get; set; }
 

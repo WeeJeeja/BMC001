@@ -49,8 +49,6 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var team = db.Teams.Where(t => t.TeamId == user.Team).FirstOrDefault();
-
             var newUser = new data.User
             {
                 EmployeeNumber  = user.EmployeeNumber,
@@ -58,17 +56,18 @@ namespace DomainLayer
                 Surname         = user.Surname,
                 Email           = user.Email,
                 JobTitle        = user.JobTitle,
-                //Team            = team,
                 IsLineManager   = user.IsLineManager,
                 IsAdministrator = user.IsAdministrator,
             };
             db.Users.Add(newUser);
 
+            var team = db.Teams.Where(t => t.TeamId == user.Team).FirstOrDefault();
+            newUser.Teams.Add(team);
+
             var account = new data.Account
             {
                 User     = newUser,
                 Password = Encoding.UTF8.GetBytes(password),
-
             };
             db.Accounts.Add(account);
 
