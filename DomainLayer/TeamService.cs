@@ -125,7 +125,8 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var users = db.Users.Where(t => t.Team.TeamId == teamId).ToList();
+            var team = db.Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
+            var users = team.Members.ToList();
             var userList = new List<User>();
 
             foreach (DataLayer.Models.User data in users)

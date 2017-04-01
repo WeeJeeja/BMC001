@@ -26,7 +26,7 @@ namespace DataLayer.Models
 
         public bool IsAdministrator { get; set; }
 
-        public virtual Team Team { get; set; }
+        public virtual ICollection<Team> Teams { get; set; }
 
         public virtual User LineManager { get; set; }
     }

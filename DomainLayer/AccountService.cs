@@ -58,7 +58,7 @@ namespace DomainLayer
                 Surname         = user.Surname,
                 Email           = user.Email,
                 JobTitle        = user.JobTitle,
-                Team            = team,
+                //Team            = team,
                 IsLineManager   = user.IsLineManager,
                 IsAdministrator = user.IsAdministrator,
             };
