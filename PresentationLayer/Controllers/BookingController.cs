@@ -19,6 +19,7 @@ namespace PresentationLayer.Controllers
         IUserService userService = new UserService();
         ISlotService slotService = new SlotService();
         ITeamService teamService = new TeamService();
+        IResourceService resourceService = new ResourceService();
         ModelConversitions converter = new ModelConversitions();
 
         #endregion
@@ -104,68 +105,16 @@ namespace PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            #region populate slots
-                List<Slot> slots = new List<Slot>();
-                var slotData = slotService.GetSlots();
-                foreach (wrapper.Slot data in slotData)
+            var model = new CreateBooking
+            {
+                Slots        = GetSlots(),
+                GroupBooking = new GroupBooking
                 {
-                    slots.Add(new Slot
-                    {
-                        Time = data.Time,
-                        SlotId = data.SlotId,
-                    });
+                    Attendees = GetAttendees(),
+                    Teams     = GetTeams(),
                 }
-            #endregion
-
-            #region populate attendees
-                List<User> attendees = new List<User>();
-                var attendeeData = userService.GetUsers();
-                foreach (wrapper.User data in attendeeData)
-                {
-                    attendees.Add(new User
-                    {
-                        EmployeeNumber = data.EmployeeNumber,
-                        Forename       = data.Forename,
-                        Surname        = data.Surname,
-                        JobTitle       = data.JobTitle,
-                        UserId         = data.UserId,
-                    });
-                }
-            #endregion
-
-            #region populate teams
-                List<Team> teams = new List<Team>();
-                var teamData = teamService.GetTeams();
-                
-                foreach (wrapper.Team data in teamData)
-                {
-                    teams.Add(new Team
-                    {
-                        Name     = data.Name,
-                        TeamId   = data.TeamId,
-                    });
-                    var teamMembers = converter.ConvertUserListFromWrapper(teamService.GetTeamMembers(data.TeamId));
-                    foreach (User user in teamMembers)
-                    {
-                        var team = teams.Where(t => t.TeamId == data.TeamId).FirstOrDefault();
-                        team.Members.Add(user);
-                    }
-                    
-                }
-
-            #endregion
-
-                var model = new CreateBooking
-                {
-                    Slots        = slots,
-                    GroupBooking = new GroupBooking
-                    {
-                        Attendees = attendees,
-                        Teams     = teams,
-                    }
-                };
+            };
             
-
             return View(model);
         }
 
@@ -279,6 +228,18 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public ActionResult BookGroup(CreateBooking booking)
         {
+            if (!CapacityCheck(booking))
+            {
+                ModelState.AddModelError("",
+                    String.Format("Unable to create the group booking. " + Resource(booking).Name + " has a capacity of " +
+                    Resource(booking).Capacity) + ", this booking requires a capacity of " + BookingCapacity(booking));
+
+                booking.Slots = GetSlots();
+                booking.GroupBooking.Attendees = GetAttendees();
+                booking.GroupBooking.Teams = GetTeams();
+                
+                return View("Create", booking);
+            }
             try
             {
                 var userId = Session["UserId"].ToString();
@@ -305,21 +266,21 @@ namespace PresentationLayer.Controllers
 
         #region HelperMethods
 
-        private List<SelectListItem> getSlots()
-        {
-            List<SelectListItem> slots = new List<SelectListItem>();
-            var slotData = slotService.GetSlots();
-            foreach (wrapper.Slot data in slotData)
-            {
-                slots.Add(new SelectListItem
-                {
-                    Text = data.Time,
-                    Value = data.SlotId.ToString(),
-                });
-            }
+        //private List<SelectListItem> getSlots()
+        //{
+        //    List<SelectListItem> slots = new List<SelectListItem>();
+        //    var slotData = slotService.GetSlots();
+        //    foreach (wrapper.Slot data in slotData)
+        //    {
+        //        slots.Add(new SelectListItem
+        //        {
+        //            Text = data.Time,
+        //            Value = data.SlotId.ToString(),
+        //        });
+        //    }
 
-            return slots;
-        }
+        //    return slots;
+        //}
 
         private List<TimetableEntry> CreateEmptyTimetable()
         {
@@ -443,6 +404,96 @@ namespace PresentationLayer.Controllers
             return timetable;
         }
 
+        private bool CapacityCheck(CreateBooking booking)
+        {
+            var resource = resourceService.GetResource(booking.Resource);
+            var attendeeCount = booking.GroupBooking.SelectedAttendees.Count();
+            var teamMemberCount = 0;
+            foreach (string teamId in booking.GroupBooking.SelectedTeams)
+            {
+                var team = teamService.GetTeam(new Guid(teamId));
+                teamMemberCount += team.Members.Count();
+            }
+
+            if (resource.Capacity >= (attendeeCount + teamMemberCount)) return true;
+            return false;
+        }
+
+        private int BookingCapacity(CreateBooking booking)
+        {
+            var attendeeCount = booking.GroupBooking.SelectedAttendees.Count();
+            var teamMemberCount = 0;
+            foreach (string teamId in booking.GroupBooking.SelectedTeams)
+            {
+                var team = teamService.GetTeam(new Guid(teamId));
+                teamMemberCount += team.Members.Count();
+            }
+
+            return attendeeCount + teamMemberCount; 
+        }
+
+        private Resource Resource(CreateBooking booking)
+        {
+            var resource = converter.ConvertResourceFromWrapper(resourceService.GetResource(booking.Resource));
+
+            return resource;
+        }
+
+        private List<Slot> GetSlots()
+        {
+            List<Slot> slots = new List<Slot>();
+                var slotData = slotService.GetSlots();
+                foreach (wrapper.Slot data in slotData)
+                {
+                    slots.Add(new Slot
+                    {
+                        Time = data.Time,
+                        SlotId = data.SlotId,
+                    });
+                }
+            return slots;
+        }
+
+        private List<User> GetAttendees()
+        {
+            List<User> attendees = new List<User>();
+                var attendeeData = userService.GetUsers();
+                foreach (wrapper.User data in attendeeData)
+                {
+                    attendees.Add(new User
+                    {
+                        EmployeeNumber = data.EmployeeNumber,
+                        Forename       = data.Forename,
+                        Surname        = data.Surname,
+                        JobTitle       = data.JobTitle,
+                        UserId         = data.UserId,
+                    });
+                }
+            return attendees;
+        }
+
+        private List<Team> GetTeams()
+        {
+            List<Team> teams = new List<Team>();
+            var teamData = teamService.GetTeams();
+
+            foreach (wrapper.Team data in teamData)
+            {
+                teams.Add(new Team
+                {
+                    Name = data.Name,
+                    TeamId = data.TeamId,
+                });
+                var teamMembers = converter.ConvertUserListFromWrapper(teamService.GetTeamMembers(data.TeamId));
+                foreach (User user in teamMembers)
+                {
+                    var team = teams.Where(t => t.TeamId == data.TeamId).FirstOrDefault();
+                    team.Members.Add(user);
+                }
+            }
+            return teams;
+        }
+        
         #endregion
 
     }

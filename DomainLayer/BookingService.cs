@@ -153,29 +153,6 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets the resource using the resourceId
-        /// </summary>
-        /// <returns>Returns the resource</returns>
-        public Resource GetResource(Guid resourceId)
-        {
-            var db = new ReScrumEntities();
-
-            var data = db.Resources.Where(u => u.ResourceId == resourceId).FirstOrDefault();
-
-            var resource = new Resource
-            {
-                ResourceId  = data.ResourceId,
-                Name        = data.Name,
-                Description = data.Description,
-                Category    = data.Category,
-                Capacity    = data.Capacity,
-                Location    = data.Location,
-            };
-
-            return resource;
-        }
-
-        /// <summary>
         /// Adds a new booking to the database
         /// </summary>
         /// <param name="resource">The new booking to be added</param>
@@ -304,43 +281,6 @@ namespace DomainLayer
 
                 if (booking.BookingId == null) db.Booking.Add(booking);
             }
-
-            db.SaveChanges();
-        }
-
-
-
-        /// <summary>
-        /// Updates an existing resource
-        /// </summary>
-        /// <param name="data">The new resource details</param>
-        public void UpdateResource(Resource data)
-        {
-            var db = new ReScrumEntities();
-
-            var resource = db.Resources.Where(u => u.ResourceId == data.ResourceId).FirstOrDefault();
-
-            resource.ResourceId  = data.ResourceId;
-            resource.Name        = data.Name;
-            resource.Description = data.Description;
-            resource.Category    = data.Category;
-            resource.Capacity    = data.Capacity;
-            resource.Location    = data.Location;
-
-            db.SaveChanges();
-        }
-
-        /// <summary>
-        /// Deletes a resource from the database
-        /// </summary>
-        /// <param name="data">The resource to be deleted</param>
-        public void DeleteResource(Guid? resourceId)
-        {
-            var db = new ReScrumEntities();
-
-            var resource = db.Resources.Where(u => u.ResourceId == resourceId).FirstOrDefault();
-
-            db.Resources.Remove(resource);
 
             db.SaveChanges();
         }
