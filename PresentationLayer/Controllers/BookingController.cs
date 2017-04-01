@@ -295,9 +295,10 @@ namespace PresentationLayer.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception e)
             {
-                return View("Create");
+                ModelState.AddModelError("", e);
+                return View(booking);
             }
 
         }

@@ -261,13 +261,13 @@ namespace DomainLayer
                                                 s.EndTime <= endSlot.EndTime).ToList();
 
             //Add booking for user (the person who created the boooking)
-            AddBooking(slotList, user, resource, date);
+            AddBooking(db, slotList, user, resource, date);
 
             //Add booking for Attendees
             foreach (string data in users)
             {
                 var attendee = db.Users.Where(u => u.UserId == new Guid(data)).FirstOrDefault();
-                AddBooking(slotList, attendee, resource, date);
+                AddBooking(db, slotList, attendee, resource, date);
             }
 
             //Add booking for team memebers
@@ -276,7 +276,7 @@ namespace DomainLayer
                 var team = db.Teams.Where(u => u.TeamId == new Guid(data)).FirstOrDefault();
                 foreach (DataLayer.Models.User member in team.Members)
                 {
-                    AddBooking(slotList, member, resource, date);
+                    AddBooking(db, slotList, member, resource, date);
                 }
             }
                 
@@ -288,10 +288,8 @@ namespace DomainLayer
         /// Adds a new booking to the database
         /// </summary>
         /// <param name="resource">The new booking to be added</param>
-        public void AddBooking(List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date)
+        public void AddBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date)
         {
-            var db = new ReScrumEntities();
-
             foreach (DataLayer.Models.Slot slot in slots)
             {
                 var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
