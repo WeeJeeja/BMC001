@@ -45,7 +45,7 @@ namespace DomainLayer
         /// Gets the user using the id
         /// </summary>
         /// <returns>Returns the user</returns>
-        public User GetUser(Guid userId)
+        public User GetUser(Guid? userId)
         {
             var db = new ReScrumEntities();
 

@@ -6,6 +6,13 @@
 
 <h2>Index</h2>
 
+@if (ViewBag.Message != null)
+{ 
+    <div class="alert alert-success">
+    <strong>Member added! </strong> <p>@ViewBag.Message</p>
+    </div>
+}
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -30,10 +37,18 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { teamId=item.TeamId }) |
+            @Html.ActionLink("Add members", "AddMember", new { teamId=item.TeamId }) |
             @Html.ActionLink("Details", "Details", new { teamId=item.TeamId }) |
             @Html.ActionLink("Delete", "Delete", new { teamId=item.TeamId })
         </td>
     </tr>
 }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+}
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 </table>

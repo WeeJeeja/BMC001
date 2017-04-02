@@ -10,7 +10,8 @@ namespace PresentationLayer.Models
     {
         public Team()
         {
-            Members = new List<User>();
+            Members          = new List<User>();
+            PotentialMembers = new List<User>();
         }
 
         public Guid? TeamId { get; set; }
@@ -23,15 +24,7 @@ namespace PresentationLayer.Models
 
         public ICollection<User> Members { get; set; }
 
-        public int Count { 
-            get
-            {
-                return this.Count;
-            }
-            set
-            {
-                Count = Members.Count();
-            }
-        }
+        public ICollection<User> PotentialMembers { get; set; }
+
     }
 }

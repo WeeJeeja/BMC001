@@ -10,7 +10,7 @@ namespace DomainLayer
         /// Gets the user using the id
         /// </summary>
         /// <returns>the user</returns>
-        User GetUser(Guid userId);
+        User GetUser(Guid? userId);
 
         /// <summary>
         /// Adds a user to the database

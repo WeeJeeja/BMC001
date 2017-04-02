@@ -23,6 +23,12 @@ namespace PresentationLayer
                      "~/Scripts/Highcharts-4.0.1/js/highcharts.js"
                         ));
 
+            //Bootstrap bundle 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                     "~/Scripts/bootstrap.js",
+                     "~/Scripts/bootstrap.min.js"
+                        ));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

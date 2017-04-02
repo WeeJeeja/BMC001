@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using PresentationLayer.HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,17 @@ namespace PresentationLayer.Controllers
         #region Fields
 
         ITeamService service = new TeamService();
+        IUserService userService = new UserService();
+        ModelConversitions converter = new ModelConversitions();
 
         #endregion
+
         //
         // GET: /Team/
 
-        public ActionResult Index()
+        public ActionResult Index(string successMessage = null)
         {
-            ViewBag.Message = "Need to display the list of members in the details section";
+            ViewBag.Message = successMessage;
 
             var data = service.GetTeams();
             var teams = new List<Team>();
@@ -124,6 +128,51 @@ namespace PresentationLayer.Controllers
                 return View();
             }
         }
+
+        //
+        // GET: /Team/AddMember/5
+
+        public ActionResult AddMember(Guid? teamId)
+        {
+            var data = service.GetTeam(teamId);
+
+            var team = new Team
+            {
+                TeamId = data.TeamId,
+                Name   = data.Name,
+                Colour = data.Colour,
+            };
+
+            var nonMembers = service.GetPotentialTeamMembers(teamId);
+
+            team.PotentialMembers = converter.ConvertUserListFromWrapper(nonMembers);
+
+            return View(team);
+        }
+
+        //
+        // POST: /Team/AddMember/5
+
+        [HttpPost]
+        public ActionResult AddMember(Guid? teamId, Guid? userId)
+        {
+            try
+            {
+                service.AddMember(teamId, userId);
+
+                var user = userService.GetUser(userId);
+                var team = service.GetTeam(teamId);
+
+                ViewBag.successMessage = user.Forename + " " + user.Surname + " was successfully added to team " + team.Name;
+
+                return RedirectToAction("Index", new { successMessage = ViewBag.successMessage });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
 
         //
         // GET: /Team/Delete/5

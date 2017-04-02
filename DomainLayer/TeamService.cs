@@ -16,6 +16,7 @@ namespace DomainLayer
         ModelConversitions converter = new ModelConversitions();
 
         #endregion
+
         /// <summary>
         /// Gets all of the teams in the database
         /// </summary>
@@ -103,6 +104,23 @@ namespace DomainLayer
         }
 
         /// <summary>
+        /// Adds a user to the team
+        /// </summary>
+        /// <param name="data">The teamId and the new userId</param>
+        public void AddMember(Guid? teamId, Guid? userId)
+        {
+            var db = new ReScrumEntities();
+
+            var team = db.Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
+
+            var user = db.Users.Where(t => t.UserId == userId).FirstOrDefault();
+
+            team.Members.Add(user);
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
         /// Deletes an existing team from the database
         /// </summary>
         /// <param name="data">The team to be deleted</param>
@@ -139,6 +157,41 @@ namespace DomainLayer
             }
 
             return userList;
+        }
+
+        /// <summary>
+        /// Gets all of the users that are not a member of the team
+        /// </summary>
+        /// <returns>Returns a list of users</returns>
+        public List<User> GetPotentialTeamMembers(Guid? teamId)
+        {
+            var db = new ReScrumEntities();
+
+            var team = db.Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
+            var members = team.Members.ToList();
+            var users = db.Users.ToList();
+
+            var nonMembers = users.Except(members);
+
+            var potenatialUsers = new List<User>();
+
+            foreach (DataLayer.Models.User data in nonMembers)
+            {
+                var user = new User
+                {
+                    UserId          = data.UserId,
+                    EmployeeNumber  = data.EmployeeNumber,
+                    Forename        = data.Forename,
+                    Surname         = data.Surname,
+                    Email           = data.Email,
+                    JobTitle        = data.JobTitle,
+                    IsLineManager   = data.IsLineManager,
+                    IsAdministrator = data.IsAdministrator,
+                };
+                potenatialUsers.Add(user);
+            }
+
+            return potenatialUsers;
         }
     }
 }
