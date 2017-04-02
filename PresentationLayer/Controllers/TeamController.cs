@@ -50,12 +50,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetTeam(teamId);
 
-            var team = new Team
-            {
-                TeamId = data.TeamId,
-                Name   = data.Name,
-                Colour = data.Colour,
-            };
+            var team = converter.ConvertTeamFromWrapper(data);
 
             return View(team);
         }

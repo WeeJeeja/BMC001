@@ -10,7 +10,8 @@ namespace PresentationLayer.HelperMethods
         ISlotService slotService = new SlotService();
         IResourceService resourceService = new ResourceService();
 
-        #region Convert View models to wrappers
+        #region Convert View models from wrappers
+
         public Slot ConvertSlotFromWrapper(wrapper.Slot entry)
         {
             var slot = new Slot
@@ -92,6 +93,23 @@ namespace PresentationLayer.HelperMethods
                 users.Add(user);
             };
             return users;
+        }
+
+        public Team ConvertTeamFromWrapper(wrapper.Team entry)
+        {
+            var team = new Team
+            {
+                TeamId = entry.TeamId,
+                Name   = entry.Name,
+                Colour = entry.Colour,
+            };
+
+            foreach (wrapper.User member in entry.Members)
+            {
+                team.Members.Add(ConvertUserFromWrapper(member));
+            }
+
+            return team;
         }
 
         #endregion
