@@ -8,7 +8,11 @@
 
 @if (Model.PotentialMembers.Count() == 0)
 {
-    <p>No users are avilable to be added to the team.</p>
+    <div class="alert alert-info">
+        <strong>No users available! </strong> 
+        <p>All existing users are already a member of team @Model.Name</p>
+    </div>
+
 }
 else
 {
@@ -61,3 +65,14 @@ else
     }
 </table>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+}
+
+@Styles.Render("~/bundles/bootstrap/css")
