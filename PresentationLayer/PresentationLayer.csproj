@@ -397,6 +397,7 @@
     <Content Include="Views\ChartSample\Index.cshtml" />
     <Content Include="Views\ChartSample\Test2.cshtml" />
     <Content Include="Views\Team\AddMember.cshtml" />
+    <Content Include="Views\Booking\TeamDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -264,23 +264,20 @@ namespace PresentationLayer.Controllers
 
         }
 
+        //
+        // GET: /Booking/TeamDetails/5
+
+        public ActionResult TeamDetails(Guid? teamId)
+        {
+            var data = teamService.GetTeam(teamId);
+
+            var team = converter.ConvertTeamFromWrapper(data);
+
+            return View(team);
+        }
+
+
         #region HelperMethods
-
-        //private List<SelectListItem> getSlots()
-        //{
-        //    List<SelectListItem> slots = new List<SelectListItem>();
-        //    var slotData = slotService.GetSlots();
-        //    foreach (wrapper.Slot data in slotData)
-        //    {
-        //        slots.Add(new SelectListItem
-        //        {
-        //            Text = data.Time,
-        //            Value = data.SlotId.ToString(),
-        //        });
-        //    }
-
-        //    return slots;
-        //}
 
         private List<TimetableEntry> CreateEmptyTimetable()
         {
