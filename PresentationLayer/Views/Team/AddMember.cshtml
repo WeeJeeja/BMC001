@@ -1,0 +1,63 @@
+﻿@model PresentationLayer.Models.Team
+
+@{
+    ViewBag.Title = "Add users as members of " + Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+@if (Model.PotentialMembers.Count() == 0)
+{
+    <p>No users are avilable to be added to the team.</p>
+}
+else
+{
+        <table>
+            <tr>
+                <th>
+                    Employee number
+                </th>
+                <th>
+                    Forename
+                </th>
+                <th>
+                    Surname
+                </th>
+                <th>
+                    Job title
+                </th>
+                <th></th>
+
+                <th></th>
+            </tr>
+
+@foreach (var item in Model.PotentialMembers)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Forename)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JobTitle)
+        </td>
+        <td>
+            <form method="post">
+                  <input type="hidden" name="teamId" value="@Model.TeamId" />
+                  <input type="hidden" name="userId" value="@item.UserId" />
+                
+                <input type="submit" value="Add memmber" />
+            </form>
+            </td>
+        <td>
+
+        </td>
+    </tr>
+    }
+</table>
+}
