@@ -4,12 +4,13 @@
     ViewBag.Title = "Timetable3";
 }
 
-<h2>Timetable3</h2>
+<h2>Resource allocation</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<button type="button" class="btn btn-success">
+    @Html.ActionLink("Create new booking", "Create")
+</button>
+
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Time)
