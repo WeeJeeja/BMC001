@@ -7,13 +7,13 @@ namespace DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddedBooleansToBookingTableToTrackUserConfirmation : IMigrationMetadata
+    public sealed partial class AddedAnUnconfirmedBookingsTableForStaging : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedBooleansToBookingTableToTrackUserConfirmation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedAnUnconfirmedBookingsTableForStaging));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation"; }
+            get { return "201704031312078_AddedAnUnconfirmedBookingsTableForStaging"; }
         }
         
         string IMigrationMetadata.Source

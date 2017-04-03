@@ -51,13 +51,15 @@ namespace PresentationLayer.Controllers
 
             var slots = slotService.GetSlots();
 
-            var timetable = CreateEmptyTimetable();
+            var timetable = new Timetable();
+
+            timetable.TimetableEntries = CreateEmptyTimetable();
 
             #region Add bookings to timetable
 
             foreach (Booking booking in bookings)
             {
-                var entry = timetable.Where(e => e.Time.Equals(booking.Time)).FirstOrDefault();
+                var entry = timetable.TimetableEntries.Where(e => e.Time.Equals(booking.Time)).FirstOrDefault();
 
                 switch (booking.Date.DayOfWeek.ToString())
                 {
@@ -96,6 +98,19 @@ namespace PresentationLayer.Controllers
             }
 
             #endregion
+
+            var unconfirmedEntries = service.GetThisWeeksUnconfirmedBookings(new Guid(userId));
+
+            foreach (wrapper.Booking unconfirmedBooking in unconfirmedEntries)
+            {
+                timetable.UnconfirmedEntries.Add(new UnconfirmedEntry
+                    {
+                        Date      = unconfirmedBooking.Date,
+                        StartTime = unconfirmedBooking.Slot.Time,
+                        Resource  = unconfirmedBooking.Resource.Name,
+                        BookedBy  = unconfirmedBooking.BookedBy.Forename + " " + unconfirmedBooking.BookedBy.Surname + " - " + unconfirmedBooking.BookedBy.JobTitle,
+                    });
+            }
 
             return View(timetable);
         }

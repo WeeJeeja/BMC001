@@ -24,60 +24,21 @@ namespace DomainLayer
         public List<Booking> GetThisWeeksBookings(Guid? userId)
         {
             //work out the start of the week
-            var date = DateTime.Today;
-
-            switch(date.DayOfWeek)
-            {
-                case DayOfWeek.Monday:
-                    {
-                        break;
-                    }
-                case DayOfWeek.Tuesday:
-                    {
-                        date = date.AddDays(-1);
-                        break;
-                    }
-                case DayOfWeek.Wednesday:
-                    {
-                        date = date.AddDays(-2);
-                        break;
-                    }
-                case DayOfWeek.Thursday:
-                    {
-                        date = date.AddDays(-3);
-                        break;
-                    }
-                case DayOfWeek.Friday:
-                    {
-                        date = date.AddDays(-4);
-                        break;
-                    }
-                case DayOfWeek.Saturday:
-                    {
-                        date = date.AddDays(-5);
-                        break;
-                    }
-                case DayOfWeek.Sunday:
-                    {
-                        date = date.AddDays(-6);
-                        break;
-                    }
-            }
+            var date = FindStartDate();
 
             var endDate = date.AddDays(7);
 
             //db connection
             var db = new ReScrumEntities();
 
-            //get this weeks bookings
-            var data = db.Booking.Where(b => b.Date >= date && b.Date < endDate).ToList();
+            //the bookings that belong to the user
+            var data = db.Booking.Where(u => u.User.UserId == userId).ToList();
 
             var bookings = new List<Booking>();
-
             if (data.Count < 1) return bookings;
 
-            //the bookings that belong to the user
-            data = data.Where(u => u.User.UserId == userId).ToList();
+            //get this weeks bookings
+            data = data.Where(b => b.Date >= date && b.Date < endDate).ToList();
 
             foreach(DataLayer.Models.Booking b in data)
             {
@@ -88,8 +49,6 @@ namespace DomainLayer
                     Slot           = converter.ConvertDataSlotToWrapper(b.Slot),
                     Resource       = converter.ConvertDataResourceToWrapper(b.Resource),
                     User           = converter.ConvertDataUserToWrapper(b.User),
-                    GroupBooking   = b.GroupBooking,
-                    AcceptedByUser = b.AcceptedByUser
                 };
                 bookings.Add(booking);
             }
@@ -97,13 +56,43 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets a list of all bookings for a particular user and week
+        /// Gets a list of all unconfirmed bookings for a particular user and week
         /// </summary>
-        /// <returns>Returns a list of all of a user's bookings for a particular week</returns>
+        /// <returns>Returns a list of all of a user's unconfirmed bookings for a particular week</returns>
         public List<Booking> GetThisWeeksUnconfirmedBookings(Guid? userId)
         {
-            var bookings = GetThisWeeksBookings(userId);
-            var unconfirmedBooking = bookings.Where(b => b.AcceptedByUser == false).ToList();
+            //work out the start of the week
+            var date = FindStartDate();
+
+            var endDate = date.AddDays(7);
+
+            //db connection
+            var db = new ReScrumEntities();
+
+            //the bookings that belong to the user
+            var data = db.UnconfirmedBooking.Where(u => u.User.UserId == userId).ToList();
+
+            var bookings = new List<Booking>();
+            if (data.Count < 1) return bookings;
+
+            var test = new DateTime(date.Year, date.Month, date.Day);
+
+            //get this weeks bookings
+            data = data.Where(b => b.Date >= test && b.Date < endDate).ToList();
+
+            foreach (DataLayer.Models.UnconfirmedBooking b in data)
+            {
+                var booking = new Booking
+                {
+                    BookingId = b.UnconfirmedBookingId,
+                    Date      = b.Date,
+                    Slot      = converter.ConvertDataSlotToWrapper(b.Slot),
+                    Resource  = converter.ConvertDataResourceToWrapper(b.Resource),
+                    User      = converter.ConvertDataUserToWrapper(b.User),
+                    BookedBy  = converter.ConvertDataUserToWrapper(b.BookedBy),
+                };
+                bookings.Add(booking);
+            }
             return bookings;
         }
 
@@ -250,14 +239,14 @@ namespace DomainLayer
             var slotList = db.Slots.Where(s => s.StartTime >= startSlot.StartTime &&
                                                 s.EndTime <= endSlot.EndTime).ToList();
 
-            //Add booking for user (the person who created the boooking)
-            AddBooking(db, slotList, user, resource, date);
+            //Add booking for user (the person who created the booking)
+            AddBooking(db, slotList, user, resource, date, user);
 
             //Add booking for Attendees
             foreach (string data in users)
             {
                 var attendee = db.Users.Where(u => u.UserId == new Guid(data)).FirstOrDefault();
-                AddBooking(db, slotList, attendee, resource, date);
+                AddBooking(db, slotList, attendee, resource, date, user);
             }
 
             //Add booking for team memebers
@@ -266,7 +255,7 @@ namespace DomainLayer
                 var team = db.Teams.Where(u => u.TeamId == new Guid(data)).FirstOrDefault();
                 foreach (DataLayer.Models.User member in team.Members)
                 {
-                    AddBooking(db, slotList, member, resource, date);
+                    AddBooking(db, slotList, member, resource, date, user);
                 }
             }
                 
@@ -277,26 +266,67 @@ namespace DomainLayer
         /// Adds a new booking to the database
         /// </summary>
         /// <param name="resource">The new booking to be added</param>
-        public void AddBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date)
+        public void AddBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date, DataLayer.Models.User bookedBy)
         {
             foreach (DataLayer.Models.Slot slot in slots)
             {
-                var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
-                                            b.Slot.SlotId == slot.SlotId &&
-                                            b.Date == date).FirstOrDefault();
-                if (booking == null) booking = new DataLayer.Models.Booking();
+                var booking = new DataLayer.Models.UnconfirmedBooking();
 
                 booking.Date           = date;
                 booking.Slot           = slot;
                 booking.Resource       = resource;
                 booking.User           = user;
-                booking.GroupBooking   = true;
-                booking.AcceptedByUser = false;
+                booking.BookedBy       = bookedBy;
 
-                if (booking.BookingId == null) db.Booking.Add(booking);
+                db.UnconfirmedBooking.Add(booking);
             }
 
             db.SaveChanges();
+        }
+
+        public DateTime FindStartDate()
+        {
+            var date = DateTime.Today;
+
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    {
+                        break;
+                    }
+                case DayOfWeek.Tuesday:
+                    {
+                        date = date.AddDays(-1);
+                        break;
+                    }
+                case DayOfWeek.Wednesday:
+                    {
+                        date = date.AddDays(-2);
+                        break;
+                    }
+                case DayOfWeek.Thursday:
+                    {
+                        date = date.AddDays(-3);
+                        break;
+                    }
+                case DayOfWeek.Friday:
+                    {
+                        date = date.AddDays(-4);
+                        break;
+                    }
+                case DayOfWeek.Saturday:
+                    {
+                        date = date.AddDays(-5);
+                        break;
+                    }
+                case DayOfWeek.Sunday:
+                    {
+                        date = date.AddDays(-6);
+                        break;
+                    }
+            }
+
+            return date;
         }
     }
 }

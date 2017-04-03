@@ -18,6 +18,7 @@ namespace DataLayer
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Slot> Slots { get; set; }
         public DbSet<Booking> Booking { get; set; }
+        public DbSet<UnconfirmedBooking> UnconfirmedBooking { get; set; }
 
     }
 }

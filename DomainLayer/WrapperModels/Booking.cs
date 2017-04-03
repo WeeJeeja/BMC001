@@ -19,8 +19,6 @@ namespace DomainLayer.WrapperModels
 
         public User User { get; set; }
 
-        public bool GroupBooking { get; set; }
-
-        public bool? AcceptedByUser { get; set; }
+        public User BookedBy { get; set; }
     }
 }

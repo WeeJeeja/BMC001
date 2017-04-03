@@ -24,7 +24,5 @@ namespace PresentationLayer.Models
 
         [Display(Name = "Friday")]
         public string FridayResource { get; set; }
-
-        public List<UnconfirmedEntry> UnconfirmedEntries { get; set; }
     }
 }

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Models
 {
-    public class Booking
+    public class UnconfirmedBooking
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid? BookingId { get; set; }
+        public Guid? UnconfirmedBookingId { get; set; }
 
         public DateTime Date { get; set; }
 

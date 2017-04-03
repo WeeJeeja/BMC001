@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PresentationLayer.Models.TimetableEntry>
+﻿@model PresentationLayer.Models.Timetable
 
 @{
-    ViewBag.Title = "Timetable3";
+    ViewBag.Title = "Timetable";
 }
 
 <h2>Resource allocation</h2>
@@ -13,27 +13,28 @@
 <table class="table table-hover">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Time)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().Time)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MondayResource)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().MondayResource)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TuesdayResource)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().TuesdayResource)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WednesdayResource)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().WednesdayResource)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ThursdayResource)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().ThursdayResource)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FridayResource)
+            @Html.DisplayNameFor(model => model.TimetableEntries.First().FridayResource)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.TimetableEntries)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Time)
@@ -55,5 +56,58 @@
         </td>
     </tr>
 }
+
+</table>
+
+
+
+<h2>Please confirm or delete the following unconfrimed bookings</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UnconfirmedEntries.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnconfirmedEntries.First().StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnconfirmedEntries.First().Resource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnconfirmedEntries.First().BookedBy)
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.UnconfirmedEntries)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookedBy)
+            </td>
+            <td>
+                <button type="button" class="btn btn-success">
+                    @Html.ActionLink("Create new booking", "Confirm")
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success">
+                    @Html.ActionLink("Create new booking", "Delete")
+                </button>
+            </td>
+        </tr>
+    }
 
 </table>
