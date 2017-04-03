@@ -10,11 +10,10 @@
 
 <section id="loginForm">
 <h2>Use a local account to log in.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
 
-    <form>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
         <div class="form-group row-xs-3">
             @Html.LabelFor(m => m.Email)
             <div class="col-xs-16">
@@ -32,14 +31,16 @@
         <div class="form-group">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-        </div>hk
+        </div>
+
+        <input type="submit" value="Log in" />
+
     </form>
 
-    <input type="submit" value="Log in" />
     <p>
         @Html.ActionLink("Register", "Register") if you don't have an account.
     </p>
-}
+
 </section>
 
 <section class="social" id="register">

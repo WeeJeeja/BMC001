@@ -29,15 +29,15 @@
             @Html.ValidationMessageFor(model => model.Colour)
         </div>
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
+        <br>
+
+        <button type="submit" class="btn btn-success">Create</button>
+        <button type="button" class="btn btn-default">
+            @Html.ActionLink("Back to List", "Index")
+        </button>
+
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
