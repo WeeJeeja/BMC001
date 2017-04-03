@@ -6,28 +6,37 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Team</legend>
+<h3>Are you sure you want to delete team @Model.Name?</h3>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
+<form>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </label>
+        <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Name)
+            </p>
+        </div>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Colour)
+    <div class="form-group">
+        <label class="control-label col-sm-2">
+            @Html.DisplayNameFor(model => model.Colour)
+        </label>
+        <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Colour)
+            </p>
+        </div>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Colour)
-    </div>
-</fieldset>
+
+</form>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    <p>
-        <input type="submit" value="Delete" /> |
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="button" class="btn btn-default">
         @Html.ActionLink("Back to List", "Index")
-    </p>
+    </button>
 }
