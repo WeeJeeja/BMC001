@@ -18,5 +18,9 @@ namespace DomainLayer.WrapperModels
         public Resource Resource { get; set; }
 
         public User User { get; set; }
+
+        public bool GroupBooking { get; set; }
+
+        public bool? AcceptedByUser { get; set; }
     }
 }

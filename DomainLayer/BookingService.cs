@@ -83,14 +83,27 @@ namespace DomainLayer
             {
                 var booking = new Booking
                 {
-                    BookingId  = b.BookingId,
-                    Date       = b.Date,
-                    Slot       = converter.ConvertDataSlotToWrapper(b.Slot),
-                    Resource   = converter.ConvertDataResourceToWrapper(b.Resource),
-                    User       = converter.ConvertDataUserToWrapper(b.User),
+                    BookingId      = b.BookingId,
+                    Date           = b.Date,
+                    Slot           = converter.ConvertDataSlotToWrapper(b.Slot),
+                    Resource       = converter.ConvertDataResourceToWrapper(b.Resource),
+                    User           = converter.ConvertDataUserToWrapper(b.User),
+                    GroupBooking   = b.GroupBooking,
+                    AcceptedByUser = b.AcceptedByUser
                 };
                 bookings.Add(booking);
             }
+            return bookings;
+        }
+
+        /// <summary>
+        /// Gets a list of all bookings for a particular user and week
+        /// </summary>
+        /// <returns>Returns a list of all of a user's bookings for a particular week</returns>
+        public List<Booking> GetThisWeeksUnconfirmedBookings(Guid? userId)
+        {
+            var bookings = GetThisWeeksBookings(userId);
+            var unconfirmedBooking = bookings.Where(b => b.AcceptedByUser == false).ToList();
             return bookings;
         }
 
@@ -257,7 +270,6 @@ namespace DomainLayer
                 }
             }
                 
-
             db.SaveChanges();
         }
 
@@ -274,10 +286,12 @@ namespace DomainLayer
                                             b.Date == date).FirstOrDefault();
                 if (booking == null) booking = new DataLayer.Models.Booking();
 
-                booking.Date     = date;
-                booking.Slot     = slot;
-                booking.Resource = resource;
-                booking.User     = user;
+                booking.Date           = date;
+                booking.Slot           = slot;
+                booking.Resource       = resource;
+                booking.User           = user;
+                booking.GroupBooking   = true;
+                booking.AcceptedByUser = false;
 
                 if (booking.BookingId == null) db.Booking.Add(booking);
             }

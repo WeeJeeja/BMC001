@@ -19,5 +19,9 @@ namespace DataLayer.Models
         public virtual Resource Resource { get; set; }
 
         public virtual User User { get; set; }
+
+        public bool GroupBooking { get; set; }
+
+        public bool? AcceptedByUser { get; set; }
     }
 }

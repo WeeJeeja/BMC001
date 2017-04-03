@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201704011725192_AddedManyToManyRelationshipBetweenTeamsAndMembers.Designer.cs">
       <DependentUpon>201704011725192_AddedManyToManyRelationshipBetweenTeamsAndMembers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation.cs" />
+    <Compile Include="Migrations\201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation.Designer.cs">
+      <DependentUpon>201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Office.cs" />
@@ -114,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704011725192_AddedManyToManyRelationshipBetweenTeamsAndMembers.resx">
       <DependentUpon>201704011725192_AddedManyToManyRelationshipBetweenTeamsAndMembers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation.resx">
+      <DependentUpon>201704031211300_AddedBooleansToBookingTableToTrackUserConfirmation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
