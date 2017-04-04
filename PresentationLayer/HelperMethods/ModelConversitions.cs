@@ -166,6 +166,17 @@ namespace PresentationLayer.HelperMethods
             return booking;
         }
 
+        public wrapper.Slot ConvertSlotToWrapper(Slot entry)
+        {
+            var slot = new wrapper.Slot
+            {
+                SlotId  = entry.SlotId,
+                Time    = entry.Time,
+            };
+
+            return slot;
+        }
+
         #endregion
     }
         

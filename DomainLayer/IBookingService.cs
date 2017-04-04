@@ -1,4 +1,5 @@
-﻿using DomainLayer.WrapperModels;
+﻿using DataLayer;
+using DomainLayer.WrapperModels;
 using System;
 using System.Collections.Generic;
 namespace DomainLayer
@@ -22,7 +23,26 @@ namespace DomainLayer
         
         void AddBooking(Booking booking);
 
-        void AddGroupBooking(DateTime date, List<string> users, List<string> teams, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId);
         
+        void AddGroupBooking(DateTime date, List<string> users, List<string> teams, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId);
+
+        /// <summary>
+        /// Gets an unconfirmed booking from the database
+        /// </summary>
+        /// <param name="unconfirmedBookingId">The unconfirmed booking id</param>
+        /// <returns></returns>
+        Booking GetUnconfirmedBooking(Guid? unconfirmedBookingId);
+
+        /// <summary>
+        /// Adds a new booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        void AddUnconfirmedBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date, DataLayer.Models.User bookedBy);
+
+        /// <summary>
+        /// Adds a new booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        void ConfirmBooking(Guid? unconfirmedBookingId);
     }
 }

@@ -164,7 +164,6 @@ namespace DomainLayer
 
             var slot = db.Slots.Where( s => s.SlotId == booking.Slot.SlotId).FirstOrDefault();
             var user = db.Users.Where(u => u.UserId == booking.User.UserId).FirstOrDefault();
-            var resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
 
             var newBooking = db.Booking.Where(b => b.User.UserId == user.UserId &&
                                                 b.Slot.SlotId == slot.SlotId &&
@@ -173,8 +172,9 @@ namespace DomainLayer
 
             newBooking.Date     = booking.Date;
             newBooking.Slot     = slot;
-            newBooking.Resource = resource;
+            newBooking.Resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
             newBooking.User     = user;
+            newBooking.BookedBy = db.Users.Where(u => u.UserId == booking.BookedBy.UserId).FirstOrDefault();
 
             if (newBooking.BookingId == null)  db.Booking.Add(newBooking);
 
@@ -239,14 +239,11 @@ namespace DomainLayer
             var slotList = db.Slots.Where(s => s.StartTime >= startSlot.StartTime &&
                                                 s.EndTime <= endSlot.EndTime).ToList();
 
-            //Add booking for user (the person who created the booking)
-            AddBooking(db, slotList, user, resource, date, user);
-
             //Add booking for Attendees
             foreach (string data in users)
             {
                 var attendee = db.Users.Where(u => u.UserId == new Guid(data)).FirstOrDefault();
-                AddBooking(db, slotList, attendee, resource, date, user);
+                AddUnconfirmedBooking(db, slotList, attendee, resource, date, user);
             }
 
             //Add booking for team memebers
@@ -255,7 +252,7 @@ namespace DomainLayer
                 var team = db.Teams.Where(u => u.TeamId == new Guid(data)).FirstOrDefault();
                 foreach (DataLayer.Models.User member in team.Members)
                 {
-                    AddBooking(db, slotList, member, resource, date, user);
+                    AddUnconfirmedBooking(db, slotList, member, resource, date, user);
                 }
             }
                 
@@ -266,7 +263,7 @@ namespace DomainLayer
         /// Adds a new booking to the database
         /// </summary>
         /// <param name="resource">The new booking to be added</param>
-        public void AddBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date, DataLayer.Models.User bookedBy)
+        public void AddUnconfirmedBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date, DataLayer.Models.User bookedBy)
         {
             foreach (DataLayer.Models.Slot slot in slots)
             {
@@ -280,6 +277,60 @@ namespace DomainLayer
 
                 db.UnconfirmedBooking.Add(booking);
             }
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets an unconfirmed booking from the database
+        /// </summary>
+        /// <param name="unconfirmedBookingId">The unconfirmed booking id</param>
+        /// <returns></returns>
+        public Booking GetUnconfirmedBooking(Guid? unconfirmedBookingId)
+        {
+            var db = new ReScrumEntities();
+
+            var entry = db.UnconfirmedBooking.Where(b => b.UnconfirmedBookingId == unconfirmedBookingId).FirstOrDefault();
+
+            var booking = new Booking
+            {
+                BookingId = entry.UnconfirmedBookingId,
+                Date      = entry.Date,
+                Slot      = converter.ConvertDataSlotToWrapper(entry.Slot),
+                Resource  = converter.ConvertDataResourceToWrapper(entry.Resource),
+                User      = converter.ConvertDataUserToWrapper(entry.User),
+                BookedBy  = converter.ConvertDataUserToWrapper(entry.BookedBy),
+            };
+
+            return booking;
+
+        }
+
+        /// <summary>
+        /// Adds a new booking to the database
+        /// </summary>
+        /// <param name="resource">The new booking to be added</param>
+        public void ConfirmBooking(Guid? unconfirmedBookingId)
+        {
+            var db = new ReScrumEntities();
+
+            var unconfirmedBooking = db.UnconfirmedBooking.Where(b => b.UnconfirmedBookingId == unconfirmedBookingId).FirstOrDefault();
+
+            var newBooking = db.Booking.Where(b => b.User.UserId == unconfirmedBooking.User.UserId &&
+                                                b.Slot.SlotId == unconfirmedBooking.Slot.SlotId &&
+                                                b.Date == unconfirmedBooking.Date).FirstOrDefault();
+            if (newBooking == null) newBooking = new DataLayer.Models.Booking();
+
+            newBooking.Date     = unconfirmedBooking.Date;
+            newBooking.Slot     = unconfirmedBooking.Slot;
+            newBooking.Resource = unconfirmedBooking.Resource;
+            newBooking.User     = unconfirmedBooking.User;
+            newBooking.BookedBy = unconfirmedBooking.BookedBy;
+
+            if (newBooking.BookingId == null) db.Booking.Add(newBooking);
+
+            //Remove the unconfirmed booking
+            db.UnconfirmedBooking.Remove(unconfirmedBooking);
 
             db.SaveChanges();
         }

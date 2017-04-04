@@ -105,10 +105,13 @@ namespace PresentationLayer.Controllers
             {
                 timetable.UnconfirmedEntries.Add(new UnconfirmedEntry
                     {
-                        Date      = unconfirmedBooking.Date,
-                        StartTime = unconfirmedBooking.Slot.Time,
-                        Resource  = unconfirmedBooking.Resource.Name,
-                        BookedBy  = unconfirmedBooking.BookedBy.Forename + " " + unconfirmedBooking.BookedBy.Surname + " - " + unconfirmedBooking.BookedBy.JobTitle,
+                        UnconfirmedBookingId   = unconfirmedBooking.BookingId,
+                        Date        = unconfirmedBooking.Date,
+                        Slot        = converter.ConvertSlotFromWrapper(unconfirmedBooking.Slot),
+                        StartTime   = unconfirmedBooking.Slot.Time,
+                        Resource    = converter.ConvertResourceFromWrapper(unconfirmedBooking.Resource),
+                        Creator     = converter.ConvertUserFromWrapper(unconfirmedBooking.BookedBy),
+                        BookedBy    = unconfirmedBooking.BookedBy.Forename + " " + unconfirmedBooking.BookedBy.Surname + " - " + unconfirmedBooking.BookedBy.JobTitle,
                     });
             }
 
@@ -289,6 +292,23 @@ namespace PresentationLayer.Controllers
             var team = converter.ConvertTeamFromWrapper(data);
 
             return View(team);
+        }
+
+        public ActionResult ConfirmGroupBooking(Guid? unconfirmedBookingId)
+        {
+            try
+            {
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                service.ConfirmBooking(unconfirmedBookingId);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Create");
+            }
         }
 
 

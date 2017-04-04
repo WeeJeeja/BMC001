@@ -41,6 +41,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MondayResource)
+            @*@Html.ActionLink(item.LastName, "ActionName", "ControllerName")*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TuesdayResource)
@@ -92,22 +93,36 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Resource)
+                @Html.DisplayFor(modelItem => item.Resource.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookedBy)
             </td>
             <td>
-                <button type="button" class="btn btn-success">
-                    @Html.ActionLink("Create new booking", "Confirm")
-                </button>
+                    @Html.HiddenFor(modelItem => item.Date)
+                    @Html.HiddenFor(modelItem => item.Slot)
+                    @Html.HiddenFor(modelItem => item.Resource)
+                    @Html.HiddenFor(modelItem => item.Creator)
+                    <button type="button" class="btn btn-success">
+                        @Html.ActionLink("Confirm", "ConfirmGroupBooking", new { unconfirmedBookingId = item.UnconfirmedBookingId})
+                    </button>
+                @*<button type="button" method="post" class="btn btn-success">
+                    @Html.ActionLink("Confirm", "ConfirmGroupBooking")
+                </button>*@
             </td>
             <td>
-                <button type="button" class="btn btn-success">
-                    @Html.ActionLink("Create new booking", "Delete")
+                <button type="button" class="btn btn-danger">
+                    @Html.ActionLink("Remove", "Delete")
                 </button>
             </td>
         </tr>
+
+    @*<form method="post">
+        <input type="hidden" name="teamId" value="@Model.TeamId" />
+        <input type="hidden" name="userId" value="@item.UserId" />
+
+        <button type="submit" class="btn btn-success">Add member</button>
+    </form>*@
     }
 
 </table>
