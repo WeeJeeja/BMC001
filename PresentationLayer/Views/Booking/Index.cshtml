@@ -40,20 +40,19 @@
             @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
-            @*@Html.DisplayFor(modelItem => item.MondayResource)*@
-            @Html.ActionLink(item.MondayResource.TimetableDisplay, "ActionName", new { bookingId = item.MondayResource.BookingId })
+            @Html.ActionLink(item.MondayResource.TimetableDisplay, "BookingDetails", new { bookingId = item.MondayResource.BookingId })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TuesdayResource)
+            @Html.ActionLink(item.TuesdayResource.TimetableDisplay, "BookingDetails", new { bookingId = item.TuesdayResource.BookingId })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.WednesdayResource)
+            @Html.ActionLink(item.WednesdayResource.TimetableDisplay, "BookingDetails", new { bookingId = item.WednesdayResource.BookingId })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ThursdayResource)
+            @Html.ActionLink(item.ThursdayResource.TimetableDisplay, "BookingDetails", new { bookingId = item.ThursdayResource.BookingId })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FridayResource)
+            @Html.ActionLink(item.FridayResource.TimetableDisplay, "BookingDetails", new { bookingId = item.FridayResource.BookingId })
         </td>
     </tr>
 }
