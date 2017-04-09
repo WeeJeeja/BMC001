@@ -27,11 +27,11 @@ namespace DomainLayer
         void AddGroupBooking(DateTime date, List<string> users, List<string> teams, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId);
 
         /// <summary>
-        /// Gets an unconfirmed booking from the database
+        /// Gets a booking from the database
         /// </summary>
-        /// <param name="unconfirmedBookingId">The unconfirmed booking id</param>
+        /// <param name="bookingId">The booking id</param>
         /// <returns></returns>
-        Booking GetUnconfirmedBooking(Guid? unconfirmedBookingId);
+        Booking GetBooking(Guid? bookingId);
 
         /// <summary>
         /// Adds a new booking to the database

@@ -49,6 +49,7 @@ namespace DomainLayer
                     Slot           = converter.ConvertDataSlotToWrapper(b.Slot),
                     Resource       = converter.ConvertDataResourceToWrapper(b.Resource),
                     User           = converter.ConvertDataUserToWrapper(b.User),
+                    BookedBy       = converter.ConvertDataUserToWrapper(b.BookedBy),
                 };
                 bookings.Add(booking);
             }
@@ -174,7 +175,7 @@ namespace DomainLayer
             newBooking.Slot     = slot;
             newBooking.Resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
             newBooking.User     = user;
-            newBooking.BookedBy = db.Users.Where(u => u.UserId == booking.BookedBy.UserId).FirstOrDefault();
+            newBooking.BookedBy = user;
 
             if (newBooking.BookingId == null)  db.Booking.Add(newBooking);
 
@@ -214,6 +215,7 @@ namespace DomainLayer
                     booking.Slot     = slot;
                     booking.Resource = resource;
                     booking.User     = user;
+                    booking.BookedBy = user;
 
                     if (booking.BookingId == null) db.Booking.Add(booking);
                 }
@@ -282,19 +284,19 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets an unconfirmed booking from the database
+        /// Gets an booking from the database
         /// </summary>
-        /// <param name="unconfirmedBookingId">The unconfirmed booking id</param>
+        /// <param name="BookingId">The booking id</param>
         /// <returns></returns>
-        public Booking GetUnconfirmedBooking(Guid? unconfirmedBookingId)
+        public Booking GetBooking(Guid? BookingId)
         {
             var db = new ReScrumEntities();
 
-            var entry = db.UnconfirmedBooking.Where(b => b.UnconfirmedBookingId == unconfirmedBookingId).FirstOrDefault();
+            var entry = db.Booking.Where(b => b.BookingId == BookingId).FirstOrDefault();
 
             var booking = new Booking
             {
-                BookingId = entry.UnconfirmedBookingId,
+                BookingId = entry.BookingId,
                 Date      = entry.Date,
                 Slot      = converter.ConvertDataSlotToWrapper(entry.Slot),
                 Resource  = converter.ConvertDataResourceToWrapper(entry.Resource),

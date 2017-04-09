@@ -12,32 +12,24 @@ namespace PresentationLayer.Models
 {
     public class Booking
     {
-
         public Booking()
         {
-            Resources = new List<Resource>();
+            TimetableDisplay = "---";
         }
+
         public Guid? BookingId { get; set; }
 
-        [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
-        public IEnumerable<Slot> Slots { get; set; }
+        public Slot Slot { get; set; }
 
-        public Guid? Slot { get; set; }
+        public Resource Resource { get; set; }
 
-        public ICollection<Resource> Resources { get; set; }
-
-        public Guid? Resource { get; set; }
-
-        [Required]
         public User User { get; set; }
 
-        //Index display
+        public User BookedBy { get; set; }
 
-        public string ResourceName { get; set; }
-
-        public string Time { get; set; }
+        public string TimetableDisplay { get; set; }
     }
 }

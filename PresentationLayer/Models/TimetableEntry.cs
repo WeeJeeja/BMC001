@@ -11,18 +11,18 @@ namespace PresentationLayer.Models
         public string Time { get; set; }
 
         [Display(Name="Monday")]
-        public string MondayResource { get; set; }
-
+        public Booking MondayResource { get; set; }
+        
         [Display(Name = "Tuesday")]
-        public string TuesdayResource { get; set; }
+        public Booking TuesdayResource { get; set; }
 
         [Display(Name = "Wednesday")]
-        public string WednesdayResource { get; set; }
+        public Booking WednesdayResource { get; set; }
 
         [Display(Name = "Thursday")]
-        public string ThursdayResource { get; set; }
+        public Booking ThursdayResource { get; set; }
 
         [Display(Name = "Friday")]
-        public string FridayResource { get; set; }
+        public Booking FridayResource { get; set; }
     }
 }

@@ -6,7 +6,7 @@
 
 <h2>Resource allocation</h2>
 
-<button type="button" class="btn btn-success">
+<button type="button" class="btn btn-info">
     @Html.ActionLink("Create new booking", "Create")
 </button>
 
@@ -40,8 +40,8 @@
             @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MondayResource)
-            @*@Html.ActionLink(item.LastName, "ActionName", "ControllerName")*@
+            @*@Html.DisplayFor(modelItem => item.MondayResource)*@
+            @Html.ActionLink(item.MondayResource.TimetableDisplay, "ActionName", new { bookingId = item.MondayResource.BookingId })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TuesdayResource)

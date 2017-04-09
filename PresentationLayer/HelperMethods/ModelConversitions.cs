@@ -134,8 +134,8 @@ namespace PresentationLayer.HelperMethods
 
         public wrapper.Booking ConvertBookingToWrapper(Booking entry)
         {
-            var slot = slotService.GetSlot(entry.Slot);
-            var resource = resourceService.GetResource(entry.Resource);
+            var slot = slotService.GetSlot(entry.Slot.SlotId);
+            var resource = resourceService.GetResource(entry.Resource.ResourceId);
 
 
             var booking = new wrapper.Booking

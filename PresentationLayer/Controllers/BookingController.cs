@@ -15,12 +15,12 @@ namespace PresentationLayer.Controllers
     {
         #region Fields
 
-        IBookingService service = new BookingService();
-        IUserService userService = new UserService();
-        ISlotService slotService = new SlotService();
-        ITeamService teamService = new TeamService();
+        IBookingService service          = new BookingService();
+        IUserService userService         = new UserService();
+        ISlotService slotService         = new SlotService();
+        ITeamService teamService         = new TeamService();
         IResourceService resourceService = new ResourceService();
-        ModelConversitions converter = new ModelConversitions();
+        ModelConversitions converter     = new ModelConversitions();
 
         #endregion
 
@@ -40,11 +40,13 @@ namespace PresentationLayer.Controllers
             {
                 var booking = new Booking
                 {
-                    BookingId    = b.BookingId,
-                    Date         = b.Date,
-                    ResourceName = b.Resource.Name,
-                    User         = converter.ConvertUserFromWrapper(b.User),
-                    Time         = b.Slot.Time,
+                    BookingId        = b.BookingId,
+                    Date             = b.Date,
+                    Resource         = converter.ConvertResourceFromWrapper(b.Resource),
+                    User             = converter.ConvertUserFromWrapper(b.User),
+                    Slot             = converter.ConvertSlotFromWrapper(b.Slot),
+                    BookedBy         = converter.ConvertUserFromWrapper(b.BookedBy),
+                    TimetableDisplay = b.Resource.Name,
                 };
                 bookings.Add(booking);
             }
@@ -59,35 +61,35 @@ namespace PresentationLayer.Controllers
 
             foreach (Booking booking in bookings)
             {
-                var entry = timetable.TimetableEntries.Where(e => e.Time.Equals(booking.Time)).FirstOrDefault();
+                var entry = timetable.TimetableEntries.Where(e => e.Time.Equals(booking.Slot.Time)).FirstOrDefault();
 
                 switch (booking.Date.DayOfWeek.ToString())
                 {
                     case "Monday":
                         {
-                            entry.MondayResource = booking.ResourceName;
+                            entry.MondayResource = booking;
                             break;
                         }
                     case "Tuesday":
                         {
-                            entry.TuesdayResource = booking.ResourceName;
+                            entry.TuesdayResource = booking;
                             break;
                         }
                     case "Wednesday":
                         {
-                            entry.WednesdayResource = booking.ResourceName;
+                            entry.WednesdayResource = booking;
                             break;
                         }
 
                     case "Thursday":
                         {
-                            entry.ThursdayResource = booking.ResourceName;
+                            entry.ThursdayResource = booking;
                             break;
                         }
 
                     case "Friday":
                         {
-                            entry.FridayResource = booking.ResourceName;
+                            entry.FridayResource = booking;
                             break;
                         }
                     default:
@@ -116,6 +118,23 @@ namespace PresentationLayer.Controllers
             }
 
             return View(timetable);
+        }
+
+        public ActionResult BookingDetails(Guid? bookingId)
+        {
+            var booking = service.GetBooking(bookingId);
+
+            var model = new Booking
+            {
+                BookingId        = booking.BookingId,
+                Date             = booking.Date,
+                Resource         = converter.ConvertResourceFromWrapper(booking.Resource),
+                User             = converter.ConvertUserFromWrapper(booking.User),
+                Slot             = converter.ConvertSlotFromWrapper(booking.Slot),
+                BookedBy         = converter.ConvertUserFromWrapper(booking.BookedBy),
+            };
+
+            return View(model);
         }
 
         //
@@ -318,7 +337,7 @@ namespace PresentationLayer.Controllers
         {
             var slots = slotService.GetSlots();
             var timetable = new List<TimetableEntry>();
-
+            
             foreach (wrapper.Slot slot in slots)
             {
                 switch (slot.Time)
@@ -327,12 +346,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "09:00 - 10:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "09:00 - 10:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -340,12 +359,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "10:00 - 11:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "10:00 - 11:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -353,12 +372,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "11:00 - 12:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "11:00 - 12:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -366,12 +385,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "12:00 - 13:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "12:00 - 13:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -379,12 +398,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "13:00 - 14:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "13:00 - 14:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -392,12 +411,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "14:00 - 15:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "14:00 - 15:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -405,12 +424,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "15:00 - 16:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "15:00 - 16:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
@@ -418,12 +437,12 @@ namespace PresentationLayer.Controllers
                         {
                             timetable.Add(new TimetableEntry
                             {
-                                Time = "16:00 - 17:00",
-                                MondayResource = "---",
-                                TuesdayResource = "---",
-                                WednesdayResource = "---",
-                                ThursdayResource = "---",
-                                FridayResource = "---",
+                                Time              = "16:00 - 17:00",
+                                MondayResource    = new Booking(),
+                                TuesdayResource   = new Booking(),
+                                WednesdayResource = new Booking(),
+                                ThursdayResource  = new Booking(),
+                                FridayResource    = new Booking(),
                             });
                             break;
                         }
