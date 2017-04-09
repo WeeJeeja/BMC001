@@ -72,8 +72,6 @@ namespace HelperMethods
             return user;
         }
 
-
-        //**delete this
         public ICollection<wrapper.User> ConvertDataUserListToWrapper(ICollection<data.User> entry)
         {
             var users = new List<wrapper.User>();
@@ -94,48 +92,6 @@ namespace HelperMethods
             };
             return users;
         }
-
-        //public data.Slot ConvertSlotFromWrapper(wrapper.Slot entry)
-        //{
-        //    var slot = new data.Slot
-        //    {
-        //        SlotId = entry.SlotId,
-        //        Time   = entry.Time,
-        //    };
-
-        //    return slot;
-        //}
-
-        //public data.Resource ConvertResourceFromWrapper(wrapper.Resource entry)
-        //{
-        //    var resource = new data.Resource
-        //    {
-        //        ResourceId  = entry.ResourceId,
-        //        Name        = entry.Name,
-        //        Description = entry.Description,
-        //        Category    = entry.Category,
-        //        Capacity    = entry.Capacity,
-        //        Location    = entry.Location,
-        //    };
-
-        //    return resource;
-        //}
-
-        //public data.User ConvertUserFromWrapper(wrapper.User entry)
-        //{
-        //    var user = new data.User
-        //    {
-        //        UserId          = entry.UserId,
-        //        EmployeeNumber  = entry.EmployeeNumber,
-        //        Forename        = entry.Forename,
-        //        Surname         = entry.Surname,
-        //        JobTitle        = entry.JobTitle,
-        //        IsLineManager   = entry.IsLineManager,
-        //        IsAdministrator = entry.IsAdministrator,
-        //    };
-
-        //    return user;
-        //}
     }
         
 }

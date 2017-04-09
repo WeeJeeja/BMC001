@@ -30,6 +30,8 @@ namespace PresentationLayer.Models
 
         public User BookedBy { get; set; }
 
+        public bool? GroupBooking { get; set; }
+
         public string TimetableDisplay { get; set; }
     }
 }

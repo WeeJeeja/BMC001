@@ -137,14 +137,15 @@ namespace PresentationLayer.HelperMethods
             var slot = slotService.GetSlot(entry.Slot.SlotId);
             var resource = resourceService.GetResource(entry.Resource.ResourceId);
 
-
             var booking = new wrapper.Booking
             {
-                BookingId = entry.BookingId,
-                Date      = entry.Date,
-                Slot      = slot,
-                Resource  = resource,
-                User      = ConvertUserToWrapper(entry.User),
+                BookingId    = entry.BookingId,
+                Date         = entry.Date,
+                Slot         = slot,
+                Resource     = resource,
+                User         = ConvertUserToWrapper(entry.User),
+                BookedBy     = ConvertUserToWrapper(entry.BookedBy),
+                GroupBooking = entry.GroupBooking,
             };
 
             return booking;
@@ -157,10 +158,10 @@ namespace PresentationLayer.HelperMethods
 
             var booking = new wrapper.Booking
             {
-                Date     = entry.SingleBooking.Date,
-                Slot     = slot,
-                Resource = resource,
-                User     = ConvertUserToWrapper(entry.User),
+                Date         = entry.SingleBooking.Date,
+                Slot         = slot,
+                Resource     = resource,
+                User         = ConvertUserToWrapper(entry.User),
             };
 
             return booking;

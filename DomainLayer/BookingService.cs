@@ -50,6 +50,7 @@ namespace DomainLayer
                     Resource       = converter.ConvertDataResourceToWrapper(b.Resource),
                     User           = converter.ConvertDataUserToWrapper(b.User),
                     BookedBy       = converter.ConvertDataUserToWrapper(b.BookedBy),
+                    GroupBooking   = b.GroupBooking,
                 };
                 bookings.Add(booking);
             }
@@ -323,11 +324,12 @@ namespace DomainLayer
                                                 b.Date == unconfirmedBooking.Date).FirstOrDefault();
             if (newBooking == null) newBooking = new DataLayer.Models.Booking();
 
-            newBooking.Date     = unconfirmedBooking.Date;
-            newBooking.Slot     = unconfirmedBooking.Slot;
-            newBooking.Resource = unconfirmedBooking.Resource;
-            newBooking.User     = unconfirmedBooking.User;
-            newBooking.BookedBy = unconfirmedBooking.BookedBy;
+            newBooking.Date         = unconfirmedBooking.Date;
+            newBooking.Slot         = unconfirmedBooking.Slot;
+            newBooking.Resource     = unconfirmedBooking.Resource;
+            newBooking.User         = unconfirmedBooking.User;
+            newBooking.BookedBy     = unconfirmedBooking.BookedBy;
+            newBooking.GroupBooking = true;
 
             if (newBooking.BookingId == null) db.Booking.Add(newBooking);
 

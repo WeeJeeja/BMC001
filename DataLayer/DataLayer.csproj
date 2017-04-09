@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201704031312078_AddedAnUnconfirmedBookingsTableForStaging.Designer.cs">
       <DependentUpon>201704031312078_AddedAnUnconfirmedBookingsTableForStaging.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704091413129_AddedBooleanFlagToBookingTableForGroupBookings.cs" />
+    <Compile Include="Migrations\201704091413129_AddedBooleanFlagToBookingTableForGroupBookings.Designer.cs">
+      <DependentUpon>201704091413129_AddedBooleanFlagToBookingTableForGroupBookings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\UnconfirmedBooking.cs" />
@@ -122,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704031312078_AddedAnUnconfirmedBookingsTableForStaging.resx">
       <DependentUpon>201704031312078_AddedAnUnconfirmedBookingsTableForStaging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704091413129_AddedBooleanFlagToBookingTableForGroupBookings.resx">
+      <DependentUpon>201704091413129_AddedBooleanFlagToBookingTableForGroupBookings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,5 +21,7 @@ namespace DataLayer.Models
         public virtual User User { get; set; }
 
         public virtual User BookedBy { get; set; }
+
+        public bool? GroupBooking { get; set; }
     }
 }
