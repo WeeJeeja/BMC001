@@ -319,10 +319,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        
-        // POST: /Team/Delete/5
-
-        public ActionResult Delete(Guid? bookingId, Booking model)
+        public ActionResult Delete(Guid? bookingId)
         {
             try
             {
