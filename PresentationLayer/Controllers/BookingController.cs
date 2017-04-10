@@ -333,7 +333,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-
         #region HelperMethods
 
         private List<TimetableEntry> CreateEmptyTimetable()

@@ -9,6 +9,11 @@ namespace DomainLayer.WrapperModels
 {
     public class Booking
     {
+        public Booking()
+        {
+            ConfirmedAttendees   = new List<User>();
+            UnconfirmedAttendees = new List<User>();
+        }
         public Guid? BookingId { get; set; }
 
         public DateTime Date { get; set; }
@@ -22,5 +27,9 @@ namespace DomainLayer.WrapperModels
         public User BookedBy { get; set; }
 
         public bool? GroupBooking { get; set; }
+
+        public ICollection<User> ConfirmedAttendees { get; set; }
+
+        public ICollection<User> UnconfirmedAttendees { get; set; }
     }
 }

@@ -306,6 +306,22 @@ namespace DomainLayer
                 GroupBooking = entry.GroupBooking,
             };
 
+            if (booking.GroupBooking == true)
+            {
+                var confirmedBookings = db.Booking.Where(b => b.Date == entry.Date &&
+                                                    b.Slot.SlotId == entry.Slot.SlotId &&
+                                                    b.Resource.ResourceId == entry.Resource.ResourceId).ToList();
+
+                var confirmedAttendees = confirmedBookings.Select(u => u.User).ToList();
+                booking.ConfirmedAttendees = converter.ConvertDataUserListToWrapper(confirmedAttendees);
+
+                var unconfirmedBookings = db.UnconfirmedBooking.Where(b => b.Date == entry.Date &&
+                                                    b.Slot.SlotId == entry.Slot.SlotId &&
+                                                    b.Resource.ResourceId == entry.Resource.ResourceId).ToList();
+                var unconfirmedAttendees = unconfirmedBookings.Select(u => u.User).ToList();
+                booking.UnconfirmedAttendees = converter.ConvertDataUserListToWrapper(unconfirmedAttendees);
+            }
+
             return booking;
 
         }

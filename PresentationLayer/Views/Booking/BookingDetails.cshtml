@@ -6,50 +6,178 @@
 
 <h2>Booking details</h2>
 
+<section id="bookingDetails"> 
+           
+    <form>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Date)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Date)
+            </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Slot)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Slot.Time)
+            </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.TimetableDisplay)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.TimetableDisplay)
+            </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.BookedBy)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.BookedBy.Surname)
+            </p>
+            </div>
+        </div>
+    </form>
+    
+    <button type="button" class="btn btn-danger">
+            @Html.ActionLink("Delete", "Delete", new { bookingId = Model.BookingId })
+    </button>
+    <button type="button" class="btn btn-default">
+        @Html.ActionLink("Back to List", "Index")
+    </button>
+
+</section> 
+
+
 @if (Model.GroupBooking == true)
 { 
-    <p>It's a group booking</p>
-}
-else
-{ 
-          
-<form>
-    <div class="form-group">
-        <label class="control-label col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </label>
-        <div class="col-sm-10">
-        <p class="form-control-static">
-            @Html.DisplayFor(model => model.Date)
-        </p>
-        </div>
+<section id="groupDetails"> 
+           
+  <div class="container">
+  <h2>Attendees</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#confirmed">Confirmed attendees</a></li>
+    <li><a data-toggle="tab" href="#unconfirmed">Unconfirmed attendees</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="confirmed" class="tab-pane fade in active row">
+
+      <h3>Confirmed attendees</h3>
+        
+        @if (Model.ConfirmedAttendees.Count() == 0)
+        {
+            <div class="alert alert-info">
+                <strong>No users have confirmed! </strong> 
+                <p>No users have confirmed yet!</p>
+            </div>
+        }
+        else
+        {
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            Employee number
+                        </th>
+                        <th>
+                            Forename
+                        </th>
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Job title
+                        </th>
+                    </tr>
+
+        @foreach (var item in Model.ConfirmedAttendees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Forename)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+            </tr>
+            }
+        </table>
+        }  
+
     </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">
-            @Html.DisplayNameFor(model => model.Slot)
-        </label>
-        <div class="col-sm-10">
-        <p class="form-control-static">
-            @Html.DisplayFor(model => model.Slot.Time)
-        </p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">
-            @Html.DisplayNameFor(model => model.TimetableDisplay)
-        </label>
-        <div class="col-sm-10">
-        <p class="form-control-static">
-            @Html.DisplayFor(model => model.TimetableDisplay)
-        </p>
-        </div>
-    </div>
-</form>
-    
-<button type="button" class="btn btn-danger">
-        @Html.ActionLink("Delete", "Delete", new { bookingId = Model.BookingId })
+
+    <div id="unconfirmed" class="tab-pane fade">
+      <h3>Unconfirmed attendees</h3>
+        
+        @if (Model.UnconfirmedAttendees.Count() == 0)
+        {
+            <div class="alert alert-success">
+                <strong>No unconfirmed users! </strong> 
+                <p>There are no outstanding users left to confirm!</p>
+            </div>
+        }
+        else
+        {
+                <table class="table table-hover">
+                    <tr>
+                        <th>
+                            Employee number
+                        </th>
+                        <th>
+                            Forename
+                        </th>
+                        <th>
+                            Surname
+                        </th>
+                        <th>
+                            Job title
+                        </th>
+                    </tr>
+
+        @foreach (var item in Model.UnconfirmedAttendees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Forename)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+            </tr>
+            }
+        </table>
+        }
+       </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-info">
+        @Html.ActionLink("Update", "Delete", new { bookingId = Model.BookingId })
 </button>
-<button type="button" class="btn btn-default">
-    @Html.ActionLink("Back to List", "Index")
-</button>
+
+</section> 
 }

@@ -14,7 +14,9 @@ namespace PresentationLayer.Models
     {
         public Booking()
         {
-            TimetableDisplay = "---";
+            TimetableDisplay     = "---";
+            ConfirmedAttendees   = new List<User>();
+            UnconfirmedAttendees = new List<User>();
         }
 
         public Guid? BookingId { get; set; }
@@ -35,5 +37,9 @@ namespace PresentationLayer.Models
 
         [Display(Name = "Resource")]
         public string TimetableDisplay { get; set; }
+
+        public ICollection<User> ConfirmedAttendees { get; set; }
+
+        public ICollection<User> UnconfirmedAttendees { get; set; }
     }
 }

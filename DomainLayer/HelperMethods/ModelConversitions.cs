@@ -82,12 +82,12 @@ namespace HelperMethods
             {
                 var user = new wrapper.User
                 {
-                    UserId = data.UserId,
-                    EmployeeNumber = data.EmployeeNumber,
-                    Forename = data.Forename,
-                    Surname = data.Surname,
-                    JobTitle = data.JobTitle,
-                    IsLineManager = data.IsLineManager,
+                    UserId          = data.UserId,
+                    EmployeeNumber  = data.EmployeeNumber,
+                    Forename        = data.Forename,
+                    Surname         = data.Surname,
+                    JobTitle        = data.JobTitle,
+                    IsLineManager   = data.IsLineManager,
                     IsAdministrator = data.IsAdministrator,
                 };
                 users.Add(user);
