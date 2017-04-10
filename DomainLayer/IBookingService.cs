@@ -44,5 +44,11 @@ namespace DomainLayer
         /// </summary>
         /// <param name="resource">The new booking to be added</param>
         void ConfirmBooking(Guid? unconfirmedBookingId);
+
+        /// <summary>
+        /// Deletes a booking from the database
+        /// </summary>
+        /// <param name="bookingId">The id of the booking to be removed</param>
+        void DeleteBooking(Guid? bookingId);
     }
 }

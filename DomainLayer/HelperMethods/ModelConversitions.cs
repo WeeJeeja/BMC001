@@ -10,6 +10,8 @@ namespace HelperMethods
 {
     public class ModelConversitions
     {
+        #region .ToWrapper
+
         public wrapper.Slot ConvertDataSlotToWrapper(data.Slot entry)
         {
             var slot = new wrapper.Slot
@@ -92,6 +94,9 @@ namespace HelperMethods
             };
             return users;
         }
+
+
+        #endregion
     }
         
 }

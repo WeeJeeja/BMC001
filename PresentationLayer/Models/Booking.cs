@@ -22,6 +22,7 @@ namespace PresentationLayer.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
+        [Display(Name="Time")]
         public Slot Slot { get; set; }
 
         public Resource Resource { get; set; }
@@ -32,6 +33,7 @@ namespace PresentationLayer.Models
 
         public bool? GroupBooking { get; set; }
 
+        [Display(Name = "Resource")]
         public string TimetableDisplay { get; set; }
     }
 }

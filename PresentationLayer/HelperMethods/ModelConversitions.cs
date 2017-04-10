@@ -112,6 +112,23 @@ namespace PresentationLayer.HelperMethods
             return team;
         }
 
+        public Booking ConvertBookingFromWrapper(wrapper.Booking entry)
+        {
+            var model = new Booking
+            {
+                BookingId        = entry.BookingId,
+                Date             = entry.Date,
+                Resource         = ConvertResourceFromWrapper(entry.Resource),
+                User             = ConvertUserFromWrapper(entry.User),
+                Slot             = ConvertSlotFromWrapper(entry.Slot),
+                BookedBy         = ConvertUserFromWrapper(entry.BookedBy),
+                GroupBooking     = entry.GroupBooking,
+                TimetableDisplay = entry.Resource.Name
+            };
+
+            return model;
+        }
+
         #endregion
 
         #region Convert View models to wrappers

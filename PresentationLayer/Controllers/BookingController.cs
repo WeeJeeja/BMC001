@@ -36,18 +36,10 @@ namespace PresentationLayer.Controllers
             var data = service.GetThisWeeksBookings(new Guid(userId));
             var bookings = new List<Booking>();
 
-            foreach (wrapper.Booking b in data)
+            foreach (wrapper.Booking entry in data)
             {
-                var booking = new Booking
-                {
-                    BookingId        = b.BookingId,
-                    Date             = b.Date,
-                    Resource         = converter.ConvertResourceFromWrapper(b.Resource),
-                    User             = converter.ConvertUserFromWrapper(b.User),
-                    Slot             = converter.ConvertSlotFromWrapper(b.Slot),
-                    BookedBy         = converter.ConvertUserFromWrapper(b.BookedBy),
-                    TimetableDisplay = b.Resource.Name,
-                };
+                var booking = converter.ConvertBookingFromWrapper(entry);
+
                 bookings.Add(booking);
             }
 
@@ -120,19 +112,16 @@ namespace PresentationLayer.Controllers
             return View(timetable);
         }
 
+        /// <summary>
+        /// Gets the booking details
+        /// </summary>
+        /// <param name="bookingId">The id of the booking to be returned</param>
+        /// <returns>The booking</returns>
         public ActionResult BookingDetails(Guid? bookingId)
         {
             var booking = service.GetBooking(bookingId);
 
-            var model = new Booking
-            {
-                BookingId        = booking.BookingId,
-                Date             = booking.Date,
-                Resource         = converter.ConvertResourceFromWrapper(booking.Resource),
-                User             = converter.ConvertUserFromWrapper(booking.User),
-                Slot             = converter.ConvertSlotFromWrapper(booking.Slot),
-                BookedBy         = converter.ConvertUserFromWrapper(booking.BookedBy),
-            };
+            var model = converter.ConvertBookingFromWrapper(booking);
 
             return View(model);
         }
@@ -327,6 +316,23 @@ namespace PresentationLayer.Controllers
             catch
             {
                 return View("Create");
+            }
+        }
+
+        
+        // POST: /Team/Delete/5
+
+        public ActionResult Delete(Guid? bookingId, Booking model)
+        {
+            try
+            {
+                service.DeleteBooking(bookingId);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
             }
         }
 

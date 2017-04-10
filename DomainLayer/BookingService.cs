@@ -297,12 +297,13 @@ namespace DomainLayer
 
             var booking = new Booking
             {
-                BookingId = entry.BookingId,
-                Date      = entry.Date,
-                Slot      = converter.ConvertDataSlotToWrapper(entry.Slot),
-                Resource  = converter.ConvertDataResourceToWrapper(entry.Resource),
-                User      = converter.ConvertDataUserToWrapper(entry.User),
-                BookedBy  = converter.ConvertDataUserToWrapper(entry.BookedBy),
+                BookingId    = entry.BookingId,
+                Date         = entry.Date,
+                Slot         = converter.ConvertDataSlotToWrapper(entry.Slot),
+                Resource     = converter.ConvertDataResourceToWrapper(entry.Resource),
+                User         = converter.ConvertDataUserToWrapper(entry.User),
+                BookedBy     = converter.ConvertDataUserToWrapper(entry.BookedBy),
+                GroupBooking = entry.GroupBooking,
             };
 
             return booking;
@@ -382,6 +383,22 @@ namespace DomainLayer
             }
 
             return date;
+        }
+
+        /// <summary>
+        /// Deletes a booking from the database
+        /// </summary>
+        /// <param name="bookingId">The id of the booking to be removed</param>
+        public void DeleteBooking(Guid? bookingId)
+        {
+            var db = new ReScrumEntities();
+
+            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
+
+            db.Booking.Remove(booking);
+
+            db.SaveChanges();
+
         }
     }
 }
