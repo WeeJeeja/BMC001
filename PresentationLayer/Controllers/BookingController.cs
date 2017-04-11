@@ -364,6 +364,22 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public ActionResult AddAttendee(UpdateBooking booking)
+        {
+            try
+            {
+                service.AddAttendeeToGroupBooking(booking.Booking.BookingId, booking.SelectedAttendees);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Create");
+            }
+        }
+
         #region HelperMethods
 
         private List<TimetableEntry> CreateEmptyTimetable()

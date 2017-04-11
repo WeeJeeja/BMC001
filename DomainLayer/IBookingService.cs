@@ -50,5 +50,12 @@ namespace DomainLayer
         /// </summary>
         /// <param name="bookingId">The id of the booking to be removed</param>
         void DeleteBooking(Guid? bookingId);
+
+        /// <summary>
+        /// Adds attendees to an existing group booking
+        /// </summary>
+        /// <param name="bookingId">The booking the users should be added to</param>
+        /// <param name="attendees">The list of users to be added</param>
+        void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees);
     }
 }

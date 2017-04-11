@@ -12,9 +12,9 @@ namespace DomainLayer
     public class BookingService : IBookingService
     {
 
-        ModelConversitions converter = new ModelConversitions();
-        ISlotService slotService = new SlotService();
-        IUserService userService = new UserService();
+        ModelConversitions converter     = new ModelConversitions();
+        ISlotService slotService         = new SlotService();
+        IUserService userService         = new UserService();
         IResourceService resourceService = new ResourceService();
 
         /// <summary>
@@ -414,7 +414,29 @@ namespace DomainLayer
             db.Booking.Remove(booking);
 
             db.SaveChanges();
+        }
 
+        /// <summary>
+        /// Adds attendees to an existing group booking
+        /// </summary>
+        /// <param name="bookingId">The booking the users should be added to</param>
+        /// <param name="attendees">The list of users to be added</param>
+        public void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees)
+        {
+            var db = new ReScrumEntities();
+
+            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
+
+            var slots = new List<DataLayer.Models.Slot>();
+            slots.Add(booking.Slot);
+
+            foreach (string userId in attendees)
+            {
+                var attendee = db.Users.Where(u => u.UserId == new Guid(userId)).FirstOrDefault();
+                AddUnconfirmedBooking(db, slots, attendee, booking.Resource, booking.Date, booking.BookedBy);
+            }
+
+            db.SaveChanges();
         }
     }
 }

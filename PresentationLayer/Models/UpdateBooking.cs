@@ -10,9 +10,13 @@ namespace PresentationLayer.Models
         public UpdateBooking()
         {
             PotentialAttendees = new List<User>();
+            SelectedAttendees = new List<string>();
         }
 
         public Booking Booking { get; set; }
+
         public ICollection<User> PotentialAttendees { get; set; }
+
+        public IList<string> SelectedAttendees { get; set; }
     }
 }
