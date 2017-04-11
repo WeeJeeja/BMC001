@@ -333,6 +333,37 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        //
+        // GET: /Booking/AddAttendee
+
+        public ActionResult AddAttendee(Guid? bookingId)
+        {
+            var booking = converter.ConvertBookingFromWrapper(service.GetBooking(bookingId));
+
+            var users = converter.ConvertUserListFromWrapper(userService.GetUsers());
+
+            var attendees = booking.ConfirmedAttendees.Concat(booking.UnconfirmedAttendees).ToList();
+
+            var potentialAttendees = new List<User>();
+
+                foreach (User user in users)
+                {
+                    var test = attendees.Where(u => u.UserId == user.UserId).FirstOrDefault();
+                    if (test == null)
+                    {
+                        potentialAttendees.Add(user);
+                    }
+                }
+            
+            var model = new UpdateBooking
+            {
+                Booking            = booking,
+                PotentialAttendees = potentialAttendees,
+            };
+
+            return View(model);
+        }
+
         #region HelperMethods
 
         private List<TimetableEntry> CreateEmptyTimetable()

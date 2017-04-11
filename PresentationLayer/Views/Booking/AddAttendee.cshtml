@@ -1,0 +1,42 @@
+﻿@model PresentationLayer.Models.UpdateBooking
+
+@{
+    ViewBag.Title = "AddAttendee";
+}
+
+<h2>Add attendee</h2>
+
+<table class="table table-hover">
+                <tr>
+                    <th>
+                        Employee number
+                    </th>
+                    <th>
+                        Forename
+                    </th>
+                    <th>
+                        Surname
+                    </th>
+                    <th>
+                        Job title
+                    </th>
+                </tr>
+
+    @foreach (var item in Model.PotentialAttendees)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Forename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobTitle)
+            </td>
+        </tr>
+        }
+</table>

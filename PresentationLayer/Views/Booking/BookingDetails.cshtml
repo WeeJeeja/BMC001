@@ -50,13 +50,13 @@
             </div>
         </div>
     </form>
-    
-    <button type="button" class="btn btn-danger">
-            @Html.ActionLink("Delete", "Delete", new { bookingId = Model.BookingId })
-    </button>
-    <button type="button" class="btn btn-default">
-        @Html.ActionLink("Back to List", "Index")
-    </button>
+
+<button type="button" class="btn btn-danger">
+        @Html.ActionLink("Delete", "Delete", new { bookingId = Model.BookingId })
+</button>
+<button type="button" class="btn btn-default">
+    @Html.ActionLink("Back to List", "Index")
+</button>
 
 </section> 
 
@@ -173,11 +173,10 @@
         }
        </div>
   </div>
-</div>
-
 <button type="button" class="btn btn-info">
-        @Html.ActionLink("Update", "Delete", new { bookingId = Model.BookingId })
+            @Html.ActionLink("Add attendee", "AddAttendee", new { bookingId = Model.BookingId })
 </button>
+
 
 </section> 
 }

@@ -196,7 +196,7 @@
     <Compile Include="HelperMethods\ModelConversitions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
-    <Compile Include="Models\BookingResource.cs" />
+    <Compile Include="Models\UpdateBooking.cs" />
     <Compile Include="Models\ChartData.cs" />
     <Compile Include="Models\BlockBooking.cs" />
     <Compile Include="Models\ChartsData.cs" />
@@ -399,6 +399,7 @@
     <Content Include="Views\Team\AddMember.cshtml" />
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />
+    <Content Include="Views\Booking\AddAttendee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
