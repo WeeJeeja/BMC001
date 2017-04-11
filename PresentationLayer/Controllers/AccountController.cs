@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using PresentationLayer.Models;
 using DomainLayer;
 using wrapper = DomainLayer.WrapperModels;
-using HelperMethods;
+using PresentationLayer.HelperMethods;
 
 namespace PresentationLayer.Controllers
 {
@@ -57,7 +55,8 @@ namespace PresentationLayer.Controllers
                 var user = service.GetUser(model.Email);
 
                 Session["UserId"] = user.UserId;
-                Session["Username"] = user.Forename + "Yessss!";
+                Session["Username"] = user.Forename + " " + user.Surname + " - " + user.JobTitle; ;
+                Session["IsAdmin"] = user.IsAdministrator;
                 return RedirectToLocal(returnUrl);
             }
 
