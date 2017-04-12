@@ -9,12 +9,12 @@
         <header>
             <div class="col-md-2">
               <ul id="sidebar" class="nav nav-pills nav-stacked affix">
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "WeekChart" ? "active" : "")">@Html.ActionLink("Dashboard", "WeekChart", "Home")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Teams", "Index", "Team")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Employees", "Index", "Employee")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Time slots", "Index", "Slot")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">@Html.ActionLink("Dashboard", "WeekChart", "Chart")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Resource" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Team" ? "active" : "")">@Html.ActionLink("Teams", "Index", "Team")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Employee" ? "active" : "")">@Html.ActionLink("Employees", "Index", "Employee")</li>
+                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Slot" ? "active" : "")">@Html.ActionLink("Time slots", "Index", "Slot")</li>
               </ul>
             </div>
         </header>
