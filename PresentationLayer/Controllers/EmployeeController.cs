@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using PresentationLayer.HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,12 @@ namespace PresentationLayer.Controllers
 {
     public class EmployeeController : Controller
     {
-        IUserService service = new UserService();
+        #region Fields
 
+        IUserService service = new UserService();
+        ModelConversitions converter = new ModelConversitions();
+
+        #endregion
 
         //
         // GET: /EmployeeController/
@@ -21,21 +26,12 @@ namespace PresentationLayer.Controllers
         {
             ViewBag.Message = "Need to be able to add an employee and search for existing ones";
 
-            var data = service.GetUsers();
+            var userList = service.GetUsers();
             var users = new List<User>();
 
-            foreach (DomainLayer.WrapperModels.User u in data)
+            foreach (DomainLayer.WrapperModels.User data in userList)
             {
-                var user = new User
-                {
-                    UserId          = u.UserId,
-                    Forename        = u.Forename,
-                    Surname         = u.Surname,
-                    JobTitle        = u.JobTitle,
-                    IsLineManager   = u.IsLineManager,
-                    IsAdministrator = u.IsAdministrator,
-
-                };
+                var user = converter.ConvertUserFromWrapper(data);
                 users.Add(user);
             }
 
@@ -49,16 +45,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetUser(userId);
 
-            var user = new User
-            {
-                UserId          = data.UserId,
-                EmployeeNumber  = data.EmployeeNumber,
-                Forename        = data.Forename,
-                Surname         = data.Surname,
-                JobTitle        = data.JobTitle,
-                IsLineManager   = data.IsLineManager,
-                IsAdministrator = data.IsAdministrator,
-            };
+            var user = converter.ConvertUserFromWrapper(data);
 
             return View(user);
         }
@@ -99,15 +86,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetUser(userId);
 
-            var user = new User
-            {
-                EmployeeNumber  = data.EmployeeNumber,
-                Forename        = data.Forename,
-                Surname         = data.Surname,
-                JobTitle        = data.JobTitle,
-                IsLineManager   = data.IsLineManager,
-                IsAdministrator = data.IsAdministrator,
-            };
+            var user = converter.ConvertUserFromWrapper(data);
 
             return View(user);
         }
@@ -140,15 +119,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetUser(userId);
 
-            var user = new User
-            {
-                EmployeeNumber  = data.EmployeeNumber,
-                Forename        = data.Forename,
-                Surname         = data.Surname,
-                JobTitle        = data.JobTitle,
-                IsLineManager   = data.IsLineManager,
-                IsAdministrator = data.IsAdministrator,
-            };
+            var user = converter.ConvertUserFromWrapper(data);
 
             return View(user);
         }
