@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<PresentationLayer.Models.Resource>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Resources";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Resources</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<button type="button" class="btn btn-info">    
+    @Html.ActionLink("Add new resource", "Create")
+</button>
+
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)

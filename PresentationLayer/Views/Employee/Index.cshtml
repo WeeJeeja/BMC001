@@ -2,14 +2,16 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Employees</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
+<button type="button" class="btn btn-info">    
+    @Html.ActionLink("Add new employee", "Create")
+</button>
+
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.EmployeeNumber)
@@ -22,12 +24,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.JobTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsLineManager)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsAdministrator)
         </th>
         <th></th>
     </tr>
@@ -45,12 +41,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.JobTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsLineManager)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsAdministrator)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { userId=item.UserId }) |

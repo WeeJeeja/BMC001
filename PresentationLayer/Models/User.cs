@@ -12,6 +12,7 @@ namespace PresentationLayer.Models
         public Guid? UserId { get; set; }
 
         [Required]
+        [Display(Name = "Employee number")]
         public int EmployeeNumber { get; set; }
 
         [Required]
@@ -24,10 +25,13 @@ namespace PresentationLayer.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Job title")]
         public string JobTitle { get; set; }
 
+        [Display(Name = "Line manager")]
         public bool IsLineManager { get; set; }
 
+        [Display(Name = "Administrator")]
         public bool IsAdministrator { get; set; }
 
         public User LineManager { get; set; }

@@ -2,63 +2,77 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
 <h2>Details</h2>
 
-<fieldset>
-    <legend>User</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EmployeeNumber)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EmployeeNumber)
-    </div>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.EmployeeNumber)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.EmployeeNumber)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Forename)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Forename)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Forename)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Forename)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Surname)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Surname)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Surname)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Surname)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DateOfBirth)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DateOfBirth)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.IsLineManager)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.IsLineManager)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.JobTitle)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.JobTitle)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.IsAdministrator)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.IsAdministrator)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsLineManager)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsLineManager)
-    </div>
+    </form>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsAdministrator)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsAdministrator)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.UserId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <button type="button" class="btn btn-info">
+        @Html.ActionLink("Edit", "Edit", new { userId=Model.UserId })
+    </button>
+    <button type="button" class="btn btn-default">
+        @Html.ActionLink("Back to List", "Index")
+    </button>
+</div>
+
+
