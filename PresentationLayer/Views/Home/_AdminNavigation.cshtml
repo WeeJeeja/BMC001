@@ -7,12 +7,14 @@
 {
 <body>
         <header>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <ul id="sidebar" class="nav nav-pills nav-stacked affix">
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Test" ? "active" : "")">@Html.ActionLink("Test", "Test", "Home")</li>
-                <li data-toggle="tab"><a href="#">Menu 2</a></li>
-                <li data-toggle="tab"><a href="#">Menu 3</a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "WeekChart" ? "active" : "")">@Html.ActionLink("Dashboard", "WeekChart", "Home")</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Teams", "Index", "Team")</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Employees", "Index", "Employee")</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Time slots", "Index", "Slot")</li>
               </ul>
             </div>
         </header>

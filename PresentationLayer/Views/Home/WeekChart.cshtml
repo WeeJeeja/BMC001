@@ -10,24 +10,24 @@
 
 @model DotNet.Highcharts.Highcharts
 
-@*@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>Having issues with charts</p>
-            <p>Add bookings</p>
-            <p>Delete slots and teams</p>
 
-        </div>
-        
-    </section>
-}*@
-
-<div class="content-wrapper">
+<div class="content-wrapper col-md-9">
     @(Model)
 </div>
+
+
+<div class="panel panel-info pull-right">
+    <div class="panel-heading"><strong>Rates for this week:</strong></div>
+    <div class="panel-body bg-info">
+        @foreach (string message in ViewBag.Message)
+        {
+            <p>@message</p>
+            <br />
+        }
+
+    </div>
+</div>
+
+
 
 

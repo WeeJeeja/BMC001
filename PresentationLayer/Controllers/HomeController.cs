@@ -36,6 +36,20 @@ namespace PresentationLayer.Controllers
 
         public ActionResult WeekChart()
         {
+            var date = FindStartDate(DateTime.Today);
+
+            var frequency = service.CalculateFrequencyRate(date, date.AddDays(4));
+
+            var occupancy = service.CalculateOccupancyRate(date, date.AddDays(4));
+
+            var utilisation = service.CalculateUtilisationRate(date, date.AddDays(4));
+
+            ViewBag.Message = new string[] {
+                              String.Format("Frequency rate is: {0}", frequency.ToString("0.##\\%")),
+                              "Frequency rate is: " + frequency.ToString("0.##\\%"),
+                              "Occupancy rate is " + occupancy.ToString("0.##\\%"),
+                              "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
+
             var chart = GenerateWeekChart(DateTime.Today);
             return View(chart);
         }
