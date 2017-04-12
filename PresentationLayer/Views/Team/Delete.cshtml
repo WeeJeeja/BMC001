@@ -2,37 +2,40 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete team @Model.Name?</h3>
 
-<form>
+<div class="container">
+    <form>
 
-    <div class="form-group">
-        <label class="control-label col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </label>
-        <div class="col-sm-10">
-            <p class="form-control-static">
-                @Html.DisplayFor(model => model.Name)
-            </p>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.DisplayFor(model => model.Name)
+                </p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="control-label col-sm-2">
-            @Html.DisplayNameFor(model => model.Colour)
-        </label>
-        <div class="col-sm-10">
-            <p class="form-control-static">
-                @Html.DisplayFor(model => model.Colour)
-            </p>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Colour)
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.DisplayFor(model => model.Colour)
+                </p>
+            </div>
         </div>
-    </div>
 
-</form>
+    </form>
+</div>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-danger">Delete</button>

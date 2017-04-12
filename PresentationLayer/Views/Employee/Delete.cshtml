@@ -2,60 +2,100 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>User</legend>
+<h3>Are you sure you want to delete employee @Model.EmployeeNumber?</h3>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EmployeeNumber)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EmployeeNumber)
-    </div>
+<div class="container">
+    <form>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Forename)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Forename)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.EmployeeNumber)
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.DisplayFor(model => model.EmployeeNumber)
+                </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Surname)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Surname)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Forename)
+            </label>
+            <div class="col-sm-10">
+                <p class="form-control-static">
+                    @Html.DisplayFor(model => model.Forename)
+                </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.JobTitle)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.JobTitle)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Surname)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Surname)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsLineManager)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsLineManager)
-    </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Email)
+            </p>
+            </div>
+        </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.IsAdministrator)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.IsAdministrator)
-    </div>
-</fieldset>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.JobTitle)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.JobTitle)
+            </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.IsLineManager)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.IsLineManager)
+            </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.IsAdministrator)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.IsAdministrator)
+            </p>
+            </div>
+        </div>
+
+    </form>
+</div>
+
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    <p>
-        <input type="submit" value="Delete" /> |
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="button" class="btn btn-default">
         @Html.ActionLink("Back to List", "Index")
-    </p>
+    </button>
 }
