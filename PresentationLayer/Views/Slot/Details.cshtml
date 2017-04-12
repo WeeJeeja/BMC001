@@ -2,21 +2,29 @@
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
 <h2>Details</h2>
 
-<fieldset>
-    <legend>Slot</legend>
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label class="control-label col-sm-2">
+                @Html.DisplayNameFor(model => model.Time)
+            </label>
+            <div class="col-sm-10">
+            <p class="form-control-static">
+                @Html.DisplayFor(model => model.Time)
+            </p>
+            </div>
+        </div>
+    </form>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Time)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Time)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { slotId=Model.SlotId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <button type="button" class="btn btn-info">
+        @Html.ActionLink("Edit", "Edit", new { slotId=Model.SlotId })
+    </button>
+    <button type="button" class="btn btn-default">
+        @Html.ActionLink("Back to List", "Index")
+    </button>
+</div>
