@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Edit @Model.EmployeeNumber</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -63,16 +64,13 @@
             @Html.ValidationMessageFor(model => model.IsAdministrator)
         </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<br>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<button type="submit" class="btn btn-success">Save</button>
+<button type="button" class="btn btn-default">
+    @Html.ActionLink("Back to List", "Index")
+</button>
+
