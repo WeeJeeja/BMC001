@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "_AdminNavigation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section LeftMenu
+{
+<body>
+        <header>
+            <div class="col-md-3">
+              <ul id="sidebar" class="nav nav-pills nav-stacked affix">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Test" ? "active" : "")">@Html.ActionLink("Test", "Test", "Home")</li>
+                <li data-toggle="tab"><a href="#">Menu 2</a></li>
+                <li data-toggle="tab"><a href="#">Menu 3</a></li>
+              </ul>
+            </div>
+        </header>
+    @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+</body>
+}
+
+

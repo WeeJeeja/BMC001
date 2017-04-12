@@ -354,8 +354,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -370,7 +368,6 @@
     <Content Include="Views\Resource\Edit.cshtml" />
     <Content Include="Views\Resource\Delete.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
-    <Content Include="Views\Home\DrawChart.cshtml" />
     <Content Include="Views\Slot\Index.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
     <Content Include="Views\Team\Details.cshtml" />
@@ -400,6 +397,9 @@
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />
     <Content Include="Views\Booking\AddAttendee.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\WeekChart.cshtml" />
+    <Content Include="Views\Home\_AdminNavigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

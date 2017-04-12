@@ -1,9 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Test";
     Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-@section featured {
+
+<h2>Test</h2>
+
+<script type="text/javascript" src="~/Scripts/Highcharts-4.0.1/js/highcharts.js"></script>
+
+@model DotNet.Highcharts.Highcharts
+
+@*@section featured {
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
@@ -17,9 +24,10 @@
         </div>
         
     </section>
-}
+}*@
 
-
-
+<div class="content-wrapper">
+    @(Model)
+</div>
 
 

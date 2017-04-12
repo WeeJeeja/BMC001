@@ -26,22 +26,23 @@
                     </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Home", "Index", "Booking")</li>
+                            <li>@Html.ActionLink("Administration", "Index", "Home")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
                             <li>@Html.ActionLink("Resources", "Index", "Resource")</li>
                             <li>@Html.ActionLink("Slots", "Index", "Slot")</li>
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
-                            <li>@Html.ActionLink("Bookings", "Index", "Booking")</li>
                             <li>@Html.ActionLink("Wee chart", "Index", "ChartSample")</li>
                             <li>@Html.ActionLink("Here", "Test", "ChartSample")</li>
                             <li>@Html.ActionLink("Script", "Test2", "ChartSample")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </header>
         <div id="body">
+            
+        @RenderSection("LeftMenu", required: false)
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
