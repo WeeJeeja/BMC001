@@ -18,7 +18,7 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var data = db.Slots.ToList();
+            var data = db.Slots.Where(s => s.CancellationDate == null).ToList();
             var slots = new List<Slot>();
 
             foreach (DataLayer.Models.Slot s in data)
@@ -27,7 +27,6 @@ namespace DomainLayer
                 {
                     SlotId = s.SlotId,
                     Time   = s.Time
-
                 };
                 slots.Add(slot);
             }
@@ -99,7 +98,7 @@ namespace DomainLayer
 
             var slot = db.Slots.Where(u => u.SlotId == slotId).FirstOrDefault();
 
-            db.Slots.Remove(slot);
+            slot.CancellationDate = DateTime.Today;
 
             db.SaveChanges();
         }
