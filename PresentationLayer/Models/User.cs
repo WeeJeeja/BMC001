@@ -35,5 +35,7 @@ namespace PresentationLayer.Models
         public bool IsAdministrator { get; set; }
 
         public User LineManager { get; set; }
+
+        public DateTime? CancellationDate { get; set; }
     }
 }

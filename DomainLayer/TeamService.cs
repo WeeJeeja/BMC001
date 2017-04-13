@@ -169,7 +169,7 @@ namespace DomainLayer
 
             var team = db.Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
             var members = team.Members.ToList();
-            var users = db.Users.ToList();
+            var users = db.Users.Where(u => u.CancellationDate == null).ToList();
 
             var nonMembers = users.Except(members);
 

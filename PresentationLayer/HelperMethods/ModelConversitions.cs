@@ -141,13 +141,15 @@ namespace PresentationLayer.HelperMethods
         {
             var user = new wrapper.User
             {
-                UserId          = entry.UserId,
-                EmployeeNumber  = entry.EmployeeNumber,
-                Forename        = entry.Forename,
-                Surname         = entry.Surname,
-                JobTitle        = entry.JobTitle,
-                IsLineManager   = entry.IsLineManager,
-                IsAdministrator = entry.IsAdministrator,
+                UserId           = entry.UserId,
+                EmployeeNumber   = entry.EmployeeNumber,
+                Forename         = entry.Forename,
+                Surname          = entry.Surname,
+                Email            = entry.Email,
+                JobTitle         = entry.JobTitle,
+                IsLineManager    = entry.IsLineManager,
+                IsAdministrator  = entry.IsAdministrator,
+                CancellationDate = entry.CancellationDate,
             };
 
             return user;

@@ -14,8 +14,9 @@ namespace PresentationLayer.Controllers
     {
         #region Fields
 
-        IUserService service = new UserService();
-        ModelConversitions converter = new ModelConversitions();
+        IUserService service           = new UserService();
+        IAccountService accountService = new AccountService();
+        ModelConversitions converter   = new ModelConversitions();
 
         #endregion
 
@@ -69,7 +70,7 @@ namespace PresentationLayer.Controllers
                 var user = new DomainLayer.WrapperModels.User();
                 UpdateModel(user, collection);
 
-                service.AddUser(user);
+                //accountService.AddUserAndAccount(user);
 
                 return RedirectToAction("Index");
             }
