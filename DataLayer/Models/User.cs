@@ -33,5 +33,7 @@ namespace DataLayer.Models
         public virtual ICollection<Team> Teams { get; set; }
 
         public virtual User LineManager { get; set; }
+
+        public DateTime? CancellationDate { get; set; }
     }
 }
