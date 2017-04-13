@@ -447,7 +447,7 @@ namespace PresentationLayer.Controllers
                 //load the X values
                         .SetXAxis(new XAxis { Categories = xData })
                 //set the Y title
-                        .SetYAxis(new YAxis { Title = new YAxisTitle { Text = "Rate %" } })
+                        .SetYAxis(new YAxis { Title = new YAxisTitle { Text = "Rate %" }, Min = 0 })
                         .SetTooltip(new Tooltip
                         {
                             Enabled = true,
