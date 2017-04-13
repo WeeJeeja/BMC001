@@ -106,7 +106,8 @@ namespace DomainLayer
                     b.Date            == date &&
                     b.Slot.SlotId     == time).Select(r => r.Resource).ToList();
 
-            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+            var availableResources = db.Resources.Where(r => r.CancellationDate == null).ToList()
+                                        .Except(unavailableResources).ToList();
 
             var resources = converter.ConvertDataResourceListToWrapper(availableResources);
 
@@ -127,7 +128,8 @@ namespace DomainLayer
                     b.Slot.StartTime >= startTime.StartTime &&
                     b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
 
-            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+            var availableResources = db.Resources.Where(r => r.CancellationDate == null).
+                                        ToList().Except(unavailableResources).ToList();
 
             var resources = converter.ConvertDataResourceListToWrapper(availableResources);
 
@@ -147,7 +149,8 @@ namespace DomainLayer
                     b.Slot.StartTime >= startTime.StartTime &&
                     b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
 
-            var availableResources = db.Resources.ToList().Except(unavailableResources).ToList();
+            var availableResources = db.Resources.Where(r => r.CancellationDate == null)
+                                        .ToList().Except(unavailableResources).ToList();
 
             availableResources.RemoveAll(r => r.Capacity < capacity);
 

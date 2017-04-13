@@ -23,5 +23,7 @@ namespace DomainLayer.WrapperModels
         public int Capacity { get; set; }
 
         public string Location { get; set; }
+
+        public DateTime? CancellationDate { get; set; }
     }
 }

@@ -1,15 +1,19 @@
 ﻿using DataLayer;
 using DomainLayer.WrapperModels;
+using HelperMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
     public class ResourceService : DomainLayer.IResourceService
     {
+        #region Fields
+
+        ModelConversitions converter = new ModelConversitions();
+
+        #endregion
         /// <summary>
         /// Gets a list of all resources
         /// </summary>
@@ -18,21 +22,12 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
-            var data = db.Resources.ToList();
+            var resourceData = db.Resources.Where(r => r.CancellationDate == null).ToList();
             var resources = new List<Resource>();
 
-            foreach (DataLayer.Models.Resource r in data)
+            foreach (DataLayer.Models.Resource data in resourceData)
             {
-                var resource = new Resource
-                {
-                    ResourceId = r.ResourceId,
-                    Name  = r.Name,
-                    Description = r.Description,
-                    Category = r.Category,
-                    Capacity = r.Capacity,
-                    Location = r.Location,
-
-                };
+                var resource = converter.ConvertDataResourceToWrapper(data);
                 resources.Add(resource);
             }
             return resources;
@@ -48,15 +43,7 @@ namespace DomainLayer
 
             var data = db.Resources.Where(u => u.ResourceId == resourceId).FirstOrDefault();
 
-            var resource = new Resource
-            {
-                ResourceId  = data.ResourceId,
-                Name        = data.Name,
-                Description = data.Description,
-                Category    = data.Category,
-                Capacity    = data.Capacity,
-                Location    = data.Location,
-            };
+            var resource = converter.ConvertDataResourceToWrapper(data);
 
             return resource;
         }
@@ -71,12 +58,12 @@ namespace DomainLayer
 
             var newResource = new DataLayer.Models.Resource
             {
-                ResourceId = resource.ResourceId,
-                Name = resource.Name,
+                ResourceId  = resource.ResourceId,
+                Name        = resource.Name,
                 Description = resource.Description,
-                Category = resource.Category,
-                Capacity = resource.Capacity,
-                Location = resource.Location,
+                Category    = resource.Category,
+                Capacity    = resource.Capacity,
+                Location    = resource.Location,
             };
 
             db.Resources.Add(newResource);
@@ -94,12 +81,13 @@ namespace DomainLayer
 
             var resource = db.Resources.Where(u => u.ResourceId == data.ResourceId).FirstOrDefault();
 
-            resource.ResourceId  = data.ResourceId;
-            resource.Name        = data.Name;
-            resource.Description = data.Description;
-            resource.Category    = data.Category;
-            resource.Capacity    = data.Capacity;
-            resource.Location    = data.Location;
+            resource.ResourceId       = data.ResourceId;
+            resource.Name             = data.Name;
+            resource.Description      = data.Description;
+            resource.Category         = data.Category;
+            resource.Capacity         = data.Capacity;
+            resource.Location         = data.Location;
+            resource.CancellationDate = data.CancellationDate;
 
             db.SaveChanges();
         }
@@ -114,7 +102,7 @@ namespace DomainLayer
 
             var resource = db.Resources.Where(u => u.ResourceId == resourceId).FirstOrDefault();
 
-            db.Resources.Remove(resource);
+            resource.CancellationDate = DateTime.Today;
 
             db.SaveChanges();
         }

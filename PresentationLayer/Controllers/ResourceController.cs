@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using PresentationLayer.HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace PresentationLayer.Controllers
 
         #region Fields
 
-        IResourceService service = new ResourceService();
+        IResourceService service     = new ResourceService();
+        ModelConversitions converter = new ModelConversitions();
 
         #endregion
 
@@ -24,20 +26,12 @@ namespace PresentationLayer.Controllers
         {
             ViewBag.Message = "Add, edit or delete a resource";
 
-            var data = service.GetResources();
+            var resourceData = service.GetResources();
             var resources = new List<Resource>();
 
-            foreach (DomainLayer.WrapperModels.Resource r in data)
+            foreach (DomainLayer.WrapperModels.Resource data in resourceData)
             {
-                var resource = new Resource
-                {
-                    ResourceId  = r.ResourceId,
-                    Name        = r.Name,
-                    Description = r.Description,
-                    Capacity    = r.Capacity,
-                    Category    = r.Category,
-                    Location    = r.Location,
-                };
+                var resource = converter.ConvertResourceFromWrapper(data);
                 resources.Add(resource);
             }
             return View(resources);
@@ -50,15 +44,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetResource(resourceId);
 
-            var resource = new Resource
-            {
-                ResourceId = data.ResourceId,
-                Name = data.Name,
-                Description = data.Description,
-                Capacity = data.Capacity,
-                Category = data.Category,
-                Location = data.Location,
-            };
+            var resource = converter.ConvertResourceFromWrapper(data);
 
             return View(resource);
         }
@@ -99,15 +85,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetResource(resourceId);
 
-            var resource = new Resource
-            {
-                ResourceId  = data.ResourceId,
-                Name        = data.Name,
-                Description = data.Description,
-                Capacity    = data.Capacity,
-                Category    = data.Category,
-                Location    = data.Location,
-            };
+            var resource = converter.ConvertResourceFromWrapper(data);
 
             return View(resource);
         }
@@ -140,15 +118,7 @@ namespace PresentationLayer.Controllers
         {
             var data = service.GetResource(resourceId);
 
-            var resource = new Resource
-            {
-                ResourceId  = data.ResourceId,
-                Name        = data.Name,
-                Description = data.Description,
-                Capacity    = data.Capacity,
-                Category    = data.Category,
-                Location    = data.Location,
-            };
+            var resource = converter.ConvertResourceFromWrapper(data);
 
             return View(resource);
         }

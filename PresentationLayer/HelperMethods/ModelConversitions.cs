@@ -181,10 +181,10 @@ namespace PresentationLayer.HelperMethods
 
             var booking = new wrapper.Booking
             {
-                Date         = entry.SingleBooking.Date,
-                Slot         = slot,
-                Resource     = resource,
-                User         = ConvertUserToWrapper(entry.User),
+                Date          = entry.SingleBooking.Date,
+                Slot          = slot,
+                Resource      = resource,
+                User          = ConvertUserToWrapper(entry.User),
             };
 
             return booking;

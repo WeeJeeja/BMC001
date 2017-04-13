@@ -27,12 +27,13 @@ namespace HelperMethods
         {
             var resource = new wrapper.Resource
             {
-                ResourceId  = entry.ResourceId,
-                Name        = entry.Name,
-                Description = entry.Description,
-                Category    = entry.Category,
-                Capacity    = entry.Capacity,
-                Location    = entry.Location,
+                ResourceId       = entry.ResourceId,
+                Name             = entry.Name,
+                Description      = entry.Description,
+                Category         = entry.Category,
+                Capacity         = entry.Capacity,
+                Location         = entry.Location,
+                CancellationDate = entry.CancellationDate,
             };
 
             return resource;
