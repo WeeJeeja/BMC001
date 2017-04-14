@@ -20,12 +20,12 @@ namespace PresentationLayer.Controllers
 
         #region Fields
 
-        IBookingService bookingService = new BookingService();
-        IUserService userService = new UserService();
-        ISlotService slotService = new SlotService();
-
-        IRateService service = new RateService();
-        ModelConversitions converter = new ModelConversitions();
+        IBookingService bookingService   = new BookingService();
+        IUserService userService         = new UserService();
+        ISlotService slotService         = new SlotService();
+        IRateService service             = new RateService();
+        IResourceService resourceService = new ResourceService();
+        ModelConversitions converter     = new ModelConversitions();
 
         #endregion
 
@@ -47,10 +47,23 @@ namespace PresentationLayer.Controllers
 
             var chart = GenerateWeekChart(DateTime.Today);
 
+            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
+
             var model = new ChartViewModel
             {
                 Chart = chart,
             };
+
+            foreach (Resource resource in resources)
+            {
+                model.Resources.Add(new ResourceViewModel
+                {
+                    Resource    = resource,
+                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
+                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
+                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
+                });
+            }
             return View(model);
         }
 

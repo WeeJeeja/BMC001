@@ -5,13 +5,9 @@
     Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-
-<h2>Test</h2>
+<h2>Dashboard</h2>
 
 <script type="text/javascript" src="~/Scripts/Highcharts-4.0.1/js/highcharts.js"></script>
-
-@*@model DotNet.Highcharts.Highcharts*@
-
 
 <div class="content-wrapper col-md-9">
     @(Model.Chart)
@@ -30,16 +26,60 @@
     </div>
 </div>
 
-<div class="panel-group">
-  <div class="panel panel-default">
-    <div class="panel-heading">
+<br />
+
+<div class="panel-group col-md-9" style="padding-top:20px">
+  <div class="panel">
+    <div class="panel-heading" style="background-color: lightblue">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>
+        <a data-toggle="collapse" href="#RESOURCE">RESOURCE DATA</a>
       </h4>
     </div>
-    <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel-body">
+    <div id="RESOURCE" class="panel-collapse collapse">
+      <div class="panel-body bg-info">
+          <table class="table table-hover">
+            <tr>
+                <th>
+                    Resource
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Uitilisation rate
+                </th>
+                <th>
+                    Frequency rate
+                </th>
+                <th>
+                    Occupancy rate
+                </th>
+                <th></th>
+            </tr>
+        @foreach (var item in Model.Resources) {
+            <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utilisation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Frequency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Occupancy)
+        </td>
+        <td>
+            @Html.ActionLink("More info", "Edit", new {  })
+        </td>
+    </tr>
+}
 
+</table>
       </div>
       <div class="panel-footer">Panel Footer</div>
     </div>

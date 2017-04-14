@@ -201,6 +201,21 @@ namespace PresentationLayer.HelperMethods
             return slot;
         }
 
+        public wrapper.Resource ConvertResourceToWrapper(Resource entry)
+        {
+            var resource = new wrapper.Resource
+            {
+                ResourceId  = entry.ResourceId,
+                Name        = entry.Name,
+                Description = entry.Description,
+                Category    = entry.Category,
+                Capacity    = entry.Capacity,
+                Location    = entry.Location,
+            };
+
+            return resource;
+        }
+
         #endregion
     }
         

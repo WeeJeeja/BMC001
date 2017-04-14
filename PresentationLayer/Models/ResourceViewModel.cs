@@ -7,12 +7,12 @@ namespace PresentationLayer.Models
 {
     public class ResourceViewModel
     {
-        public Resource resource { get; set; }
+        public Resource Resource { get; set; }
 
-        public int Frequency { get; set; }
+        public float Frequency { get; set; }
 
-        public int Occupancy { get; set; }
+        public float Occupancy { get; set; }
 
-        public int Utilisation { get; set; }
+        public float Utilisation { get; set; }
     }
 }
