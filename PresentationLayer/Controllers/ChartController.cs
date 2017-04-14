@@ -46,7 +46,12 @@ namespace PresentationLayer.Controllers
                               "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
 
             var chart = GenerateWeekChart(DateTime.Today);
-            return View(chart);
+
+            var model = new ChartViewModel
+            {
+                Chart = chart,
+            };
+            return View(model);
         }
 
         //

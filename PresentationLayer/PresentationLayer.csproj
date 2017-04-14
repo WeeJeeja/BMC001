@@ -196,6 +196,8 @@
     <Compile Include="HelperMethods\ModelConversitions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\ChartViewModel.cs" />
+    <Compile Include="Models\ResourceViewModel.cs" />
     <Compile Include="Models\UpdateBooking.cs" />
     <Compile Include="Models\ChartData.cs" />
     <Compile Include="Models\BlockBooking.cs" />
