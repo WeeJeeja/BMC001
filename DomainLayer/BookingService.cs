@@ -26,7 +26,7 @@ namespace DomainLayer
             //work out the start of the week
             var date = FindStartDate();
 
-            var endDate = date.AddDays(7);
+            var endDate = date.AddDays(5);
 
             //db connection
             var db = new ReScrumEntities();
@@ -59,7 +59,7 @@ namespace DomainLayer
             //work out the start of the week
             var date = FindStartDate();
 
-            var endDate = date.AddDays(4);
+            var endDate = date.AddDays(5);
 
             //db connection
             var db = new ReScrumEntities();
