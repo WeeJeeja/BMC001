@@ -7,6 +7,13 @@ namespace PresentationLayer.Models
 {
     public class ResourceViewModel
     {
+        public ResourceViewModel()
+        {
+            Table = new List<ResourceRateTable>();
+        }
+
+        public List<ResourceRateTable> Table { get; set; }
+
         public Resource Resource { get; set; }
 
         public float Frequency { get; set; }

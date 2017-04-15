@@ -73,11 +73,68 @@ namespace PresentationLayer.Controllers
         public ActionResult ResourceInfo(Guid? resourceId)
         {
             var resource = resourceService.GetResource(resourceId);
+            var rateTable = new List<ResourceRateTable>();
 
+            var slots = slotService.GetSlots();
 
+            foreach(wrapper.Slot slot in slots)
+            {
+                rateTable.Add(new ResourceRateTable
+                    {
+                        Slot = converter.ConvertSlotFromWrapper(slot),
+                    });
+            }
 
+            var bookings = bookingService.GetThisWeeksBookingsForAResource(resource.ResourceId);
 
-            return View();
+            var date = FindStartDate(DateTime.Today);
+
+            #region Add bookings to table
+
+            foreach (wrapper.Booking booking in bookings)
+            {
+                //all of the nine o'clock bookings
+                var entry = rateTable.Where(e => e.Slot.SlotId.Equals(booking.Slot.SlotId)).FirstOrDefault();
+
+                switch (booking.Date.DayOfWeek.ToString())
+                {
+                    case "Monday":
+                        {
+                            entry.MondayRates = AddEntry(booking, resource, date);
+                            break;
+                        }
+                    case "Tuesday":
+                        {
+                            entry.TuesdayRates = AddEntry(booking, resource, date);
+                            break;
+                        }
+                    case "Wednesday":
+                        {
+                            entry.WednesdayRates = AddEntry(booking, resource, date);
+                            break;
+                        }
+
+                    case "Thursday":
+                        {
+                            entry.ThursdayRates = AddEntry(booking, resource, date);
+                            break;
+                        }
+
+                    case "Friday":
+                        {
+                            entry.FridayRates = AddEntry(booking, resource, date);
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+
+            #endregion
+
+            return View(rateTable);
         }
 
         //
@@ -495,6 +552,21 @@ namespace PresentationLayer.Controllers
                     });
 
             return chart;
+        }
+
+        private ResourceRateData AddEntry(wrapper.Booking booking, wrapper.Resource resource, DateTime date)
+        {
+            var entry = new ResourceRateData
+            {
+                Resource          = converter.ConvertResourceFromWrapper(resource),
+                BookedBy          = converter.ConvertUserFromWrapper(booking.BookedBy),
+                NumberOfAttendees = booking.ConfirmedAttendees.Count(),
+                Frequency         = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource),
+                Occupancy         = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource),
+                Utilisation       = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource),
+            };
+
+            return entry;
         }
 
         #endregion
