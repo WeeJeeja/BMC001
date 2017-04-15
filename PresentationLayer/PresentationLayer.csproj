@@ -197,8 +197,8 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
-    <Compile Include="Models\ResourceRatesViewModel.cs" />
-    <Compile Include="Models\ResourceUntilisationViewModel.cs" />
+    <Compile Include="Models\ResourceRateData.cs" />
+    <Compile Include="Models\ResourceRateTable.cs" />
     <Compile Include="Models\ResourceViewModel.cs" />
     <Compile Include="Models\UpdateBooking.cs" />
     <Compile Include="Models\ChartData.cs" />
@@ -404,6 +404,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_AdminNavigation.cshtml" />
     <Content Include="Views\Chart\WeekChart.cshtml" />
+    <Content Include="Views\Chart\ResourceInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

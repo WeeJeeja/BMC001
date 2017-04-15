@@ -73,13 +73,22 @@ namespace PresentationLayer.Controllers
         public ActionResult ResourceInfo(Guid? resourceId)
         {
             var resource = resourceService.GetResource(resourceId);
-            var rateTable = new List<ResourceRateTable>();
+            
+            var date = FindStartDate(DateTime.Today);
+
+            var model = new ResourceViewModel
+            {
+                Resource    = converter.ConvertResourceFromWrapper(resource),
+                Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource),
+                Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource),
+                Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource),
+            };
 
             var slots = slotService.GetSlots();
 
             foreach(wrapper.Slot slot in slots)
             {
-                rateTable.Add(new ResourceRateTable
+                model.Table.Add(new ResourceRateTable
                     {
                         Slot = converter.ConvertSlotFromWrapper(slot),
                     });
@@ -87,14 +96,12 @@ namespace PresentationLayer.Controllers
 
             var bookings = bookingService.GetThisWeeksBookingsForAResource(resource.ResourceId);
 
-            var date = FindStartDate(DateTime.Today);
-
             #region Add bookings to table
 
             foreach (wrapper.Booking booking in bookings)
             {
                 //all of the nine o'clock bookings
-                var entry = rateTable.Where(e => e.Slot.SlotId.Equals(booking.Slot.SlotId)).FirstOrDefault();
+                var entry = model.Table.Where(e => e.Slot.SlotId.Equals(booking.Slot.SlotId)).FirstOrDefault();
 
                 switch (booking.Date.DayOfWeek.ToString())
                 {
@@ -134,7 +141,7 @@ namespace PresentationLayer.Controllers
 
             #endregion
 
-            return View(rateTable);
+            return View(model);
         }
 
         //
@@ -556,14 +563,17 @@ namespace PresentationLayer.Controllers
 
         private ResourceRateData AddEntry(wrapper.Booking booking, wrapper.Resource resource, DateTime date)
         {
+            var attendees = 1;
+            if (booking.GroupBooking == true)
+            {
+                var data = bookingService.GetBooking(booking.BookingId);
+                attendees = data.ConfirmedAttendees.Count();
+            }
+
             var entry = new ResourceRateData
             {
-                Resource          = converter.ConvertResourceFromWrapper(resource),
                 BookedBy          = converter.ConvertUserFromWrapper(booking.BookedBy),
                 NumberOfAttendees = booking.ConfirmedAttendees.Count(),
-                Frequency         = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource),
-                Occupancy         = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource),
-                Utilisation       = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource),
             };
 
             return entry;

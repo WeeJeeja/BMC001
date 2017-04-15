@@ -74,7 +74,10 @@
             @Html.DisplayFor(modelItem => item.Occupancy)
         </td>
         <td>
-            @Html.ActionLink("More info", "Edit", new {  })
+            
+                <button type="button" class="btn btn-primary">
+                    @Html.ActionLink("More info", "ResourceInfo", new { resourceId = item.Resource.ResourceId })
+                </button>
         </td>
     </tr>
 }
