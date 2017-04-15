@@ -573,7 +573,7 @@ namespace PresentationLayer.Controllers
             var entry = new ResourceRateData
             {
                 BookedBy          = converter.ConvertUserFromWrapper(booking.BookedBy),
-                NumberOfAttendees = booking.ConfirmedAttendees.Count(),
+                NumberOfAttendees = attendees,
             };
 
             return entry;
