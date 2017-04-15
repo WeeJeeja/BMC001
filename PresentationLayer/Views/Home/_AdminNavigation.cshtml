@@ -10,7 +10,16 @@
             <div class="col-md-2">
               <ul id="sidebar" class="nav nav-pills nav-stacked affix">
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">@Html.ActionLink("Dashboard", "WeekChart", "Chart")</li>
+                  <li class="dropdown @(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li>@Html.ActionLink("This week", "WeekChart", "Chart")</li>
+                      <li><a href="#">Next week</a></li>
+                      <li><a href="#">Last week</a></li>
+                      <li><a href="#">Month</a></li>  
+                    </ul>
+                  </li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Resource" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Team" ? "active" : "")">@Html.ActionLink("Teams", "Index", "Team")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Employee" ? "active" : "")">@Html.ActionLink("Employees", "Index", "Employee")</li>
