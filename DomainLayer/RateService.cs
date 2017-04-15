@@ -81,7 +81,7 @@ namespace DomainLayer
             Console.WriteLine(occupants + " employees have used this resource during this time period.");
 
             //Number of hours resource was in use
-            float hoursResourceWasInUse = scheduleEntries.Count();
+            float hoursResourceWasInUse = scheduleEntries.GroupBy(x => x.Slot).Select(y => y.First()).Count();
             Console.WriteLine("The resource has been booked for " + hoursResourceWasInUse + " hour(s) during said time period.");
 
             //Occupancy rate = occupants / (capacity * hoursResourceWasInUse)
