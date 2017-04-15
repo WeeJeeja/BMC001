@@ -40,20 +40,46 @@ namespace DomainLayer
             //get this weeks bookings
             data = data.Where(b => b.Date >= date && b.Date < endDate).ToList();
 
-            foreach(DataLayer.Models.Booking b in data)
+            var bookingEntries = converter.ConvertDataBookingListToWrapper(data);
+
+            foreach (Booking entry in bookingEntries)
             {
-                var booking = new Booking
-                {
-                    BookingId      = b.BookingId,
-                    Date           = b.Date,
-                    Slot           = converter.ConvertDataSlotToWrapper(b.Slot),
-                    Resource       = converter.ConvertDataResourceToWrapper(b.Resource),
-                    User           = converter.ConvertDataUserToWrapper(b.User),
-                    BookedBy       = converter.ConvertDataUserToWrapper(b.BookedBy),
-                    GroupBooking   = b.GroupBooking,
-                };
-                bookings.Add(booking);
+                bookings.Add(entry);
             }
+
+            return bookings;
+        }
+
+        /// <summary>
+        /// Gets a list of all bookings for a particular resource and week
+        /// </summary>
+        /// <returns>Returns a list of all of a resource's bookings for a particular week</returns>
+        public List<Booking> GetThisWeeksBookingsForAResource(Guid? resourceId)
+        {
+            //work out the start of the week
+            var date = FindStartDate();
+
+            var endDate = date.AddDays(4);
+
+            //db connection
+            var db = new ReScrumEntities();
+
+            //the bookings that belong to the user
+            var data = db.Booking.Where(u => u.Resource.ResourceId == resourceId).ToList();
+
+            var bookings = new List<Booking>();
+            if (data.Count < 1) return bookings;
+
+            //get this weeks bookings
+            data = data.Where(b => b.Date >= date && b.Date < endDate).ToList();
+
+            var bookingEntries = converter.ConvertDataBookingListToWrapper(data);
+
+            foreach (Booking entry in bookingEntries)
+            {
+                bookings.Add(entry);
+            }
+            
             return bookings;
         }
 

@@ -96,6 +96,45 @@ namespace HelperMethods
             return users;
         }
 
+        public wrapper.Booking ConvertDataBookingToWrapper(data.Booking entry)
+        {
+            var booking = new wrapper.Booking
+            {
+                BookingId    = entry.BookingId,
+                Date         = entry.Date,
+                Slot         = ConvertDataSlotToWrapper(entry.Slot),
+                Resource     = ConvertDataResourceToWrapper(entry.Resource),
+                User         = ConvertDataUserToWrapper(entry.User),
+                BookedBy     = ConvertDataUserToWrapper(entry.BookedBy),
+                GroupBooking = entry.GroupBooking,
+            };
+
+            return booking;
+        }
+
+        public ICollection<wrapper.Booking> ConvertDataBookingListToWrapper(ICollection<data.Booking> entry)
+        {
+            var bookings = new List<wrapper.Booking>();
+
+            foreach (data.Booking data in entry)
+            {
+                var booking = new wrapper.Booking
+                {
+                    BookingId    = data.BookingId,
+                    Date         = data.Date,
+                    Slot         = ConvertDataSlotToWrapper(data.Slot),
+                    Resource     = ConvertDataResourceToWrapper(data.Resource),
+                    User         = ConvertDataUserToWrapper(data.User),
+                    BookedBy     = ConvertDataUserToWrapper(data.BookedBy),
+                    GroupBooking = data.GroupBooking,
+                };
+                bookings.Add(booking);
+            };
+            return bookings;
+        }
+
+        
+
 
         #endregion
     }

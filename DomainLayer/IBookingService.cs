@@ -14,6 +14,12 @@ namespace DomainLayer
         /// <returns>Returns a list of all of a user's unconfirmed bookings for a particular week</returns>
         List<Booking> GetThisWeeksUnconfirmedBookings(Guid? userId);
 
+        /// <summary>
+        /// Gets a list of all bookings for a particular resource and week
+        /// </summary>
+        /// <returns>Returns a list of all of a resource's bookings for a particular week</returns>
+        List<Booking> GetThisWeeksBookingsForAResource(Guid? resourceId);
+
         System.Collections.Generic.List<Booking> GetThisWeeksBookings(Guid? userId);
         List<Resource> GetAvailableResourcesForBlockBooking(DateTime startDate, DateTime endDate, Guid? startSlot, Guid? endSlot);
 

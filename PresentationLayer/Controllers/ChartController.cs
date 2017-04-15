@@ -68,6 +68,19 @@ namespace PresentationLayer.Controllers
         }
 
         //
+        // GET: /Chart/ResourceInfo/5
+
+        public ActionResult ResourceInfo(Guid? resourceId)
+        {
+            var resource = resourceService.GetResource(resourceId);
+
+
+
+
+            return View();
+        }
+
+        //
         // GET: /ChartSample/
 
         public ActionResult Index()
@@ -296,17 +309,6 @@ namespace PresentationLayer.Controllers
                         });
 
             return View(chart);
-        }
-
-
-        //
-        // GET: /ChartSample/Details/5
-
-        public ActionResult Test2()
-        {
-            
-
-            return View();
         }
 
         //
