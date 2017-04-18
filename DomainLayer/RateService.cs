@@ -88,7 +88,7 @@ namespace DomainLayer
             //Occupancy rate = occupants / (capacity * hoursResourceWasInUse)
             var occupancyRate = (occupants / (capacity * hoursResourceWasInUse));
 
-            if (float.IsNaN(occupancyRate)) return 0;
+            if (float.IsNaN(occupancyRate)) return 1;
 
             return occupancyRate;
         }
