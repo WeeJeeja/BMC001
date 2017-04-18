@@ -56,7 +56,7 @@ namespace PresentationLayer.Controllers
                     Frequency   = service.CalculateFrequencyRate(date, date),
                     Occupancy   = service.CalculateOccupancyRate(date, date),
                     Utilisation = service.CalculateUtilisationRate(date, date),
-                    DayChart    = GenerateDayChart(date),
+                    DayChart    = GenerateDayChart(date, "mondayChart"),
                     Day         = "Monday",
                     Date        = date,
                 },
@@ -65,7 +65,7 @@ namespace PresentationLayer.Controllers
                     Frequency   = service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
                     Occupancy   = service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
                     Utilisation = service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1)),
-                    DayChart    = GenerateDayChart(date.AddDays(1)),
+                    DayChart = GenerateDayChart(date.AddDays(1), "tuesdayChart"),
                     Day         = "Tuesday",
                     Date        = date.AddDays(1),
                 },
@@ -74,7 +74,7 @@ namespace PresentationLayer.Controllers
                     Frequency = service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
                     Occupancy = service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
                     Utilisation = service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2)),
-                    DayChart = GenerateDayChart(date.AddDays(2)),
+                    DayChart = GenerateDayChart(date.AddDays(2), "wednesdayChart"),
                     Day = "Wednesday",
                     Date = date.AddDays(2),
                 },
@@ -83,7 +83,7 @@ namespace PresentationLayer.Controllers
                     Frequency = service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
                     Occupancy = service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
                     Utilisation = service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3)),
-                    DayChart = GenerateDayChart(date.AddDays(3)),
+                    DayChart = GenerateDayChart(date.AddDays(3), "thursdayChart"),
                     Day = "Thursday",
                     Date = date.AddDays(3),
                 },
@@ -92,7 +92,7 @@ namespace PresentationLayer.Controllers
                     Frequency = service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
                     Occupancy = service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
                     Utilisation = service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4)),
-                    DayChart = GenerateDayChart(date.AddDays(4)),
+                    DayChart = GenerateDayChart(date.AddDays(4), "fridayChart"),
                     Day = "Friday",
                     Date = date.AddDays(4),
                 },
@@ -607,7 +607,7 @@ namespace PresentationLayer.Controllers
             return chart;
         }
 
-        private Highcharts GenerateDayChart(DateTime date)
+        private Highcharts GenerateDayChart(DateTime date, string chartName)
         {
             var slots = slotService.GetSlots();
 
@@ -634,7 +634,7 @@ namespace PresentationLayer.Controllers
             var yDataUtilisation = chartData.Select(i => new object[] { i.Utilisation }).ToArray();
 
             //instanciate an object of the Highcharts type
-            var dayChart = new Highcharts("dayChart")
+            var dayChart = new Highcharts(chartName)
                 //define the type of chart 
                         .InitChart(new DotNet.Highcharts.Options.Chart { DefaultSeriesType = ChartTypes.Line })
                 //overall Title of the chart 

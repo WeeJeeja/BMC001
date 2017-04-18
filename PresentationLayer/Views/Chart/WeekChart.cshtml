@@ -33,13 +33,18 @@
         <div id="monday" class="tab-pane fade in">
             @Html.Partial("_day", Model.Monday)
         </div>
-        @*<div id="tuesday" class="tab-pane fade">
+        <div id="tuesday" class="tab-pane fade">
             @Html.Partial("_day", Model.Tuesday)
-        </div>*@
-    <div id="wednesday" class="tab-pane fade">
-      <h3>Menu 3</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
+        </div>
+        <div id="wednesday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Wednesday)
+        </div>
+        <div id="thursday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Thursday)
+        </div>
+        <div id="friday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Friday)
+        </div>
   </div>
 </div>
 
