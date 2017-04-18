@@ -69,6 +69,33 @@ namespace PresentationLayer.Controllers
                     Day         = "Tuesday",
                     Date        = date.AddDays(1),
                 },
+                Wednesday = new DayViewModel
+                {
+                    Frequency = service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
+                    Occupancy = service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
+                    Utilisation = service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2)),
+                    DayChart = GenerateDayChart(date.AddDays(2)),
+                    Day = "Wednesday",
+                    Date = date.AddDays(2),
+                },
+                Thursday = new DayViewModel
+                {
+                    Frequency = service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
+                    Occupancy = service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
+                    Utilisation = service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3)),
+                    DayChart = GenerateDayChart(date.AddDays(3)),
+                    Day = "Thursday",
+                    Date = date.AddDays(3),
+                },
+                Friday = new DayViewModel
+                {
+                    Frequency = service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
+                    Occupancy = service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
+                    Utilisation = service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4)),
+                    DayChart = GenerateDayChart(date.AddDays(4)),
+                    Day = "Friday",
+                    Date = date.AddDays(4),
+                },
             };
 
             foreach (Resource resource in resources)
