@@ -9,83 +9,45 @@
 
 <h2>Dashboard</h2>
 
-<ul class="nav nav-pills">
-  <li class="active"><a href="#overview">Overview</a></li>
-  <li><a href="#">Monday</a></li>
-  <li><a href="#">Tuesday</a></li>
-  <li><a href="#">Wednesday</a></li>
-  <li><a href="#">Thursday</a></li>
-  <li><a href="#">Friday</a></li>
-  <li><a href="#">Time slots</a></li>
-</ul>
-
-<div id="overview">
-    <br />
-    @Html.Partial("_overview", Model)
-</div>
-
-<br />
-
-<div class="panel-group col-md-9" style="padding-top:20px">
-  <div class="panel">
-    <div class="panel-heading" style="background-color: lightblue">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#RESOURCE">RESOURCE DATA</a>
-      </h4>
+<div class="container">
+  <h2>Dashboard</h2>
+  <p>All data displayed is relevant for startdate and endate</p>
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#overview">Overview</a></li>
+    <li><a data-toggle="pill" href="#resources">Resources</a></li>
+    <li><a data-toggle="pill" href="#monday">Monday</a></li>
+    <li><a data-toggle="pill" href="#tuesday">Tuesday</a></li>
+    <li><a data-toggle="pill" href="#wednesday">Wednesday</a></li>
+    <li><a data-toggle="pill" href="#thursday">Thursday</a></li>
+    <li><a data-toggle="pill" href="#friday">Friday</a></li>
+    <li><a data-toggle="pill" href="#timeslots">Time slots</a></li>
+  </ul>
+  
+  <div class="tab-content">
+    <div id="overview" class="tab-pane fade in active">
+      <h3>HOME</h3>
+          @Html.Partial("_overview", Model)
     </div>
-    <div id="RESOURCE" class="panel-collapse collapse">
-      <div class="panel-body bg-info">
-          <table class="table table-hover">
-            <tr>
-                <th>
-                    Resource
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Uitilisation rate
-                </th>
-                <th>
-                    Frequency rate
-                </th>
-                <th>
-                    Occupancy rate
-                </th>
-                <th></th>
-            </tr>
-        @foreach (var item in Model.Resources) {
-            <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Resource.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Resource.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Utilisation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Frequency)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Occupancy)
-        </td>
-        <td>
-            
-                <button type="button" class="btn btn-primary">
-                    @Html.ActionLink("More info", "ResourceInfo", new { resourceId = item.Resource.ResourceId })
-                </button>
-        </td>
-    </tr>
-}
-
-</table>
-      </div>
-      <div class="panel-footer">Panel Footer</div>
+    <div id="resources" class="tab-pane fade in">
+      <h3>RESOURCES</h3>
+          @Html.Partial("_resources", Model)
+    </div>
+    <div id="monday" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="tuesday" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="wednesday" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
   </div>
 </div>
+
+
 
 
 

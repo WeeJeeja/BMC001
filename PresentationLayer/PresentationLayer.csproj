@@ -406,6 +406,7 @@
     <Content Include="Views\Chart\WeekChart.cshtml" />
     <Content Include="Views\Chart\ResourceInfo.cshtml" />
     <Content Include="Views\Chart\_overview.cshtml" />
+    <Content Include="Views\Chart\_resources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

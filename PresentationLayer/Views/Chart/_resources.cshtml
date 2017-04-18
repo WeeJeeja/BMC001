@@ -1,0 +1,47 @@
+﻿@model PresentationLayer.Models.ChartViewModel
+
+<table class="table table-hover">
+            <tr>
+                <th>
+                    Resource
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Uitilisation rate
+                </th>
+                <th>
+                    Frequency rate
+                </th>
+                <th>
+                    Occupancy rate
+                </th>
+                <th></th>
+            </tr>
+        @foreach (var item in Model.Resources) {
+            <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utilisation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Frequency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Occupancy)
+        </td>
+        <td>
+                <button type="button" class="btn btn-primary">
+                    @Html.ActionLink("More info", "ResourceInfo", new { resourceId = item.Resource.ResourceId })
+                </button>
+        </td>
+    </tr>
+}
+
+</table>
