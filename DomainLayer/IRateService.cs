@@ -12,7 +12,7 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource</param>
         /// <returns>The number of slots the resource was booked for during the date range entered</returns>
-        float CalculateResourceFrequencyRate(DateTime startDate, DateTime endDate, Resource resource);
+        float CalculateResourceFrequencyRate(DateTime startDate, DateTime endDate, Guid? resourceId);
 
         /// <summary>
         /// Calculates the frequency rate for an individual resource between a given date range
@@ -22,7 +22,7 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the frequency rate for</param>
         /// <returns>The frequency rate for the resource</returns>
-        float CalculateResourceOccupancyRate(DateTime startDate, DateTime endDate, Resource resource);
+        float CalculateResourceOccupancyRate(DateTime startDate, DateTime endDate, Guid? resourceId);
 
         /// <summary>
         /// Calculates the occupnacy rate for an individual resource between a given date range
@@ -32,7 +32,7 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the occupancy rate for</param>
         /// <returns>The occupancy rate for the resource</returns>
-        float CalculateResourceUtilisationRate(DateTime startDate, DateTime endDate, Resource resource);
+        float CalculateResourceUtilisationRate(DateTime startDate, DateTime endDate, Guid? resourceId);
 
         /// <summary>
         /// Calculates the utilisation rate for an individual resource between a given date range
@@ -41,7 +41,7 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the utilisation rate for</param>
         /// <returns>The utilisation rate for the resource</returns>
-        List<DataLayer.Models.Booking> GetSlotsUtilised(DateTime startDate, DateTime endDate, Resource resource);
+        List<DataLayer.Models.Booking> GetSlotsUtilised(DateTime startDate, DateTime endDate, Guid? resourceId);
 
         /// <summary>
         /// Calculates the utilisation rate for the compnay between a given date range

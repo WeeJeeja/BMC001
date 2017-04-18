@@ -76,9 +76,9 @@ namespace PresentationLayer.Controllers
                 model.Resources.Add(new ResourceViewModel
                 {
                     Resource    = resource,
-                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
-                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
-                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
+                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
+                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
+                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
                 });
 
             }
@@ -97,9 +97,9 @@ namespace PresentationLayer.Controllers
             var model = new ResourceViewModel
             {
                 Resource    = converter.ConvertResourceFromWrapper(resource),
-                Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource),
-                Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource),
-                Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource),
+                Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
+                Occupancy = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
+                Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
             };
 
             var slots = slotService.GetSlots();

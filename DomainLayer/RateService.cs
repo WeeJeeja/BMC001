@@ -20,11 +20,11 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource</param>
         /// <returns>The number of slots the resource was booked for during the date range entered</returns>
-        public List<DataLayer.Models.Booking> GetSlotsUtilised(DateTime startDate, DateTime endDate, Resource resource)
+        public List<DataLayer.Models.Booking> GetSlotsUtilised(DateTime startDate, DateTime endDate, Guid? resourceId)
         {
             var db = new ReScrumEntities();
 
-            var bookings = db.Booking.Where(r => r.Resource.ResourceId == resource.ResourceId &&
+            var bookings = db.Booking.Where(r => r.Resource.ResourceId == resourceId &&
                                             r.Date >= startDate &&
                                             r.Date <= endDate).ToList();
             return bookings;
@@ -38,9 +38,11 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the frequency rate for</param>
         /// <returns>The frequency rate for the resource</returns>
-        public float CalculateResourceFrequencyRate(DateTime startDate, DateTime endDate, Resource resource)
+        public float CalculateResourceFrequencyRate(DateTime startDate, DateTime endDate, Guid? resourceId)
         {
             var db = new ReScrumEntities();
+
+            var resource = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
 
             //Calculate how many days
             var dateRange = endDate.DayOfYear - startDate.DayOfYear + 1;
@@ -50,7 +52,7 @@ namespace DomainLayer
             var availability = slots * dateRange;
 
             //How many times the resource was used
-            var hoursUsed = GetSlotsUtilised(startDate, endDate, resource).Count();
+            var hoursUsed = GetSlotsUtilised(startDate, endDate, resource.ResourceId).Count();
 
             //Number of slots the space was in use/Number of slots available = frequency rate %
             var frequencyRate = ((float)hoursUsed / (float)availability);
@@ -68,22 +70,21 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the occupancy rate for</param>
         /// <returns>The occupancy rate for the resource</returns>
-        public float CalculateResourceOccupancyRate(DateTime startDate, DateTime endDate, Resource resource)
+        public float CalculateResourceOccupancyRate(DateTime startDate, DateTime endDate, Guid? resourceId)
         {
+            var db = new ReScrumEntities();
+
             //Resource capacity
+            var resource   = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
             float capacity = resource.Capacity;
 
             //Total number of people occupaying resource
-            var scheduleEntries = GetSlotsUtilised(startDate, endDate, resource);
-
+            var scheduleEntries = GetSlotsUtilised(startDate, endDate, resourceId);
             float occupants = scheduleEntries.Count();
-
-            Console.WriteLine(occupants + " employees have used this resource during this time period.");
 
             //Number of hours resource was in use
             float hoursResourceWasInUse = scheduleEntries.GroupBy(x => x.Slot).Select(y => y.First()).Count();
-            Console.WriteLine("The resource has been booked for " + hoursResourceWasInUse + " hour(s) during said time period.");
-
+            
             //Occupancy rate = occupants / (capacity * hoursResourceWasInUse)
             var occupancyRate = (occupants / (capacity * hoursResourceWasInUse));
 
@@ -99,11 +100,11 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <param name="resource">The resource to calculate the utilisation rate for</param>
         /// <returns>The utilisation rate for the resource</returns>
-        public float CalculateResourceUtilisationRate(DateTime startDate, DateTime endDate, Resource resource)
+        public float CalculateResourceUtilisationRate(DateTime startDate, DateTime endDate, Guid? resourceId)
         {
             //Utilisation rate: frequency rate * occupancy rate
-            var frequencyRate = CalculateResourceFrequencyRate(startDate, endDate, resource);
-            var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resource);
+            var frequencyRate = CalculateResourceFrequencyRate(startDate, endDate, resourceId);
+            var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resourceId);
 
             var utilisationRate = frequencyRate * occupancyRate;
 
@@ -131,8 +132,8 @@ namespace DomainLayer
             foreach(DataLayer.Models.Resource data in resources)
             {
                 var resource     = converter.ConvertDataResourceToWrapper(data);
-                frequencyRate   += CalculateResourceFrequencyRate(startDate, endDate, resource);
-                occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource);
+                frequencyRate   += CalculateResourceFrequencyRate(startDate, endDate, resource.ResourceId);
+                occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource.ResourceId);
                 utilisationRate += frequencyRate * occupancyRate;
             }
             if (float.IsNaN(utilisationRate)) return 0;
@@ -154,10 +155,9 @@ namespace DomainLayer
             /// Frequency rate: percentage of time space is used compared to its availability
             float frequencyRate = 0;
 
-            foreach (DataLayer.Models.Resource data in resources)
+            foreach (DataLayer.Models.Resource resource in resources)
             {
-                var resource   = converter.ConvertDataResourceToWrapper(data);
-                frequencyRate += CalculateResourceFrequencyRate(startDate, endDate, resource);
+                frequencyRate += CalculateResourceFrequencyRate(startDate, endDate, resource.ResourceId);
             }
             if (float.IsNaN(frequencyRate)) return 0;
             frequencyRate = frequencyRate / resources.Count();
@@ -178,10 +178,9 @@ namespace DomainLayer
             /// Occupancy rate: how full the space is compared to its capacity
             float occupancyRate = 0;
 
-            foreach (DataLayer.Models.Resource data in resources)
+            foreach (DataLayer.Models.Resource resource in resources)
             {
-                var resource   = converter.ConvertDataResourceToWrapper(data);
-                occupancyRate += CalculateResourceOccupancyRate(startDate, endDate, resource);
+                occupancyRate += CalculateResourceOccupancyRate(startDate, endDate, resource.ResourceId);
             }
             if (float.IsNaN(occupancyRate)) return 0;
             occupancyRate = occupancyRate / resources.Count();
