@@ -7,7 +7,7 @@ namespace PresentationLayer.Models
 {
     public class ChartData
     {
-        public string Day { get; set; }
+        public string yCategories { get; set; }
 
         public int Frequency { get; set; }
 

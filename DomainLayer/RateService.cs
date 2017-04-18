@@ -188,6 +188,91 @@ namespace DomainLayer
             return occupancyRate * 100;
         }
 
+        #region Rates for time slot
+
+        /// <summary>
+        /// Calculates the frequency rate for a time slot between a given date
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The time slot</param>
+        /// <returns>The frequency rate for the time slot</returns>
+        public float CalculateSlotFrequencyRate(DateTime date, Guid? slotId)
+        {
+            var db = new ReScrumEntities();
+
+            /// Frequency rate: percentage of time space is used compared to its availability
+            float frequencyRate = 0;
+
+            //All of the bookings for the time on the day -> all 9am booking for Tuesday 18th April
+            var bookings = db.Booking.Where(b => b.Date == date && b.Slot.SlotId == slotId).ToList();
+            if (bookings.Count() < 1) return 0;
+
+            //Removes multiple bookings for the same resource -> group bookings
+            var resourcesBookedInSlot = bookings.GroupBy(x => x.Resource).Select(y => y.First()).Count();
+
+            var resources = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate > date).ToList();
+
+            frequencyRate = (float)resourcesBookedInSlot / (float)resources.Count();
+
+            if (float.IsNaN(frequencyRate)) return 0;
+            return frequencyRate * 100;
+        }
+
+        /// <summary>
+        /// Calculates the occupnacy rate for a slot time for a given date
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The slot time</param>
+        /// <returns>The occupancy rate for the time slot</returns>
+        public float CalculateSlotOccupancyRate(DateTime date, Guid? slotId)
+        {
+            var db = new ReScrumEntities();
+
+            /// Occupancy rate: how full the space is compared to its capacity
+            float occupancyRate = 0;
+
+            //All of the bookings for the time on the day -> all 9am booking for Tuesday 18th April
+            var bookings = db.Booking.Where(b => b.Date == date && b.Slot.SlotId == slotId).ToList();
+
+            if (bookings.Count() < 1) return occupancyRate;
+
+            //Get all the resources used in the bookings
+            var resources = bookings.Select(b => b.Resource).ToList();
+
+            foreach (DataLayer.Models.Resource resource in resources)
+            {
+                var totalOccupants = bookings.Where(r => r.Resource.ResourceId == resource.ResourceId).Count();
+
+                occupancyRate += totalOccupants / resource.Capacity;
+            }
+
+            if (float.IsNaN(occupancyRate)) return 0;
+            occupancyRate = occupancyRate / resources.Count();
+
+            return occupancyRate * 100;
+        }
+
+        /// <summary>
+        /// Calculates the utilisation rate for a time slot for a given date
+        /// </summary>
+        /// <param name="startDate">The date</param>
+        /// <param name="endDate">The time slot</param>
+        /// <returns>The utilisation rate for the time slot</returns>
+        public float CalculateSlotUtilisationRate(DateTime date, Guid? slotId)
+        {
+            var db = new ReScrumEntities();
+
+            //Utilisation rate: frequency rate * occupancy rate
+            float frequencyRate = CalculateSlotFrequencyRate(date, slotId) / 100;
+            float occupancyRate = CalculateSlotOccupancyRate(date, slotId) / 100;
+
+            var utilisationRate = frequencyRate * occupancyRate;
+
+            return utilisationRate * 100;
+        }
+
+        #endregion
+
 
     }
 }

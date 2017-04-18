@@ -1,2 +1,21 @@
-﻿@model PresentationLayer.Models.ChartViewModel
+﻿@model PresentationLayer.Models.DayViewModel
 
+<div class="container">
+
+    <h2>@Model.Day - @Model.Date.ToShortDateString()</h2>
+
+    <div class="content-wrapper col-md-6">
+        @(Model.DayChart)
+    </div>
+
+    <div class="panel panel-info pull-right">
+        <div class="panel-heading">Rates</div>
+        <div class="panel-body bg-info">
+            <p>Frequency: </p> <strong> @Model.Frequency </strong>
+            <p>Occupancy: </p> <strong> @Model.Occupancy </strong>
+            <p>Utilisation: </p> <strong> @Model.Utilisation </strong>
+
+        </div>
+    </div>
+
+</div>

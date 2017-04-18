@@ -9,7 +9,6 @@ using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Drawing;
 
@@ -52,6 +51,24 @@ namespace PresentationLayer.Controllers
             var model = new ChartViewModel
             {
                 Chart = chart,
+                Monday = new DayViewModel
+                {
+                    Frequency   = service.CalculateFrequencyRate(date, date),
+                    Occupancy   = service.CalculateOccupancyRate(date, date),
+                    Utilisation = service.CalculateUtilisationRate(date, date),
+                    DayChart    = GenerateDayChart(date),
+                    Day         = "Monday",
+                    Date        = date,
+                },
+                Tuesday = new DayViewModel
+                {
+                    Frequency   = service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
+                    Occupancy   = service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
+                    Utilisation = service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1)),
+                    DayChart    = GenerateDayChart(date.AddDays(1)),
+                    Day         = "Tuesday",
+                    Date        = date.AddDays(1),
+                },
             };
 
             foreach (Resource resource in resources)
@@ -63,6 +80,7 @@ namespace PresentationLayer.Controllers
                     Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
                     Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), converter.ConvertResourceToWrapper(resource)),
                 });
+
             }
             return View(model);
         }
@@ -154,35 +172,35 @@ namespace PresentationLayer.Controllers
             //modify data type to make it of array type
             var test = new List<ChartData>
             {
-                new ChartData(){Day ="Monday", 
+                new ChartData(){yCategories ="Monday", 
                     Frequency = (int)service.CalculateFrequencyRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 06)),
                     
                     Occupancy = (int)service.CalculateOccupancyRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 06)),
                     
                     Utilisation = (int)service.CalculateUtilisationRate(new DateTime(2017, 03, 06), new DateTime(2017, 03, 06))},
                     
-                new ChartData(){Day ="Tueday", 
+                new ChartData(){yCategories ="Tueday", 
                     Frequency = (int)service.CalculateFrequencyRate(new DateTime(2017, 03, 07), new DateTime(2017, 03, 07)),
 
                     Occupancy = (int)service.CalculateOccupancyRate(new DateTime(2017, 03, 07), new DateTime(2017, 03, 07)),
 
                     Utilisation = (int)service.CalculateUtilisationRate(new DateTime(2017, 03, 07), new DateTime(2017, 03, 07))},
                     
-                new ChartData(){Day ="Wednesday", 
+                new ChartData(){yCategories ="Wednesday", 
                     Frequency = (int)service.CalculateFrequencyRate(new DateTime(2017, 03, 08), new DateTime(2017, 03, 08)),
                     
                     Occupancy = (int)service.CalculateOccupancyRate(new DateTime(2017, 03, 08), new DateTime(2017, 03, 08)),
                     
                     Utilisation = (int)service.CalculateUtilisationRate(new DateTime(2017, 03, 08), new DateTime(2017, 03, 08))},
                     
-                new ChartData(){Day ="Thursday", 
+                new ChartData(){yCategories ="Thursday", 
                     Frequency = (int)service.CalculateFrequencyRate(new DateTime(2017, 03, 09), new DateTime(2017, 03, 09)),
                     
                     Occupancy = (int)service.CalculateOccupancyRate(new DateTime(2017, 03, 09), new DateTime(2017, 03, 09)),
                     
                     Utilisation = (int)service.CalculateUtilisationRate(new DateTime(2017, 03, 09), new DateTime(2017, 03, 09))},
                     
-                new ChartData(){Day ="Friday", 
+                new ChartData(){yCategories ="Friday", 
                     Frequency = (int)service.CalculateFrequencyRate(new DateTime(2017, 03, 10), new DateTime(2017, 03, 10)),
         
                     Occupancy = (int)service.CalculateOccupancyRate(new DateTime(2017, 03, 10), new DateTime(2017, 03, 10)),
@@ -191,7 +209,7 @@ namespace PresentationLayer.Controllers
                     
             };
 
-            var xData = test.Select(i => i.Day).ToArray();
+            var xData = test.Select(i => i.yCategories).ToArray();
 
             var yDataFrequency = test.Select(i => new object[] { i.Frequency }).ToArray();
 
@@ -421,7 +439,6 @@ namespace PresentationLayer.Controllers
 
         #region HelperMethods
 
-
         private DateTime FindStartDate(DateTime date)
         {
             date = DateTime.Today;
@@ -467,7 +484,6 @@ namespace PresentationLayer.Controllers
             return date;
         }
 
-
         private Highcharts GenerateWeekChart(DateTime startDate)
         {
             var date = FindStartDate(startDate);
@@ -475,44 +491,49 @@ namespace PresentationLayer.Controllers
             //modify data type to make it of array type
             var chartData = new List<ChartData>
             {
-                new ChartData(){Day ="Monday", 
-                    Frequency = (int)service.CalculateFrequencyRate(date, date),
+                new ChartData()
+                {
+                    yCategories ="Monday", 
+                    Frequency   = (int)service.CalculateFrequencyRate(date, date),
+                    Occupancy   = (int)service.CalculateOccupancyRate(date, date),
+                    Utilisation = (int)service.CalculateUtilisationRate(date, date)
+                },
                     
-                    Occupancy = (int)service.CalculateOccupancyRate(date, date),
+                new ChartData()
+                {
+                    yCategories ="Tueday", 
+                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
+                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
+                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1))
+                },
                     
-                    Utilisation = (int)service.CalculateUtilisationRate(date, date)},
+                new ChartData()
+                {
+                    yCategories ="Wednesday", 
+                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
+                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
+                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2))
+                },
                     
-                new ChartData(){Day ="Tueday", 
-                    Frequency = (int)service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
-
-                    Occupancy = (int)service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
-
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1))},
+                new ChartData()
+                {
+                    yCategories ="Thursday", 
+                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
+                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
+                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3))
+                },
                     
-                new ChartData(){Day ="Wednesday", 
-                    Frequency = (int)service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
-                    
-                    Occupancy = (int)service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
-                    
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2))},
-                    
-                new ChartData(){Day ="Thursday", 
-                    Frequency = (int)service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
-                    
-                    Occupancy = (int)service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
-                    
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3))},
-                    
-                new ChartData(){Day ="Friday", 
-                    Frequency = (int)service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
-        
-                    Occupancy = (int)service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
-    
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4))},
+                new ChartData()
+                {
+                    yCategories ="Friday", 
+                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
+                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
+                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4))
+                },
                     
             };
 
-            var xData = chartData.Select(i => i.Day).ToArray();
+            var xData = chartData.Select(i => i.yCategories).ToArray();
 
             var yDataFrequency = chartData.Select(i => new object[] { i.Frequency }).ToArray();
 
@@ -554,11 +575,74 @@ namespace PresentationLayer.Controllers
                         new Series {Name = "Frequency", Data = new Data(yDataFrequency)},
                         new Series {Name = "Occupancy", Data = new Data(yDataOccupancy)},
                         new Series {Name = "Utilisation", Data = new Data(yDataUtilisation)},
-                            //you can add more y data to create a second line
-                            // new Series { Name = "Other Name", Data = new Data(OtherData) }
                     });
 
             return chart;
+        }
+
+        private Highcharts GenerateDayChart(DateTime date)
+        {
+            var slots = slotService.GetSlots();
+
+            //modify data type to make it of array type
+            var chartData = new List<ChartData>();
+
+            foreach(wrapper.Slot slot in slots)
+            {
+                chartData.Add(new ChartData
+                {
+                    yCategories = slot.Time,
+                    Frequency   = (int)service.CalculateSlotFrequencyRate(date, slot.SlotId),
+                    Occupancy   = (int)service.CalculateSlotOccupancyRate(date, slot.SlotId),
+                    Utilisation = (int)service.CalculateSlotUtilisationRate(date, slot.SlotId)
+                });
+            };
+            
+            var xData = chartData.Select(i => i.yCategories).ToArray();
+
+            var yDataFrequency = chartData.Select(i => new object[] { i.Frequency }).ToArray();
+
+            var yDataOccupancy = chartData.Select(i => new object[] { i.Occupancy }).ToArray();
+
+            var yDataUtilisation = chartData.Select(i => new object[] { i.Utilisation }).ToArray();
+
+            //instanciate an object of the Highcharts type
+            var dayChart = new Highcharts("dayChart")
+                //define the type of chart 
+                        .InitChart(new DotNet.Highcharts.Options.Chart { DefaultSeriesType = ChartTypes.Line })
+                //overall Title of the chart 
+                        .SetTitle(new Title { Text = "Rates for " + date.ToShortDateString() })
+                //small label below the main Title
+                        .SetSubtitle(new Subtitle { Text = "Frequency, Occupancy and Utilisation" })
+                //load the X values
+                        .SetXAxis(new XAxis { Categories = xData, Min = 0 })
+                //set the Y title
+                        .SetYAxis(new YAxis { Title = new YAxisTitle { Text = "Rate %" } })
+                        .SetTooltip(new Tooltip
+                        {
+                            Enabled = true,
+                            Formatter = "function() { return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y; }"
+                        })
+                        .SetPlotOptions(new PlotOptions
+                        {
+                            Line = new PlotOptionsLine
+                            {
+                                DataLabels = new PlotOptionsLineDataLabels
+                                {
+                                    Enabled = true
+                                },
+                                EnableMouseTracking = false
+                            }
+                        })
+                //load the Y values 
+                        .SetSeries(new[]
+                    {
+                        new Series {Name = "Frequency", Data = new Data(yDataFrequency)},
+                        new Series {Name = "Occupancy", Data = new Data(yDataOccupancy)},
+                        new Series {Name = "Utilisation", Data = new Data(yDataUtilisation)},
+                    });
+
+            return dayChart;
         }
 
         private ResourceRateData AddEntry(wrapper.Booking booking, wrapper.Resource resource, DateTime date)

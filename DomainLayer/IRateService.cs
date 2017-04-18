@@ -66,5 +66,29 @@ namespace DomainLayer
         /// <param name="endDate">The end date to search to</param>
         /// <returns>The occupancy rate for the company</returns>
         float CalculateOccupancyRate(DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// Calculates the frequency rate for a time slot between a given date
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The time slot</param>
+        /// <returns>The frequency rate for the time slot</returns>
+        float CalculateSlotFrequencyRate(DateTime date, Guid? slotId);
+
+        /// <summary>
+        /// Calculates the occupnacy rate for a slot time for a given date
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The slot time</param>
+        /// <returns>The occupancy rate for the time slot</returns>
+        float CalculateSlotOccupancyRate(DateTime date, Guid? slotId);
+
+        /// <summary>
+        /// Calculates the utilisation rate for a time slot for a given date
+        /// </summary>
+        /// <param name="startDate">The date</param>
+        /// <param name="endDate">The time slot</param>
+        /// <returns>The utilisation rate for the time slot</returns>
+        float CalculateSlotUtilisationRate(DateTime date, Guid? slotId);
     }
 }

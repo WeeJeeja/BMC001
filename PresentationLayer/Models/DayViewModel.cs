@@ -9,6 +9,10 @@ namespace PresentationLayer.Models
     {
         public DotNet.Highcharts.Highcharts DayChart { get; set; }
 
+        public string Day { get; set; }
+
+        public DateTime Date { get; set; }
+
         public float Frequency { get; set; }
 
         public float Occupancy { get; set; }
