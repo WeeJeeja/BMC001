@@ -5,25 +5,23 @@
     Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Dashboard</h2>
-
 <script type="text/javascript" src="~/Scripts/Highcharts-4.0.1/js/highcharts.js"></script>
 
-<div class="content-wrapper col-md-9">
-    @(Model.Chart)
-</div>
+<h2>Dashboard</h2>
 
+<ul class="nav nav-pills">
+  <li class="active"><a href="#overview">Overview</a></li>
+  <li><a href="#">Monday</a></li>
+  <li><a href="#">Tuesday</a></li>
+  <li><a href="#">Wednesday</a></li>
+  <li><a href="#">Thursday</a></li>
+  <li><a href="#">Friday</a></li>
+  <li><a href="#">Time slots</a></li>
+</ul>
 
-<div class="panel panel-info pull-right">
-    <div class="panel-heading"><strong>Rates for this week:</strong></div>
-    <div class="panel-body bg-info">
-        @foreach (string message in ViewBag.Message)
-        {
-            <p>@message</p>
-            <br />
-        }
-
-    </div>
+<div id="overview">
+    <br />
+    @Html.Partial("_overview", Model)
 </div>
 
 <br />
