@@ -197,6 +197,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
+    <Compile Include="Models\DayViewModel.cs" />
     <Compile Include="Models\ResourceRateData.cs" />
     <Compile Include="Models\ResourceRateTable.cs" />
     <Compile Include="Models\ResourceViewModel.cs" />
@@ -407,6 +408,7 @@
     <Content Include="Views\Chart\ResourceInfo.cshtml" />
     <Content Include="Views\Chart\_overview.cshtml" />
     <Content Include="Views\Chart\_resources.cshtml" />
+    <Content Include="Views\Chart\_day.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

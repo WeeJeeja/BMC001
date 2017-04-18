@@ -21,5 +21,15 @@ namespace PresentationLayer.Models
         public int Utilisation { get; set; }
 
         public ICollection<ResourceViewModel> Resources { get; set; }
+
+        public DayViewModel Monday { get; set; }
+
+        public DayViewModel Tuesday { get; set; }
+
+        public DayViewModel Wednesday { get; set; }
+
+        public DayViewModel Thursday { get; set; }
+
+        public DayViewModel Friday { get; set; }
     }
 }
