@@ -197,6 +197,8 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\ChartViewModel.cs" />
+    <Compile Include="Models\CityPopulation.cs" />
+    <Compile Include="Models\SlotViewModel.cs" />
     <Compile Include="Models\DayViewModel.cs" />
     <Compile Include="Models\ResourceRateData.cs" />
     <Compile Include="Models\ResourceRateTable.cs" />
@@ -397,7 +399,6 @@
     <Content Include="Views\Booking\_groupAttendees.cshtml" />
     <Content Include="Views\Booking\_Team.cshtml" />
     <Content Include="Views\Chart\Index.cshtml" />
-    <Content Include="Views\Chart\Test2.cshtml" />
     <Content Include="Views\Team\AddMember.cshtml" />
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />

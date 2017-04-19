@@ -18,5 +18,6 @@ namespace PresentationLayer.Models
         public float Occupancy { get; set; }
 
         public float Utilisation { get; set; }
+
     }
 }
