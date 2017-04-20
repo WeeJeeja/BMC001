@@ -405,11 +405,11 @@
     <Content Include="Views\Booking\AddAttendee.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_AdminNavigation.cshtml" />
-    <Content Include="Views\Chart\WeekChart.cshtml" />
-    <Content Include="Views\Chart\ResourceInfo.cshtml" />
-    <Content Include="Views\Chart\_resources.cshtml" />
-    <Content Include="Views\Chart\_day.cshtml" />
-    <Content Include="Views\Chart\_overview.cshtml" />
+    <Content Include="Views\Chart\ResourceInformation.cshtml" />
+    <Content Include="Views\Chart\ResourceOverview.cshtml" />
+    <Content Include="Views\Chart\DayInformation.cshtml" />
+    <Content Include="Views\Chart\WeekInformation.cshtml" />
+    <Content Include="Views\Chart\_DashboardNavigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

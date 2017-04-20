@@ -1,0 +1,28 @@
+﻿@model PresentationLayer.Models.ChartViewModel
+
+@{
+	ViewBag.Title = "Test";
+	Layout = "~/Views/Home/_AdminNavigation.cshtml";
+}
+
+<h2>Dashboard</h2>
+  <p>KPI information from Monday </p>
+
+
+@Html.Partial("_DashboardNavigation")
+
+<div class="content-wrapper col-md-6">
+	@(Model.Chart)
+</div>
+
+<div class="panel panel-info pull-right">
+	<div class="panel-heading"><strong>Rates for this week:</strong></div>
+	<div class="panel-body bg-info">
+		@foreach (string message in ViewBag.Message)
+		{
+			<p>@message</p>
+			<br />
+		}
+
+	</div>
+</div>

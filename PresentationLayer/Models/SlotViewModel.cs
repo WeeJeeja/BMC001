@@ -5,16 +5,11 @@ using System.Text;
 
 namespace PresentationLayer.Models
 {
-    public class DayViewModel
+    public class SlotViewModel
     {
-        public DayViewModel()
-        {
-            Slots = new List<SlotViewModel>();
-        }
-
         public DotNet.Highcharts.Highcharts DayChart { get; set; }
 
-        public string Day { get; set; }
+        public string Time { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -23,8 +18,5 @@ namespace PresentationLayer.Models
         public float Occupancy { get; set; }
 
         public float Utilisation { get; set; }
-
-        public List<SlotViewModel> Slots { get; set; }
-
     }
 }

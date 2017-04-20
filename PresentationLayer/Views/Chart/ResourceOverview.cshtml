@@ -1,5 +1,16 @@
 ﻿@model PresentationLayer.Models.ChartViewModel
 
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
+}
+
+<h2>Dashboard</h2>
+  <p>KPI information from Monday </p>
+
+
+@Html.Partial("_DashboardNavigation")
+
 <table class="table table-hover">
             <tr>
                 <th>

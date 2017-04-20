@@ -28,7 +28,7 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
-        public ActionResult WeekChart()
+        public ActionResult WeekInformation()
         {
             var date = FindStartDate(DateTime.Today);
 
@@ -44,63 +44,58 @@ namespace PresentationLayer.Controllers
                               "Occupancy rate is " + occupancy.ToString("0.##\\%"),
                               "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
 
-            var chart = GenerateWeekChart(DateTime.Today);
-
-            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
+            var chart = GenerateWeekChart(DateTime.Today, "TestChartForWeek");
 
             var model = new ChartViewModel
             {
                 Chart = chart,
-                Monday = new DayViewModel
-                {
-                    Frequency   = service.CalculateFrequencyRate(date, date),
-                    Occupancy   = service.CalculateOccupancyRate(date, date),
-                    Utilisation = service.CalculateUtilisationRate(date, date),
-                    DayChart    = GenerateDayChart(date, "mondayChart"),
-                    Day         = "Monday",
-                    Date        = date,
-                },
-                Tuesday = new DayViewModel
-                {
-                    Frequency   = service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
-                    Occupancy   = service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
-                    Utilisation = service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1)),
-                    DayChart = GenerateDayChart(date.AddDays(1), "tuesdayChart"),
-                    Day         = "Tuesday",
-                    Date        = date.AddDays(1),
-                },
-                Wednesday = new DayViewModel
-                {
-                    Frequency = service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
-                    Occupancy = service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
-                    Utilisation = service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2)),
-                    DayChart = GenerateDayChart(date.AddDays(2), "wednesdayChart"),
-                    Day = "Wednesday",
-                    Date = date.AddDays(2),
-                },
-                Thursday = new DayViewModel
-                {
-                    Frequency = service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
-                    Occupancy = service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
-                    Utilisation = service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3)),
-                    DayChart = GenerateDayChart(date.AddDays(3), "thursdayChart"),
-                    Day = "Thursday",
-                    Date = date.AddDays(3),
-                },
-                Friday = new DayViewModel
-                {
-                    Frequency = service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
-                    Occupancy = service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
-                    Utilisation = service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4)),
-                    DayChart = GenerateDayChart(date.AddDays(4), "fridayChart"),
-                    Day = "Friday",
-                    Date = date.AddDays(4),
-                },
             };
+
+            return View(model);
+        }
+
+        public ActionResult DayInformation(int day)
+        {
+            var date = DateTime.Today.AddDays(day);
+
+            var frequency = service.CalculateFrequencyRate(date, date.AddDays(4));
+
+            var occupancy = service.CalculateOccupancyRate(date, date.AddDays(4));
+
+            var utilisation = service.CalculateUtilisationRate(date, date.AddDays(4));
+
+            ViewBag.Message = new string[] {
+                              String.Format("Frequency rate is: {0}", frequency.ToString("0.##\\%")),
+                              "Frequency rate is: " + frequency.ToString("0.##\\%"),
+                              "Occupancy rate is " + occupancy.ToString("0.##\\%"),
+                              "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
+
+            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
+
+            var model = new DayViewModel
+            {
+                Frequency = service.CalculateFrequencyRate(date, date),
+                Occupancy = service.CalculateOccupancyRate(date, date),
+                Utilisation = service.CalculateUtilisationRate(date, date),
+                DayChart = GenerateDayChart(date, "mondayChart"),
+                Day = date.DayOfWeek.ToString(),
+                Date = date,
+            };
+
+            return View(model);
+        }
+
+        public ActionResult ResourceOverview()
+        {
+            var date = FindStartDate(DateTime.Today);
+
+            var model = new List<ResourceViewModel>();
+
+            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
 
             foreach (Resource resource in resources)
             {
-                model.Resources.Add(new ResourceViewModel
+                model.Add(new ResourceViewModel
                 {
                     Resource    = resource,
                     Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
@@ -112,10 +107,7 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Chart/ResourceInfo/5
-
-        public ActionResult ResourceInfo(Guid? resourceId)
+        public ActionResult ResourceInformation(Guid? resourceId)
         {
             var resource = resourceService.GetResource(resourceId);
             
@@ -125,7 +117,7 @@ namespace PresentationLayer.Controllers
             {
                 Resource    = converter.ConvertResourceFromWrapper(resource),
                 Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
-                Occupancy = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
+                Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
                 Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
             };
 
@@ -349,50 +341,8 @@ namespace PresentationLayer.Controllers
 
         public ActionResult Test()
         {
-            //var data = new CityPopulation
-            //{
-            //    city_name = "San diego 2013",
-            //    population = 30,
-            //    year = "2013"
-            //};
-            //data.Add(new CityPopulation
-            //{
-            //    city_name = "New york 2013",
-            //    population = 70,
-            //    year = "2013"
-            //});
-
-            //data = data.Where(c => c.year.Equals("2013")).ToList();
-
-
             return View();
         }
-
-
-        //[HttpPost]
-        //public ActionResult Test(List<string> pData)
-        //{
-            //var year = "0";
-
-            //if (pData == null)
-            //{
-            //    year = "2013";
-            //}
-            //else
-            //{
-            //    year = pData[0];
-            //}
-
-            //data = new CityPopulation
-            //    {
-            //        city_name = year.ToString(),
-            //        population = year.ToString(),
-            //        year = "2013"
-            //    });
-
-            //return View(data);
-        //}
-
 
         public ActionResult GetChartData(List<string> pData)
         {
@@ -412,8 +362,6 @@ namespace PresentationLayer.Controllers
                 city_name = "C",
                 population = 300,
             });
-
-            ViewBag.Title = pData[0];
 
             var dataForChart = data.Select(x => new { name = x.city_name, y = x.population });
 
@@ -512,7 +460,7 @@ namespace PresentationLayer.Controllers
             return date;
         }
 
-        private Highcharts GenerateWeekChart(DateTime startDate)
+        private Highcharts GenerateWeekChart(DateTime startDate, string title)
         {
             var date = FindStartDate(startDate);
 
@@ -570,7 +518,7 @@ namespace PresentationLayer.Controllers
             var yDataUtilisation = chartData.Select(i => new object[] { i.Utilisation }).ToArray();
 
             //instanciate an object of the Highcharts type
-            var chart = new Highcharts("chart")
+            var chart = new Highcharts(title)
                 //define the type of chart 
                         .InitChart(new DotNet.Highcharts.Options.Chart { DefaultSeriesType = ChartTypes.Line })
                 //overall Title of the chart 

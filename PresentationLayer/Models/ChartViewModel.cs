@@ -12,6 +12,10 @@ namespace PresentationLayer.Models
             Resources = new List<ResourceViewModel>();
         }
 
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
+
         public DotNet.Highcharts.Highcharts Chart { get; set; }
 
         public int Frequency { get; set; }
@@ -32,4 +36,5 @@ namespace PresentationLayer.Models
 
         public DayViewModel Friday { get; set; }
     }
+
 }

@@ -1,5 +1,16 @@
 ﻿@model PresentationLayer.Models.DayViewModel
 
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
+}
+
+<h2>Dashboard</h2>
+  <p>KPI information from Monday </p>
+
+
+@Html.Partial("_DashboardNavigation")
+
 <div class="container">
 
     <h2>@Model.Day - @Model.Date.ToShortDateString()</h2>
@@ -18,8 +29,32 @@
         </div>
     </div>
 
+    
+    @*<div class="tab-content">
+        <div id="overview" class="tab-pane fade in active">
+              @Html.Partial("_overview", Model)
+        </div>
+        <div id="resources" class="tab-pane fade in">
+                @Html.Partial("_resources", Model)
+        </div>
+        <div id="monday" class="tab-pane fade in">
+            @Html.Partial("_day", Model.Monday)
+        </div>
+        <div id="tuesday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Tuesday)
+        </div>
+        <div id="wednesday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Wednesday)
+        </div>
+        <div id="thursday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Thursday)
+        </div>
+        <div id="friday" class="tab-pane fade">
+            @Html.Partial("_day", Model.Friday)
+        </div>
+  </div>*@
 
-    <div class="panel-group col-md-12" style="padding-top:10px" id="accordion">
+    <div class="panel-group" id="accordion">
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -34,7 +69,7 @@
       commodo consequat.</div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
@@ -48,7 +83,7 @@
       commodo consequat.</div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
