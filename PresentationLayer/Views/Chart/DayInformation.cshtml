@@ -1,4 +1,4 @@
-﻿@model PresentationLayer.Models.DayViewModel
+﻿@model PresentationLayer.Models.DayOverview
 
 @{
     ViewBag.Title = "Test";
@@ -39,7 +39,7 @@
     </div>
     <div id="collapse1" class="panel-collapse collapse in">
       <div class="panel-body">
-          partial view needs to go here
+        @Html.Partial("_slot", Model)
       </div>
     </div>
   </div>

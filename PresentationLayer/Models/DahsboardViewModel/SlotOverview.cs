@@ -7,7 +7,9 @@ namespace PresentationLayer.Models
 {
     public class SlotOverview
     {
-        public DotNet.Highcharts.Highcharts DayChart { get; set; }
+        public DotNet.Highcharts.Highcharts FrequencyChart { get; set; }
+
+        public DotNet.Highcharts.Highcharts OccupancyChart { get; set; }
 
         public string Time { get; set; }
 
@@ -18,5 +20,9 @@ namespace PresentationLayer.Models
         public float Occupancy { get; set; }
 
         public float Utilisation { get; set; }
+
+        public int NumberOfResources { get; set; }
+
+        public int NumberOfResourcesUsed { get; set; }
     }
 }

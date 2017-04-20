@@ -6,10 +6,11 @@ namespace DomainLayer
     public interface IResourceService
     {
         /// <summary>
-        /// Gets a list of all resources
+        /// Gets a list of active resources
         /// </summary>
-        /// <returns>A list of all resources</returns>
-        List<Resource> GetResources();
+        /// <param name="date">the date to get the active resources until</param>
+        /// <returns>the active resources</returns>
+        List<Resource> GetResources(DateTime? date = null);
 
         /// <summary>
         /// Gets the resource using the resourceId

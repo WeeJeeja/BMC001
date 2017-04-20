@@ -14,15 +14,19 @@ namespace DomainLayer
         ModelConversitions converter = new ModelConversitions();
 
         #endregion
+
         /// <summary>
-        /// Gets a list of all resources
+        /// Gets a list of active resources
         /// </summary>
-        /// <returns>Returns a list of all resources</returns>
-        public List<Resource> GetResources()
+        /// <param name="date">the date to get the active resources until</param>
+        /// <returns>the active resources</returns>
+        public List<Resource> GetResources(DateTime? date = null)
         {
             var db = new ReScrumEntities();
 
-            var resourceData = db.Resources.Where(r => r.CancellationDate == null).ToList();
+            if (date == null) date = DateTime.Today;
+
+            var resourceData = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate < date).ToList();
             var resources = new List<Resource>();
 
             foreach (DataLayer.Models.Resource data in resourceData)

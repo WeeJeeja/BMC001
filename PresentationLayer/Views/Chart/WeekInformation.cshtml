@@ -1,4 +1,4 @@
-﻿@model PresentationLayer.Models.ChartViewModel
+﻿@model PresentationLayer.Models.WeekOverview
 
 @{
 	ViewBag.Title = "Test";
@@ -11,18 +11,82 @@
 
 @Html.Partial("_DashboardNavigation")
 
-<div class="content-wrapper col-md-6">
-	@(Model.Chart)
-</div>
+<div class="container-fluid">
+  <div class="row content">
+	
+	<div class="col-sm-13">
+	  <div class="well">
+		<h4>Dashboard</h4>
+		<p>Some text..</p>
+	  </div>
+	  <div class="row">
+		<div class="col-sm-6">
+		  <div class="well">
+			@(Model.Chart)
+		  </div>
+		</div>
+		<div class="col-sm-3">
+		  <div class="well">
+			<h4>Pages</h4>
+			<p>100 Million</p> 
+		  </div>
+		</div>
+		<div class="col-sm-3">
+		  <div class="well">
+			<h4>Sessions</h4>
+			<p>10 Million</p> 
+		  </div>
+		</div>
+		<div class="col-sm-3">
+		  <div class="well">
+			<h4>Bounce</h4>
+			<p>30%</p> 
+		  </div>
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-sm-4">
+		  <div class="well">
+			<p>Text</p> 
+			<p>Text</p> 
+			<p>Text</p> 
+		  </div>
+		</div>
+		<div class="col-sm-4">
+		  <div class="well">
+			<p>Text</p> 
+			<p>Text</p> 
+			<p>Text</p> 
+		  </div>
+		</div>
+		<div class="col-sm-4">
+		  <div class="well">
+			<div class="panel panel-info pull-right">
+				<div class="panel-heading"><strong>Rates for this week:</strong></div>
+				<div class="panel-body bg-info">
+					@foreach (string message in ViewBag.Message)
+					{
+						<p>@message</p>
+						<br />
+					}
 
-<div class="panel panel-info pull-right">
-	<div class="panel-heading"><strong>Rates for this week:</strong></div>
-	<div class="panel-body bg-info">
-		@foreach (string message in ViewBag.Message)
-		{
-			<p>@message</p>
-			<br />
-		}
-
+				</div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="row">
+		<div class="col-sm-8">
+		  <div class="well">
+			<p>Text</p> 
+		  </div>
+		</div>
+		<div class="col-sm-4">
+		  <div class="well">
+			<p>Text</p> 
+		  </div>
+		</div>
+	  </div>
 	</div>
+  </div>
 </div>

@@ -196,6 +196,7 @@
     <Compile Include="HelperMethods\ModelConversitions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\DahsboardViewModel\SlotChartData.cs" />
     <Compile Include="Models\DahsboardViewModel\WeekOverview.cs" />
     <Compile Include="Models\CityPopulation.cs" />
     <Compile Include="Models\DahsboardViewModel\SlotOverview.cs" />
@@ -364,7 +365,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Resource\Web.config" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
@@ -410,6 +411,7 @@
     <Content Include="Views\Chart\DayInformation.cshtml" />
     <Content Include="Views\Chart\WeekInformation.cshtml" />
     <Content Include="Views\Chart\_DashboardNavigation.cshtml" />
+    <Content Include="Views\Chart\_slot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -190,6 +190,26 @@ namespace DomainLayer
         #region Rates for time slot
 
         /// <summary>
+        /// Counts how many resources were in use on a certain day at a certain time
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The time slot</param>
+        /// <returns>The number of resources used in a time slot</returns>
+        public int GetResourcesUsedInSlot(DateTime date, Guid? slotId)
+        {
+            var db = new ReScrumEntities();
+
+            //All of the bookings for the time on the day -> all 9am booking for Tuesday 18th April
+            var bookings = db.Booking.Where(b => b.Date == date && b.Slot.SlotId == slotId).ToList();
+            if (bookings.Count() < 1) return 0;
+
+            //Removes multiple bookings for the same resource -> group bookings
+            var resourcesBookedInSlot = bookings.GroupBy(x => x.Resource).Select(y => y.First()).Count();
+
+            return resourcesBookedInSlot;
+        }
+
+        /// <summary>
         /// Calculates the frequency rate for a time slot between a given date
         /// </summary>
         /// <param name="date">The date</param>
@@ -202,12 +222,8 @@ namespace DomainLayer
             /// Frequency rate: percentage of time space is used compared to its availability
             float frequencyRate = 0;
 
-            //All of the bookings for the time on the day -> all 9am booking for Tuesday 18th April
-            var bookings = db.Booking.Where(b => b.Date == date && b.Slot.SlotId == slotId).ToList();
-            if (bookings.Count() < 1) return 0;
-
             //Removes multiple bookings for the same resource -> group bookings
-            var resourcesBookedInSlot = bookings.GroupBy(x => x.Resource).Select(y => y.First()).Count();
+            var resourcesBookedInSlot = GetResourcesUsedInSlot(date, slotId);
 
             var resources = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate > date).ToList();
 

@@ -68,6 +68,14 @@ namespace DomainLayer
         float CalculateOccupancyRate(DateTime startDate, DateTime endDate);
 
         /// <summary>
+        /// Counts how many resources were in use on a certain day at a certain time
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="slotId">The time slot</param>
+        /// <returns>The number of resources used in a time slot</returns>
+        int GetResourcesUsedInSlot(DateTime date, Guid? slotId);
+
+        /// <summary>
         /// Calculates the frequency rate for a time slot between a given date
         /// </summary>
         /// <param name="date">The date</param>
