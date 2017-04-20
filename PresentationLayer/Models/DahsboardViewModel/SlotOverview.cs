@@ -5,16 +5,13 @@ using System.Text;
 
 namespace PresentationLayer.Models
 {
-    public class ResourceViewModel
+    public class SlotOverview
     {
-        public ResourceViewModel()
-        {
-            Table = new List<ResourceRateTable>();
-        }
+        public DotNet.Highcharts.Highcharts DayChart { get; set; }
 
-        public List<ResourceRateTable> Table { get; set; }
+        public string Time { get; set; }
 
-        public Resource Resource { get; set; }
+        public DateTime Date { get; set; }
 
         public float Frequency { get; set; }
 

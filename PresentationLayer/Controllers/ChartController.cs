@@ -46,7 +46,7 @@ namespace PresentationLayer.Controllers
 
             var chart = GenerateWeekChart(DateTime.Today, "TestChartForWeek");
 
-            var model = new ChartViewModel
+            var model = new WeekOverview
             {
                 Chart = chart,
             };
@@ -72,7 +72,7 @@ namespace PresentationLayer.Controllers
 
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
 
-            var model = new DayViewModel
+            var model = new DayOverview
             {
                 Frequency = service.CalculateFrequencyRate(date, date),
                 Occupancy = service.CalculateOccupancyRate(date, date),
@@ -89,13 +89,13 @@ namespace PresentationLayer.Controllers
         {
             var date = FindStartDate(DateTime.Today);
 
-            var model = new List<ResourceViewModel>();
+            var model = new List<ResourceOverview>();
 
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
 
             foreach (Resource resource in resources)
             {
-                model.Add(new ResourceViewModel
+                model.Add(new ResourceOverview
                 {
                     Resource    = resource,
                     Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
@@ -113,7 +113,7 @@ namespace PresentationLayer.Controllers
             
             var date = FindStartDate(DateTime.Today);
 
-            var model = new ResourceViewModel
+            var model = new ResourceOverview
             {
                 Resource    = converter.ConvertResourceFromWrapper(resource),
                 Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
@@ -367,7 +367,6 @@ namespace PresentationLayer.Controllers
 
             return Json(dataForChart, JsonRequestBehavior.AllowGet);
         }
-
 
         //
         // POST: /ChartSample/Edit/5
