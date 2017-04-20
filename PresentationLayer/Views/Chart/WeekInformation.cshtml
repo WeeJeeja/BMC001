@@ -21,9 +21,7 @@
 	  </div>
 	  <div class="row">
 		<div class="col-sm-6">
-		  <div class="well">
 			@(Model.Chart)
-		  </div>
 		</div>
 		<div class="col-sm-3">
 		  <div class="well">
@@ -76,14 +74,12 @@
 		</div>
 	  </div>
 	  <div class="row">
-		<div class="col-sm-8">
-		  <div class="well">
-			<p>Text</p> 
-		  </div>
+		<div class="col-sm-9">
+			@Html.Partial("_resourceOverview", Model) 
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 		  <div class="well">
-			<p>Text</p> 
+			<p>Search for the resources</p> 
 		  </div>
 		</div>
 	  </div>

@@ -52,6 +52,19 @@ namespace PresentationLayer.Controllers
                 Chart = chart,
             };
 
+            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
+
+            foreach (Resource resource in resources)
+            {
+                model.Resources.Add(new ResourceOverview
+                {
+                    Resource    = resource,
+                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
+                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
+                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
+                });
+            }
+
             return View(model);
         }
 
@@ -97,28 +110,6 @@ namespace PresentationLayer.Controllers
                     });
             }
 
-            return View(model);
-        }
-
-        public ActionResult ResourceOverview()
-        {
-            var date = FindStartDate(DateTime.Today);
-
-            var model = new List<ResourceOverview>();
-
-            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
-
-            foreach (Resource resource in resources)
-            {
-                model.Add(new ResourceOverview
-                {
-                    Resource    = resource,
-                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
-                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
-                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
-                });
-
-            }
             return View(model);
         }
 

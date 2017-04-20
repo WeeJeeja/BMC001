@@ -407,7 +407,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_AdminNavigation.cshtml" />
     <Content Include="Views\Chart\ResourceInformation.cshtml" />
-    <Content Include="Views\Chart\ResourceOverview.cshtml" />
+    <Content Include="Views\Chart\_resourceOverview.cshtml" />
     <Content Include="Views\Chart\DayInformation.cshtml" />
     <Content Include="Views\Chart\WeekInformation.cshtml" />
     <Content Include="Views\Chart\_DashboardNavigation.cshtml" />

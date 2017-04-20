@@ -1,17 +1,6 @@
-﻿@model PresentationLayer.Models.ChartViewModel
+﻿@model PresentationLayer.Models.WeekOverview
 
-@{
-    ViewBag.Title = "Test";
-    Layout = "~/Views/Home/_AdminNavigation.cshtml";
-}
-
-<h2>Dashboard</h2>
-  <p>KPI information from Monday </p>
-
-
-@Html.Partial("_DashboardNavigation")
-
-<table class="table table-hover">
+<table class="table table-hover bg-info">
             <tr>
                 <th>
                     Resource
@@ -48,11 +37,10 @@
             @Html.DisplayFor(modelItem => item.Occupancy)
         </td>
         <td>
-                <button type="button" class="btn btn-primary">
-                    @Html.ActionLink("More info", "ResourceInfo", new { resourceId = item.Resource.ResourceId })
+                <button type="button" class="btn btn-info">
+                    @Html.ActionLink("More info", "ResourceInformation", new { resourceId = item.Resource.ResourceId })
                 </button>
         </td>
     </tr>
 }
-
 </table>
