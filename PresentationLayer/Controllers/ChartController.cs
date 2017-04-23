@@ -33,23 +33,16 @@ namespace PresentationLayer.Controllers
         {
             var date = FindStartDate(DateTime.Today);
 
-            var frequency = service.CalculateFrequencyRate(date, date.AddDays(4));
-
-            var occupancy = service.CalculateOccupancyRate(date, date.AddDays(4));
-
-            var utilisation = service.CalculateUtilisationRate(date, date.AddDays(4));
-
-            ViewBag.Message = new string[] {
-                              String.Format("Frequency rate is: {0}", frequency.ToString("0.##\\%")),
-                              "Frequency rate is: " + frequency.ToString("0.##\\%"),
-                              "Occupancy rate is " + occupancy.ToString("0.##\\%"),
-                              "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
-
-            var chart = GenerateWeekChart(DateTime.Today, "TestChartForWeek");
+            var chart = GenerateWeekChart(DateTime.Today, "WeekChart");
 
             var model = new WeekOverview
             {
-                Chart = chart,
+                Chart       = chart,
+                Frequency   = service.CalculateFrequencyRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                Occupancy   = service.CalculateOccupancyRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                Utilisation = service.CalculateUtilisationRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                StartDate   = date,
+                EndDate     = date.AddDays(4),
             };
 
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());

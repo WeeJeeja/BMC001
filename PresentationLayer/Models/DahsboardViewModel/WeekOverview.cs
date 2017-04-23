@@ -17,11 +17,11 @@ namespace PresentationLayer.Models
 
         public DotNet.Highcharts.Highcharts Chart { get; set; }
 
-        public int Frequency { get; set; }
+        public string Frequency { get; set; }
 
-        public int Occupancy { get; set; }
+        public string Occupancy { get; set; }
 
-        public int Utilisation { get; set; }
+        public string Utilisation { get; set; }
 
         public List<ResourceOverview> Resources { get; set; }
     }

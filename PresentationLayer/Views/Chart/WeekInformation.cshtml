@@ -1,8 +1,8 @@
 ﻿@model PresentationLayer.Models.WeekOverview
 
 @{
-	ViewBag.Title = "Test";
-	Layout = "~/Views/Home/_AdminNavigation.cshtml";
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
 <h2>Dashboard</h2>
@@ -11,76 +11,71 @@
 
 <div class="container-fluid">
   <div class="row content">
-	
-	<div class="col-sm-13">
-	  <div class="well" style="border-left-width:10px; border-left-color:purple">
-		<h4 style="color:purple">Week view</h4>
-		<p>KPI infomration from Monday @Model.StartDate to Friday @Model.EndDate</p>
-	  </div>
-	  <div class="row">
-		<div class="col-sm-6">
-			@(Model.Chart)
-		</div>
-		<div class="col-sm-3">
-		  <div class="well" style="border-left-width:10px; border-left-color:aqua">
-			<h4 style="color:aqua">Frequency</h4>
-			<p>100 Million</p> 
-		  </div>
-		</div>
-		<div class="col-sm-3">
-		  <div class="well" style="border-left-width:10px; border-left-color:deeppink">
-			<h4 style="color:deeppink">Occupancy</h4>
-			<p>10 Million</p> 
-		  </div>
-		</div>
-		<div class="col-sm-3">
-		  <div class="well" style="border-left-width:10px; border-left-color:darkorange">
-			<h4 style="color:darkorange">Utilisation</h4>
-			<p>30%</p> 
-		  </div>
-		</div>
-	  </div>
-	  <div class="row">
-		<div class="col-sm-4">
-		  <div class="well">
-			<p>Text</p> 
-			<p>Text</p> 
-			<p>Text</p> 
-		  </div>
-		</div>
-		<div class="col-sm-4">
-		  <div class="well">
-			<p>Text</p> 
-			<p>Text</p> 
-			<p>Text</p> 
-		  </div>
-		</div>
-		<div class="col-sm-4">
-		  <div class="well">
-			<div class="panel panel-info pull-right">
-				<div class="panel-heading"><strong>Rates for this week:</strong></div>
-				<div class="panel-body bg-info">
-					@foreach (string message in ViewBag.Message)
-					{
-						<p>@message</p>
-						<br />
-					}
-
-				</div>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	  <div class="row">
-		<div class="col-sm-9">
-			@Html.Partial("_resourceOverview", Model) 
-		</div>
-		<div class="col-sm-3">
-		  <div class="well">
-			<p>Search for the resources</p> 
-		  </div>
-		</div>
-	  </div>
-	</div>
+    
+    <div class="col-sm-13">
+      <div class="well" style="border-left-width:10px; border-left-color:purple">
+        <h4 style="color:purple">Week view</h4>
+        <p>KPI infomration from Monday @Model.StartDate.Value.ToShortDateString() to Friday @Model.EndDate.Value.ToShortDateString()</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            @(Model.Chart)
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:aqua">
+            <h4 style="color:aqua">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:aqua">@Model.Frequency</strong></p> 
+            <p>Frequency rate: percentage of ime space is used compared to it's availability</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+            <h4 style="color:deeppink">OCCUPANY</h4>
+            <p>Average occupancy rate for the week was <strong style="color:deeppink">@Model.Occupancy</strong></p> 
+            <p>Occupancy rate: how full the space is compared to it's capacity, only calculated for when the resource is in use</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+            <h4 style="color:darkorange">UTILISATION</h4>
+            <p>Average utilisation rate for the week was <strong style="color:darkorange">@Model.Utilisation</strong></p> 
+            <p>Utilisation rate: Frequency rate * Occupancy rate</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-9">
+            @Html.Partial("_resourceOverview", Model) 
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <p>Search for the resources</p> 
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
