@@ -6,8 +6,6 @@
 }
 
 <h2>Dashboard</h2>
-  <p>KPI information from Monday </p>
-
 
 @Html.Partial("_DashboardNavigation")
 
@@ -15,29 +13,29 @@
   <div class="row content">
 	
 	<div class="col-sm-13">
-	  <div class="well">
-		<h4>Dashboard</h4>
-		<p>Some text..</p>
+	  <div class="well" style="border-left-width:10px; border-left-color:purple">
+		<h4 style="color:purple">Week view</h4>
+		<p>KPI infomration from Monday @Model.StartDate to Friday @Model.EndDate</p>
 	  </div>
 	  <div class="row">
 		<div class="col-sm-6">
 			@(Model.Chart)
 		</div>
 		<div class="col-sm-3">
-		  <div class="well">
-			<h4>Pages</h4>
+		  <div class="well" style="border-left-width:10px; border-left-color:aqua">
+			<h4 style="color:aqua">Frequency</h4>
 			<p>100 Million</p> 
 		  </div>
 		</div>
 		<div class="col-sm-3">
-		  <div class="well">
-			<h4>Sessions</h4>
+		  <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+			<h4 style="color:deeppink">Occupancy</h4>
 			<p>10 Million</p> 
 		  </div>
 		</div>
 		<div class="col-sm-3">
-		  <div class="well">
-			<h4>Bounce</h4>
+		  <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+			<h4 style="color:darkorange">Utilisation</h4>
 			<p>30%</p> 
 		  </div>
 		</div>
