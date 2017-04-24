@@ -31,7 +31,7 @@ namespace PresentationLayer.Controllers
 
         public ActionResult WeekInformation(DateTime date)
         {
-            date = FindStartDate(DateTime.Today);
+            date = FindStartDate(date);
 
             var chart = GenerateWeekChart(DateTime.Today, "WeekChart");
 
@@ -415,8 +415,6 @@ namespace PresentationLayer.Controllers
 
         private DateTime FindStartDate(DateTime date)
         {
-            date = DateTime.Today;
-
             switch (date.DayOfWeek)
             {
                 case DayOfWeek.Monday:
