@@ -29,9 +29,9 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
-        public ActionResult WeekInformation()
+        public ActionResult WeekInformation(DateTime date)
         {
-            var date = FindStartDate(DateTime.Today);
+            date = FindStartDate(DateTime.Today);
 
             var chart = GenerateWeekChart(DateTime.Today, "WeekChart");
 

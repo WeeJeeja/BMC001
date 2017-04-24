@@ -14,10 +14,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li>@Html.ActionLink("This week", "WeekInformation", "Chart")</li>
-                      <li><a href="#">Next week</a></li>
-                      <li><a href="#">Last week</a></li>
-                      <li><a href="#">Month</a></li>  
+                      <li>@Html.ActionLink("This week", "WeekInformation", "Chart", new { date = DateTime.Today }, null)</li>
+                      <li>@Html.ActionLink("Last week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(-7)}, null)</li>
+                      <li>@Html.ActionLink("Next week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(7)}, null)</li>
                     </ul>
                   </li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Resource" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
