@@ -6,10 +6,10 @@
 }
 
 <h2>Dashboard</h2>
-  <p>KPI information from Monday </p>
+  <p>KPI information from @Model.Date.ToString("MMMM dd, yyyy")</p>
 
 
-@Html.Partial("_DashboardNavigation")
+@Html.Partial("_DashboardNavigation", Model.DateInformation)
 
 <div class="container">
 

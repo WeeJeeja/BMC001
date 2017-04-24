@@ -24,6 +24,8 @@ namespace PresentationLayer.Models
         public string Utilisation { get; set; }
 
         public List<ResourceOverview> Resources { get; set; }
+
+        public DateInformation DateInformation { get; set; }
     }
 
 }

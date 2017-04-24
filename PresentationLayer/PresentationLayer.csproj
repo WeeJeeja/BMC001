@@ -196,6 +196,7 @@
     <Compile Include="HelperMethods\ModelConversitions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\DahsboardViewModel\DateInformation.cs" />
     <Compile Include="Models\DahsboardViewModel\SlotChartData.cs" />
     <Compile Include="Models\DahsboardViewModel\WeekOverview.cs" />
     <Compile Include="Models\CityPopulation.cs" />

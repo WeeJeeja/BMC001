@@ -45,6 +45,11 @@ namespace PresentationLayer.Controllers
                 EndDate     = date.AddDays(4),
             };
 
+            model.DateInformation = new DateInformation
+            {
+                StartDate = date,
+            };
+
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
 
             foreach (Resource resource in resources)
@@ -61,10 +66,8 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        public ActionResult DayInformation(int day)
+        public ActionResult DayInformation(DateTime date)
         {
-            var date = DateTime.Today.AddDays(day);
-
             var frequency = service.CalculateFrequencyRate(date, date.AddDays(4));
 
             var occupancy = service.CalculateOccupancyRate(date, date.AddDays(4));
@@ -88,6 +91,13 @@ namespace PresentationLayer.Controllers
                 Day         = date.DayOfWeek.ToString(),
                 Date        = date,
             };
+
+            model.DateInformation = new DateInformation
+            {
+                StartDate = FindStartDate(date),
+                ActiveDay = date.DayOfWeek.ToString(),
+            };
+
 
             var slots = slotService.GetSlots();
 

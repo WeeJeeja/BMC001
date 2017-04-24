@@ -25,5 +25,7 @@ namespace PresentationLayer.Models
         public float Utilisation { get; set; }
 
         public List<SlotOverview> Slots { get; set; }
+
+        public DateInformation DateInformation { get; set; }
     }
 }
