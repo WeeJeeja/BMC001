@@ -3,15 +3,14 @@
  @*List of people to add to booking*@
     @if (Model.GroupBooking.Attendees.Count() == 0)
     {
-        <p>No resources found, please enter serach criteria.</p>
+        <div class="alert-info col-sm-4" style="padding:20px">
+            <p>No attendees are avilable to be added</p>
+        </div>
     }
     else
     {
-        <h2>Add details button for each team showing all members of it </h2>
-
-        <h2>Add details button for each user showing their current resource schedule </h2>
-        <table>
-    <tr>
+        <table class="table table-hover">
+            <tr>
         <th>
             Employee number
         </th>

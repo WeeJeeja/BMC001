@@ -5,26 +5,54 @@
     Layout = null;
 }
 
-<h2>Create...</h2>
+<h3>Add a booking with multiple attendees</h3>
+
     @using (Ajax.BeginForm("RetrieveAvailableResourcesForGroupBooking", "Booking", new AjaxOptions()
     {
         InsertionMode = InsertionMode.Replace,
         UpdateTargetId = "groupResources",
     }))
     {
-        <div id="accordion">
-            <h3>Add teams</h3>
-            <div>
-                @Html.Partial("_groupTeams", Model)
+        <div class="panel-group col-md-9" id="accordion">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                Add team(s)</a>
+              </h4>
             </div>
-            <h3>Add Attendees</h3>
-            <div>
-                @Html.Partial("_groupAttendees", Model)
+            <div id="collapse1" class="panel-collapse collapse in">
+              <div class="panel-body">
+                    @Html.Partial("_groupTeams", Model)
+              </div>
             </div>
-            <h3>Booking criteria</h3>
-            <div>
-                @Html.Partial("_groupBookingCriteria", Model)
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                Add attendee(s)</a>
+              </h4>
             </div>
+            <div id="collapse2" class="panel-collapse collapse">
+              <div class="panel-body">
+                    @Html.Partial("_groupAttendees", Model)
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                Booking criteria</a>
+              </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+              <div class="panel-body">
+                  @Html.Partial("_groupBookingCriteria", Model)
+              </div>
+            </div>
+          </div>
         </div>
     }
 
@@ -32,11 +60,3 @@
     <div id="groupResources">
         @Html.Partial("_groupResources")
     </div>
-    <script>
-        $(function () {
-            $("#accordion").accordion({
-                heightStyle: "content",
-                collapsible: true,
-            });
-        });
-    </script>

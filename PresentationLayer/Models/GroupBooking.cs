@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace PresentationLayer.Models
 {
@@ -16,8 +15,10 @@ namespace PresentationLayer.Models
         }
         public DateTime Date { get; set; }
 
+        [Display(Name = "Start time")]
         public Guid? StartTime { get; set; }
 
+        [Display(Name = "End time")]
         public Guid? EndTime { get; set; }
 
         public ICollection<User> Attendees { get; set; }

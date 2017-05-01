@@ -1,9 +1,5 @@
 ﻿@model PresentationLayer.Models.CreateBooking
 
-@{
-    ViewBag.Title = "Create";
-}
-
 <h3>Add a booking for one time slot</h3>
 
 @using (Ajax.BeginForm("RetrieveAvailableResources", "Booking", new AjaxOptions()
@@ -36,7 +32,7 @@
         </div>
 
         <br />
-        <button type="submit" class="btn btn-success">Filter</button>
+        <button type="submit" class="btn btn-primary">Filter</button>
 
     </fieldset>
 }
@@ -45,10 +41,4 @@
         <div id="resources">
         @Html.Partial("_resources")
         </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
 
