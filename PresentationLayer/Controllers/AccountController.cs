@@ -57,7 +57,9 @@ namespace PresentationLayer.Controllers
                 Session["UserId"] = user.UserId;
                 Session["Username"] = user.Forename + " " + user.Surname + " - " + user.JobTitle; ;
                 Session["IsAdmin"] = user.IsAdministrator;
-                return RedirectToLocal(returnUrl);
+
+                if (returnUrl != null) return RedirectToLocal(returnUrl);
+                return RedirectToAction("Index", "Booking");
             }
 
             // If we got this far, something failed, redisplay form

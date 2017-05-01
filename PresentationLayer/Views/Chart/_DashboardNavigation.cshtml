@@ -25,6 +25,7 @@
             <li class="@(Model.ActiveDay == "Friday" ? "active" : "")">
                 @Html.ActionLink("Friday", "DayInformation", new { date = Model.StartDate.AddDays(4) })
             </li>
+            @*<li>@Html.ActionLink("Wee chart", "Test", "Chart")</li>*@
         </ul>
       </div>
     </nav>
