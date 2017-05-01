@@ -362,7 +362,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -405,7 +404,6 @@
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />
     <Content Include="Views\Booking\AddAttendee.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_AdminNavigation.cshtml" />
     <Content Include="Views\Chart\ResourceInformation.cshtml" />
     <Content Include="Views\Chart\_resourceOverview.cshtml" />

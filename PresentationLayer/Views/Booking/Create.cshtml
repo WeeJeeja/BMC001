@@ -2,45 +2,31 @@
 
 @{
     ViewBag.Title = "Overview";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Overview</h2>
-<link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<h2 style="padding-left:20px;padding-bottom:20px">Add a new resource booking</h2>
 
-@Styles.Render("~/Content/themes/base/css")
-<div id="tabs">
+<div class="container">
 
-    <ul>
-        <li><a href="#tabs-1">Individual booking</a></li>
-        <li><a href="#tabs-2">Block booking</a></li>
-        <li><a href="#tabs-3">Group booking</a></li>
-    </ul>
+     <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#single">Single booking</a></li>
+    <li><a data-toggle="pill" href="#block">Block booking</a></li>
+    <li><a data-toggle="pill" href="#group">Group booking</a></li>
+  </ul>
 
-    <div id="tabs-1">
-        Book a single slot<br />
+  <div class="tab-content">
+    <div id="single" class="tab-pane fade in active">
         @Html.Partial("_basicBooking", Model)
     </div>
-
-    <div id="tabs-2">
-        Content for Tab 2 goes here.<br />
+    <div id="block" class="tab-pane fade">
         @Html.Partial("_blockBooking", Model)
     </div>
-
-    <div id="tabs-3">
-        Room booking.<br />
+    <div id="group" class="tab-pane fade">
         @Html.Partial("_groupBooking", Model)
     </div>
+  </div>
 
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/jqueryval")
-}
-<script type="text/javascript">
-    $(function () {
-        $("#tabs").tabs();
-    });
-</script>
 
 
