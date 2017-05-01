@@ -5,72 +5,42 @@
     Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Dashboard</h2>
-  <p>KPI information from @Model.Date.ToString("MMMM dd, yyyy")</p>
-
-
 @Html.Partial("_DashboardNavigation", Model.DateInformation)
 
-<div class="container">
-
-    <h2>@Model.Day - @Model.Date.ToShortDateString()</h2>
-
-    <div class="content-wrapper col-md-6">
-        @(Model.DayChart)
-    </div>
-
-    <div class="panel panel-info pull-right">
-        <div class="panel-heading">Rates</div>
-        <div class="panel-body bg-info">
-            <p>Frequency: </p> <strong> @Model.Frequency </strong>
-            <p>Occupancy: </p> <strong> @Model.Occupancy </strong>
-            <p>Utilisation: </p> <strong> @Model.Utilisation </strong>
-
+<div class="container-fluid">
+  <div class="row content">
+    
+    <div class="col-sm-13">
+      <div class="well" style="border-left-width:10px; border-left-color:purple">
+        <h4 style="color:purple">Week view</h4>
+        <p>KPI infomration from <strong style="color:purple">@Model.Day - @Model.Date.ToString("MMMM dd, yyyy")</strong></p>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            @(Model.DayChart)
         </div>
-    </div>
-
-<div class="panel-group col-md-12" id="accordion">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-        9am time slot</a>
-      </h4>
-    </div>
-    <div id="collapse1" class="panel-collapse collapse in">
-      <div class="panel-body">
-        @Html.Partial("_slot", Model)
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:aqua">
+            <h4 style="color:aqua">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:aqua">@Model.Frequency</strong></p> 
+            <p>Frequency rate: percentage of ime space is used compared to it's availability</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+            <h4 style="color:deeppink">OCCUPANY</h4>
+            <p>Average occupancy rate for the week was <strong style="color:deeppink">@Model.Occupancy</strong></p> 
+            <p>Occupancy rate: how full the space is compared to it's capacity, only calculated for when the resource is in use</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+            <h4 style="color:darkorange">UTILISATION</h4>
+            <p>Average utilisation rate for the week was <strong style="color:darkorange">@Model.Utilisation</strong></p> 
+            <p>Utilisation rate: Frequency rate * Occupancy rate</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-        10am time slot</a>
-      </h4>
-    </div>
-    <div id="collapse2" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-        11am time slot</a>
-      </h4>
-    </div>
-    <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.</div>
-    </div>
-  </div>
-</div>
-
 </div>
