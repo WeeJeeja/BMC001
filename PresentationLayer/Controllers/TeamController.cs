@@ -26,19 +26,10 @@ namespace PresentationLayer.Controllers
         {
             ViewBag.Message = successMessage;
 
+            //gets all of the teams from the database
             var data = service.GetTeams();
-            var teams = new List<Team>();
 
-            foreach (DomainLayer.WrapperModels.Team t in data)
-            {
-                var team = new Team
-                {
-                    TeamId = t.TeamId,
-                    Name = t.Name,
-                    Colour = t.Colour,
-                };
-                teams.Add(team);
-            }
+            var teams = converter.ConvertTeamsFromWrapper(data);
 
             return View(teams);
         }

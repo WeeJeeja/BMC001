@@ -8,7 +8,7 @@ namespace PresentationLayer.Tests.Models
     public class UserTests
     {
         [Test]
-        public void UserEmployeeNumber()
+        public void User_Employee_Number_Tests()
         {
             var model = new User()
             {
@@ -25,7 +25,7 @@ namespace PresentationLayer.Tests.Models
         }
 
         [Test]
-        public void UserForename()
+        public void User_Forename_Tests()
         {
             var model = new User()
             {
@@ -42,7 +42,7 @@ namespace PresentationLayer.Tests.Models
         }
 
         [Test]
-        public void UserSurname()
+        public void User_Surname_Tests()
         {
             var model = new User()
             {
@@ -59,7 +59,7 @@ namespace PresentationLayer.Tests.Models
         }
 
         [Test]
-        public void UserEmail()
+        public void User_Email_Tests()
         {
             var model = new User()
             {

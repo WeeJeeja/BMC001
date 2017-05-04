@@ -8,6 +8,10 @@ namespace DomainLayer.WrapperModels
 {
     public class Team
     {
+        public Team()
+        {
+            Members = new List<User>();
+        }
         public Guid? TeamId { get; set; }
 
         public string Name { get; set; }

@@ -37,17 +37,16 @@ namespace PresentationLayer.Controllers
 
             var model = new WeekOverview
             {
-                Chart       = chart,
-                Frequency   = service.CalculateFrequencyRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                Occupancy   = service.CalculateOccupancyRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                Utilisation = service.CalculateUtilisationRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                StartDate   = date,
-                EndDate     = date.AddDays(4),
-            };
-
-            model.DateInformation = new DateInformation
-            {
-                StartDate = date,
+                Chart           = chart,
+                Frequency       = service.CalculateFrequencyRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                Occupancy       = service.CalculateOccupancyRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                Utilisation     = service.CalculateUtilisationRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                StartDate       = date,
+                EndDate         = date.AddDays(4),
+                DateInformation = new DateInformation
+                {
+                    StartDate = date,
+                },
             };
 
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
@@ -62,24 +61,11 @@ namespace PresentationLayer.Controllers
                     Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
                 });
             }
-
             return View(model);
         }
 
         public ActionResult DayInformation(DateTime date)
         {
-            var frequency = service.CalculateFrequencyRate(date, date.AddDays(4));
-
-            var occupancy = service.CalculateOccupancyRate(date, date.AddDays(4));
-
-            var utilisation = service.CalculateUtilisationRate(date, date.AddDays(4));
-
-            ViewBag.Message = new string[] {
-                              String.Format("Frequency rate is: {0}", frequency.ToString("0.##\\%")),
-                              "Frequency rate is: " + frequency.ToString("0.##\\%"),
-                              "Occupancy rate is " + occupancy.ToString("0.##\\%"),
-                              "Utilisation rate is: " + utilisation.ToString("0.##\\%") };
-
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
 
             var model = new DayOverview
@@ -87,7 +73,7 @@ namespace PresentationLayer.Controllers
                 Frequency   = service.CalculateFrequencyRate(date, date),
                 Occupancy   = service.CalculateOccupancyRate(date, date),
                 Utilisation = service.CalculateUtilisationRate(date, date),
-                DayChart    = GenerateDayChart(date, "mondayChart"),
+                DayChart    = GenerateDayChart(date, date.DayOfWeek + "Chart"),
                 Day         = date.DayOfWeek.ToString(),
                 Date        = date,
             };
@@ -97,21 +83,6 @@ namespace PresentationLayer.Controllers
                 StartDate = FindStartDate(date),
                 ActiveDay = date.DayOfWeek.ToString(),
             };
-
-
-            var slots = slotService.GetSlots();
-
-            foreach (wrapper.Slot slot in slots)
-            {
-                model.Slots.Add(new SlotOverview
-                    {
-                        Frequency             = service.CalculateSlotFrequencyRate(date, slot.SlotId),
-                        Occupancy             = service.CalculateSlotOccupancyRate(date, slot.SlotId),
-                        Utilisation           = service.CalculateSlotUtilisationRate(date, slot.SlotId),
-                        NumberOfResources     = resourceService.GetResources(date).Count(),
-                        NumberOfResourcesUsed = service.GetResourcesUsedInSlot(date, slot.SlotId),
-                    });
-            }
 
             return View(model);
         }

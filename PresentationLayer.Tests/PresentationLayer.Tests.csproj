@@ -54,20 +54,29 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HelperMethods\ModelConversionsTests.cs" />
+    <Compile Include="Models\TeamTests.cs" />
     <Compile Include="Models\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DomainLayer\DomainLayer.csproj">
+      <Project>{15331449-8e21-4756-b6eb-622e8dac2287}</Project>
+      <Name>DomainLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj">
       <Project>{6c6a8d0b-e713-48c7-aded-666443e2fb2c}</Project>
       <Name>PresentationLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

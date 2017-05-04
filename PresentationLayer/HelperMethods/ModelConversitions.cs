@@ -114,6 +114,30 @@ namespace PresentationLayer.HelperMethods
             return team;
         }
 
+        public ICollection<Team> ConvertTeamsFromWrapper(ICollection<wrapper.Team> entries)
+        {
+            var teams = new List<Team>();
+
+            foreach(wrapper.Team entry in entries)
+            {
+                var team = new Team
+                {
+                    TeamId = entry.TeamId,
+                    Name   = entry.Name,
+                    Colour = entry.Colour,
+                };
+
+                foreach (wrapper.User member in entry.Members)
+                {
+                    team.Members.Add(ConvertUserFromWrapper(member));
+                }
+
+                teams.Add(team);
+            }
+
+            return teams;
+        }
+
         public Booking ConvertBookingFromWrapper(wrapper.Booking entry)
         {
             var model = new Booking
