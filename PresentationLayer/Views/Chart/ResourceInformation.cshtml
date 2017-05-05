@@ -5,40 +5,37 @@
     Layout = "~/Views/Home/_AdminNavigation.cshtml";
 }
 
-<h2>Dashboard</h2>
-  <p>KPI information from Monday </p>
+@Html.Partial("_DashboardNavigation", Model.DateInformation)
 
-
-@Html.Partial("_DashboardNavigation")
-
-
-<h2>Resource Info</h2>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:greenyellow; background-color:white" >
+            <h4 style="color:greenyellow">INFORMATION</h4>
+            <p><strong style="color:greenyellow">@Model.Resource.Name</strong> - @Model.Resource.Description
+            Capacity for @Model.Resource.Capacity people</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:aqua">
+            <h4 style="color:aqua">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:aqua">@Model.Frequency</strong></p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+            <h4 style="color:deeppink">OCCUPANY</h4>
+            <p>Average occupancy rate for the week was <strong style="color:deeppink">@Model.Occupancy</strong></p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+            <h4 style="color:darkorange">UTILISATION</h4>
+            <p>Average utilisation rate for the week was <strong style="color:darkorange">@Model.Utilisation</strong></p> 
+          </div>
+        </div>
+      </div>
 
 <body>
-    <fieldset>
-        <legend>ResourceViewModel</legend>
-    
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Frequency)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Frequency)
-        </div>
-    
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Occupancy)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Occupancy)
-        </div>
-    
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Utilisation)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Utilisation)
-        </div>
-    </fieldset>
 
     <table class="table table-hover">
     <tr>

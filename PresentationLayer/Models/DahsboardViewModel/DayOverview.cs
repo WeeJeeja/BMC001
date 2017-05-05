@@ -18,11 +18,11 @@ namespace PresentationLayer.Models
 
         public DateTime Date { get; set; }
 
-        public float Frequency { get; set; }
+        public string Frequency { get; set; }
 
-        public float Occupancy { get; set; }
+        public string Occupancy { get; set; }
 
-        public float Utilisation { get; set; }
+        public string Utilisation { get; set; }
 
         public List<SlotOverview> Slots { get; set; }
 

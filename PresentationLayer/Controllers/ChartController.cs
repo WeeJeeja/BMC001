@@ -41,11 +41,10 @@ namespace PresentationLayer.Controllers
                 Frequency       = service.CalculateFrequencyRate(date, date.AddDays(4)).ToString("0.##\\%"),
                 Occupancy       = service.CalculateOccupancyRate(date, date.AddDays(4)).ToString("0.##\\%"),
                 Utilisation     = service.CalculateUtilisationRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                StartDate       = date,
-                EndDate         = date.AddDays(4),
                 DateInformation = new DateInformation
                 {
                     StartDate = date,
+                    EndDate = date.AddDays(4),
                 },
             };
 
@@ -56,9 +55,9 @@ namespace PresentationLayer.Controllers
                 model.Resources.Add(new ResourceOverview
                 {
                     Resource    = resource,
-                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
-                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
-                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
+                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
                 });
             }
             return View(model);
@@ -70,9 +69,9 @@ namespace PresentationLayer.Controllers
 
             var model = new DayOverview
             {
-                Frequency   = service.CalculateFrequencyRate(date, date),
-                Occupancy   = service.CalculateOccupancyRate(date, date),
-                Utilisation = service.CalculateUtilisationRate(date, date),
+                Frequency   = service.CalculateFrequencyRate(date, date).ToString("0.##\\%"),
+                Occupancy   = service.CalculateOccupancyRate(date, date).ToString("0.##\\%"),
+                Utilisation = service.CalculateUtilisationRate(date, date).ToString("0.##\\%"),
                 DayChart    = GenerateDayChart(date, date.DayOfWeek + "Chart"),
                 Day         = date.DayOfWeek.ToString(),
                 Date        = date,
@@ -87,18 +86,22 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        public ActionResult ResourceInformation(Guid? resourceId)
+        public ActionResult ResourceInformation(Guid? resourceId, DateTime date)
         {
             var resource = resourceService.GetResource(resourceId);
             
-            var date = FindStartDate(DateTime.Today);
+            date = FindStartDate(date);
 
             var model = new ResourceOverview
             {
-                Resource    = converter.ConvertResourceFromWrapper(resource),
-                Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId),
-                Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId),
-                Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId),
+                Resource        = converter.ConvertResourceFromWrapper(resource),
+                Frequency       = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                Occupancy       = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                Utilisation     = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                DateInformation = new DateInformation
+                {
+                    StartDate = date,
+                },
             };
 
             var slots = slotService.GetSlots();

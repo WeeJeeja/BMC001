@@ -11,9 +11,6 @@ namespace PresentationLayer.Models
         {
             Resources = new List<ResourceOverview>();
         }
-        public DateTime? StartDate { get; set; }
-
-        public DateTime? EndDate { get; set; }
 
         public DotNet.Highcharts.Highcharts Chart { get; set; }
 

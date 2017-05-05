@@ -38,7 +38,7 @@
         </td>
         <td>
                 <button type="button" class="btn btn-info">
-                    @Html.ActionLink("More info", "ResourceInformation", new { resourceId = item.Resource.ResourceId })
+                    @Html.ActionLink("More information", "ResourceInformation", new { resourceId = item.Resource.ResourceId, date = Model.DateInformation.StartDate })
                 </button>
         </td>
     </tr>

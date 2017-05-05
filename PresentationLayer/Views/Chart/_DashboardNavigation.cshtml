@@ -7,7 +7,7 @@
           <a class="navbar-brand" href="#">DASHBOARD</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "WeekInformation" ? "active" : "")">
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "WeekInformation" || ViewContext.RouteData.Values["Action"].ToString() == "ResourceInformation" ? "active" : "")">
                 @Html.ActionLink("Overview", "WeekInformation", new { date = Model.StartDate })
             </li>
             <li class="@(Model.ActiveDay == "Monday" ? "active" : "")">

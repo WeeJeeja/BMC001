@@ -59,7 +59,7 @@ namespace DomainLayer
 
             if (float.IsNaN(frequencyRate)) return 0;
 
-            return frequencyRate;
+            return frequencyRate * 100;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace DomainLayer
 
             if (float.IsNaN(occupancyRate)) return 1;
 
-            return occupancyRate;
+            return occupancyRate * 100;
         }
 
         /// <summary>
@@ -103,14 +103,14 @@ namespace DomainLayer
         public float CalculateResourceUtilisationRate(DateTime startDate, DateTime endDate, Guid? resourceId)
         {
             //Utilisation rate: frequency rate * occupancy rate
-            var frequencyRate = CalculateResourceFrequencyRate(startDate, endDate, resourceId);
-            var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resourceId);
+            var frequencyRate = CalculateResourceFrequencyRate(startDate, endDate, resourceId) / 100;
+            var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resourceId) / 100;
 
             var utilisationRate = frequencyRate * occupancyRate;
 
 
             if (float.IsNaN(utilisationRate)) return 0;
-            return utilisationRate;
+            return utilisationRate * 100;
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace DomainLayer
             foreach(DataLayer.Models.Resource data in resources)
             {
                 var resource     = converter.ConvertDataResourceToWrapper(data);
-                frequencyRate   += CalculateResourceFrequencyRate(startDate, endDate, resource.ResourceId);
-                occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource.ResourceId);
+                frequencyRate   += CalculateResourceFrequencyRate(startDate, endDate, resource.ResourceId) / 100;
+                occupancyRate   += CalculateResourceOccupancyRate(startDate, endDate, resource.ResourceId) / 100;
                 utilisationRate += frequencyRate * occupancyRate;
             }
             if (float.IsNaN(utilisationRate)) return 0;
@@ -161,7 +161,7 @@ namespace DomainLayer
             }
             if (float.IsNaN(frequencyRate)) return 0;
             frequencyRate = frequencyRate / resources.Count();
-            return frequencyRate * 100;
+            return frequencyRate;
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace DomainLayer
             }
             if (float.IsNaN(occupancyRate)) return 0;
             occupancyRate = occupancyRate / resources.Count();
-            return occupancyRate * 100;
+            return occupancyRate;
         }
 
         #region Rates for time slot

@@ -324,6 +324,4 @@ namespace PresentationLayer.Tests.HelperMethods
 
         #endregion
     }
-    
-
 }
