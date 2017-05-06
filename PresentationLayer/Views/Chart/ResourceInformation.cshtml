@@ -7,12 +7,17 @@
 
 @Html.Partial("_DashboardNavigation", Model.DateInformation)
 
+      <div class="well" style="border-left-width:10px; border-left-color:purple">
+        <h4 style="color:purple">Resource Overview</h4>
+        <p>Booking details for @Model.Resource.Name from <strong style="color:purple">Monday @Model.DateInformation.StartDate.ToShortDateString()</strong> to <strong style="color:purple">Friday @Model.DateInformation.EndDate.ToShortDateString()</strong></p>
+      </div>
+
       <div class="row">
         <div class="col-sm-3">
           <div class="well" style="border-left-width:10px; border-left-color:greenyellow; background-color:white" >
             <h4 style="color:greenyellow">INFORMATION</h4>
             <p><strong style="color:greenyellow">@Model.Resource.Name</strong> - @Model.Resource.Description
-            Capacity for @Model.Resource.Capacity people</p>
+            Capacity - <strong style="color:greenyellow">@Model.Resource.Capacity</strong></p>
           </div>
         </div>
         <div class="col-sm-3">
@@ -37,7 +42,7 @@
 
 <body>
 
-    <table class="table table-hover">
+    <table class="table table-hover bg-info">
     <tr>
         <th>
             Time
@@ -69,29 +74,29 @@
             <td>
                 @if(item.MondayRates == null)
                 {
-                    <p class="text-danger">NOT UTILISED</p>
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
                 }
                 else
                 {
-                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.MondayRates.BookedBy.Forename)
-                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.MondayRates.NumberOfAttendees)
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.MondayRates.BookedBy.Forename) </p>
+                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.MondayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
                 @if(item.TuesdayRates == null)
                 {
-                    <p class="text-danger">NOT UTILISED</p>
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
                 }
                 else
                 {
-                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.TuesdayRates.BookedBy.Forename)
-                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.TuesdayRates.NumberOfAttendees)
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.TuesdayRates.BookedBy.Forename) </p>
+                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.TuesdayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
                 @if(item.WednesdayRates == null)
                 {
-                    <p class="text-danger">NOT UTILISED</p>
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
                 }
                 else
                 {
@@ -102,7 +107,7 @@
             <td>
                 @if(item.ThursdayRates == null)
                 {
-                    <p class="text-danger">NOT UTILISED</p>
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
                 }
                 else
                 {
@@ -113,7 +118,7 @@
             <td>
                 @if(item.FridayRates == null)
                 {
-                    <p class="text-danger">NOT UTILISED</p>
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
                 }
                 else
                 {
