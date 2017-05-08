@@ -7,8 +7,8 @@
 
 <h2>Resource allocation</h2>
 
-<button type="button" class="btn btn-info">
-    @Html.ActionLink("Create new booking", "Create")
+<button type="button" class="btn btn-primary">
+    @Html.ActionLink("Create new booking", "Create", "Booking", new { Style = "color:white" })
 </button>
 
 <table class="table table-hover">
@@ -64,7 +64,7 @@
 @if (Model.UnconfirmedEntries.Count() > 0)
 {
     
-<h2>Please confirm or delete the following unconfrimed bookings</h2>
+<h2>Please confirm or delete the following un-confirmed bookings</h2>
 
 <table class="table table-hover">
     <tr>
