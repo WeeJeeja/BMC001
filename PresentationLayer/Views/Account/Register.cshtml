@@ -1,98 +1,77 @@
 ﻿@model PresentationLayer.Models.RegisterModel
-@{
-    ViewBag.Title = "Register";
-}
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
+
+<div class="container" style="padding:60px">
+
+    <hgroup class="title">
+        <h1>Registration form</h1>
+    </hgroup>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
+    @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li class="editor-label">
+
+        <legend>User details</legend>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.EmployeeNumber)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.EmployeeNumber)
             @Html.ValidationMessageFor(model => model.EmployeeNumber)
-        </li>
+        </div>
 
-        <li class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Forename)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Forename)
             @Html.ValidationMessageFor(model => model.Forename)
-        </li>
+        </div>
 
-        <li class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Surname)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Surname)
             @Html.ValidationMessageFor(model => model.Surname)
-        </li>
+        </div>
 
-        <li class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Email)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Email)
             @Html.ValidationMessageFor(model => model.Email)
-        </li>
+        </div>
 
-        <li class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.JobTitle)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.JobTitle)
             @Html.ValidationMessageFor(model => model.JobTitle)
-        </li>
+        </div>
 
-        <li class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Teams)
-        </li>
-        <li class="editor-field">
+        </div>
+        <div class="editor-field">
             @Html.DropDownList("Team",
                        new SelectList(Model.Teams, "TeamId", "Name"))
             @Html.ValidationMessageFor(model => model.Teams)
-        </li>
+        </div>
 
-        <li class="editor-label">
-            @Html.LabelFor(model => model.IsLineManager)
-        </li>
-        <li class="editor-field">
-            @Html.EditorFor(model => model.IsLineManager)
-            @Html.ValidationMessageFor(model => model.IsLineManager)
-        </li>
+        <br>
 
-        <li class="editor-label">
-            @Html.LabelFor(model => model.IsAdministrator)
-        </li>
-        <li class="editor-field">
-            @Html.EditorFor(model => model.IsAdministrator)
-            @Html.ValidationMessageFor(model => model.IsAdministrator)
-        </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
+        <button type="submit" class="btn btn-success">Register</button>
+        <button type="button" class="btn btn-default">
+            @Html.ActionLink("Back", "Login")
+        </button>
 
-        <input type="submit" value="Register" />
     </fieldset>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</div>

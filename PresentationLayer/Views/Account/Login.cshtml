@@ -1,15 +1,10 @@
 ﻿@model PresentationLayer.Models.LoginModel
 
-@{
-    ViewBag.Title = "Log in";
-}
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
-<section id="loginForm">
-<h2>Use a local account to log in.</h2>
+    <div class="container col-sm-4" style="margin-left:100px">
+    <hgroup class="title" style="padding-top:40px;padding-bottom:20px">
+        <h1>Log in</h1>
+    </hgroup>
 
     <form method="post">
         @Html.AntiForgeryToken()
@@ -33,21 +28,23 @@
             @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
         </div>
 
-        <input type="submit" value="Log in" />
+        <button type="submit" class="btn btn-primary" style="font-size:large">Log in</button>
 
     </form>
+        
+    <br />
 
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
+    </div>
 
+<section class="social" style="padding-top:60px;float:left">
+
+    <div class="col-sm-5">
+          <div class="well text-center" style="background:#337ab7">
+            <h1 style="color:white">New user?</h1>
+            <h4 style="color:white">Create an account to book resources and view your allocation timetable</h4>
+            <button type="button" class="btn btn-info">
+                    @Html.ActionLink("REGISTER", "Register", "Account", new { Style = "color:white;align-content:center;font-size:large"})
+            </button>
+          </div>
+    </div>
 </section>
-
-<section class="social" id="register">
-    <h2>What should go here?</h2>
-    
-</section>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

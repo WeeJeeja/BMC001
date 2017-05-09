@@ -1,20 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Web.Security;
 
 namespace PresentationLayer.Models
 {
-    public class RegisterExternalLoginModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        public string ExternalLoginData { get; set; }
-    }
-
     public class LocalPasswordModel
     {
         [Required]
@@ -51,6 +40,7 @@ namespace PresentationLayer.Models
 
     public class RegisterModel
     {
+        [Display(Name="Employee number")]
         public int EmployeeNumber { get; set; }
 
         public string Forename { get; set; }
@@ -59,17 +49,13 @@ namespace PresentationLayer.Models
 
         public string Email { get; set; }
 
+        [Display(Name = "Job title")]
         public string JobTitle { get; set; }
 
-        public bool IsLineManager { get; set; }
-
-        public bool IsAdministrator { get; set; }
-
+        [Display(Name = "Team member of")]
         public IEnumerable<Team> Teams { get; set; }
 
         public Guid? Team { get; set; }
-
-        public User LineManager { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -81,12 +67,5 @@ namespace PresentationLayer.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class ExternalLogin
-    {
-        public string Provider { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public string ProviderUserId { get; set; }
     }
 }

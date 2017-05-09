@@ -30,10 +30,7 @@
                   <span class="glyphicon glyphicon-log-out" style="color:white">@Html.ActionLink("Log out", "LogOff", "Account", 
                                                                 new { Style = "color:white;font-family:Arial, sans-serif" })</span>
                 </li>
-            } else {
-              <li><span class="glyphicon glyphicon-user"></span>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-              <li><span class="glyphicon glyphicon-log-in"></span>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-            }
+            } 
     </ul>
   </div>
 </nav>

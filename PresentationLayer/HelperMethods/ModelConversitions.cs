@@ -179,6 +179,21 @@ namespace PresentationLayer.HelperMethods
             return user;
         }
 
+        public wrapper.User ConvertRegistrationToWrapper(RegisterModel entry)
+        {
+            var user = new wrapper.User
+            {
+                EmployeeNumber   = entry.EmployeeNumber,
+                Forename         = entry.Forename,
+                Surname          = entry.Surname,
+                Email            = entry.Email,
+                JobTitle         = entry.JobTitle,
+                Team             = entry.Team,
+            };
+
+            return user;
+        }
+
         public wrapper.Booking ConvertBookingToWrapper(Booking entry)
         {
             var slot = slotService.GetSlot(entry.Slot.SlotId);
