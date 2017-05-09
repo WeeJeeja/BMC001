@@ -19,12 +19,9 @@
         <header>
                 @Html.Partial("_LoginPartial")
         </header>
-        <div id="body">
             
         @RenderSection("LeftMenu", required: false)
-            @RenderSection("featured", required: false)
-                @RenderBody()
-        </div>
+        @RenderBody()
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">

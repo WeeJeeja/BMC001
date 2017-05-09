@@ -3,31 +3,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/bundles/bootstrap/css")
+
 @section LeftMenu
 {
 <body>
-        <header>
-            <div class="col-md-2">
-              <ul id="sidebar" class="nav nav-pills nav-stacked affix" style="padding-top:40px">
+            <div class="container col-md-2">
+              <ul id="sidebar" class="nav nav-pills nav-stacked" style="padding-top:20px">
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Booking" ? "active" : "")">@Html.ActionLink("Home", "Index", "Booking")</li>
-                  <li class="dropdown @(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">
+                <li class="dropdown @(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li>@Html.ActionLink("This week", "WeekInformation", "Chart", new { date = DateTime.Today }, null)</li>
-                      <li>@Html.ActionLink("Last week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(-7)}, null)</li>
-                      <li>@Html.ActionLink("Next week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(7)}, null)</li>
+                        <li>@Html.ActionLink("This week", "WeekInformation", "Chart", new { date = DateTime.Today }, null)</li>
+                        <li>@Html.ActionLink("Last week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(-7)}, null)</li>
+                        <li>@Html.ActionLink("Next week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(7)}, null)</li>
                     </ul>
-                  </li>
+                </li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Resource" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Team" ? "active" : "")">@Html.ActionLink("Teams", "Index", "Team")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Employee" ? "active" : "")">@Html.ActionLink("Employees", "Index", "Employee")</li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Slot" ? "active" : "")">@Html.ActionLink("Time slots", "Index", "Slot")</li>
               </ul>
             </div>
-        </header>
-    @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
+            <section class="content-wrapper col-md-10" >
                 @RenderBody()
             </section>
 </body>

@@ -9,6 +9,14 @@
     }
 }
 
+@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Styles.Render("~/bundles/bootstrap/css")
+
+
 <nav class="navbar navbar-default" style="padding:0px;margin:0px;background:#337ab7">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -16,11 +24,11 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
         @if (!@username.Equals(""))
-            
             { 
                 <li style="color:white;padding:30px"><span class="glyphicon glyphicon-user" style="color:white"></span> Hello, @username</li>
                 <li style="padding:30px">
-                  <span class="glyphicon glyphicon-log-out" style="color:white">@Html.ActionLink("Log out", "LogOff", "Account", new { Style= "color:white;font-family:Arial, sans-serif" })</span>
+                  <span class="glyphicon glyphicon-log-out" style="color:white">@Html.ActionLink("Log out", "LogOff", "Account", 
+                                                                new { Style = "color:white;font-family:Arial, sans-serif" })</span>
                 </li>
             } else {
               <li><span class="glyphicon glyphicon-user"></span>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>

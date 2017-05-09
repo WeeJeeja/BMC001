@@ -39,7 +39,10 @@ namespace PresentationLayer
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/all.css"));
             // Css bootstrap
-            bundles.Add(new StyleBundle("~/bundles/bootstrap/css").Include("~/Content/bootstrap*"));
+            bundles.Add(new StyleBundle("~/bundles/bootstrap/css").Include(
+                "~/Content/bootstrap*",
+                "~/Content/bootstrap-theme*"
+                ));
         }
     }
 }

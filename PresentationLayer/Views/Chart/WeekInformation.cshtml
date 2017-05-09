@@ -20,9 +20,9 @@
             @(Model.Chart)
         </div>
         <div class="col-sm-3">
-          <div class="well" style="border-left-width:10px; border-left-color:aqua">
-            <h4 style="color:aqua">FREQUENCY</h4>
-            <p>Average frequency rate for the week was <strong style="color:aqua">@Model.Frequency</strong></p> 
+          <div class="well" style="border-left-width:10px; border-left-color:turquoise">
+            <h4 style="color:turquoise">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:turquoise">@Model.Frequency</strong></p> 
             <p>Frequency rate: percentage of ime space is used compared to it's availability</p>
           </div>
         </div>
@@ -42,13 +42,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             @Html.Partial("_resourceOverview", Model) 
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <p>Search for the resources</p> 
-          </div>
         </div>
       </div>
     </div>

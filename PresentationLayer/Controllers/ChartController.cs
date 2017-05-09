@@ -528,7 +528,7 @@ namespace PresentationLayer.Controllers
                 //load the Y values 
                         .SetSeries(new[]
                     {
-                        new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Aqua},
+                        new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Turquoise},
                         new Series {Name = "Occupancy", Data = new Data(yDataOccupancy),  Color = Color.DeepPink},
                         new Series {Name = "Utilisation", Data = new Data(yDataUtilisation),  Color = Color.DarkOrange},
                     });
@@ -593,7 +593,7 @@ namespace PresentationLayer.Controllers
                 //load the Y values 
                         .SetSeries(new[]
                     {
-                        new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Aqua},
+                        new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Turquoise},
                         new Series {Name = "Occupancy", Data = new Data(yDataOccupancy), Color = Color.DeepPink},
                         new Series {Name = "Utilisation", Data = new Data(yDataUtilisation), Color = Color.DarkOrange},
                     });
