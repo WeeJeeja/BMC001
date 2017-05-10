@@ -16,13 +16,13 @@
             <div class="container col-md-2">
               <ul id="sidebar" class="nav nav-pills nav-stacked" style="padding-top:20px">
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Booking" ? "active" : "")">@Html.ActionLink("Home", "Index", "Booking")</li>
-                <li class="dropdown @(ViewContext.RouteData.Values["Controller"].ToString() == "Chart" ? "active" : "")">
+                <li class="dropdown @(ViewContext.RouteData.Values["Controller"].ToString() == "Dashboard" ? "active" : "")">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dashboard
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("This week", "WeekInformation", "Chart", new { date = DateTime.Today }, null)</li>
-                        <li>@Html.ActionLink("Last week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(-7)}, null)</li>
-                        <li>@Html.ActionLink("Next week", "WeekInformation", "Chart", new { date = DateTime.Today.AddDays(7)}, null)</li>
+                        <li>@Html.ActionLink("This week", "WeekInformation", "Dashboard", new { date = DateTime.Today }, null)</li>
+                        <li>@Html.ActionLink("Last week", "WeekInformation", "Dashboard", new { date = DateTime.Today.AddDays(-7)}, null)</li>
+                        <li>@Html.ActionLink("Next week", "WeekInformation", "Dashboard", new { date = DateTime.Today.AddDays(7)}, null)</li>
                     </ul>
                 </li>
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Resource" ? "active" : "")">@Html.ActionLink("Resources", "Index", "Resource")</li>

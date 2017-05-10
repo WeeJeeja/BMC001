@@ -184,7 +184,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
@@ -193,6 +193,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperMethods\DateCalculations.cs" />
     <Compile Include="HelperMethods\ModelConversitions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -386,7 +387,7 @@
     <Content Include="Views\Slot\Edit.cshtml" />
     <Content Include="Views\Slot\Create.cshtml" />
     <Content Include="Views\Slot\Details.cshtml" />
-    <Content Include="Views\Chart\Test.cshtml" />
+    <Content Include="Views\Dashboard\Test.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\_resources.cshtml" />
@@ -399,18 +400,18 @@
     <Content Include="Views\Booking\_groupBooking.cshtml" />
     <Content Include="Views\Booking\_groupAttendees.cshtml" />
     <Content Include="Views\Booking\_Team.cshtml" />
-    <Content Include="Views\Chart\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Team\AddMember.cshtml" />
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />
     <Content Include="Views\Booking\AddAttendee.cshtml" />
     <Content Include="Views\Home\_AdminNavigation.cshtml" />
-    <Content Include="Views\Chart\ResourceInformation.cshtml" />
-    <Content Include="Views\Chart\_resourceOverview.cshtml" />
-    <Content Include="Views\Chart\DayInformation.cshtml" />
-    <Content Include="Views\Chart\WeekInformation.cshtml" />
-    <Content Include="Views\Chart\_DashboardNavigation.cshtml" />
-    <Content Include="Views\Chart\_slot.cshtml" />
+    <Content Include="Views\Dashboard\ResourceInformation.cshtml" />
+    <Content Include="Views\Dashboard\_resourceOverview.cshtml" />
+    <Content Include="Views\Dashboard\DayInformation.cshtml" />
+    <Content Include="Views\Dashboard\WeekInformation.cshtml" />
+    <Content Include="Views\Dashboard\_DashboardNavigation.cshtml" />
+    <Content Include="Views\Dashboard\_slot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

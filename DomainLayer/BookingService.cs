@@ -4,27 +4,30 @@ using HelperMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
+    /// <summary>
+    /// Booking service to retrive, add and delete bookings from the database
+    /// </summary>
     public class BookingService : IBookingService
     {
+        #region Fields
 
         ModelConversitions converter     = new ModelConversitions();
-        ISlotService slotService         = new SlotService();
-        IUserService userService         = new UserService();
-        IResourceService resourceService = new ResourceService();
+        //ISlotService slotService         = new SlotService();
+
+        #endregion
 
         /// <summary>
-        /// Gets a list of all bookings for a particular user and week
+        /// Gets of all of a users bookings for a week
         /// </summary>
-        /// <returns>Returns a list of all of a user's bookings for a particular week</returns>
+        /// <param name="userId">The user</param>
+        /// <returns>A list of bookings</returns>
         public List<Booking> GetThisWeeksBookings(Guid? userId)
         {
             //work out the start of the week
-            var date = FindStartDate();
+            var date = FindStartDate(DateTime.Today);
 
             var endDate = date.AddDays(5);
 
@@ -51,13 +54,15 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets a list of all bookings for a particular resource and week
+        /// Gets all of a resources bookings for a week
         /// </summary>
-        /// <returns>Returns a list of all of a resource's bookings for a particular week</returns>
-        public List<Booking> GetThisWeeksBookingsForAResource(Guid? resourceId)
+        /// <param name="resourceId">The resource</param>
+        /// <param name="date">The date</param>
+        /// <returns>A list of bookings</returns>
+        public List<Booking> GetThisWeeksBookingsForAResource(Guid? resourceId, DateTime date)
         {
             //work out the start of the week
-            var date = FindStartDate();
+            var startDate = FindStartDate(date);
 
             var endDate = date.AddDays(5);
 
@@ -71,7 +76,7 @@ namespace DomainLayer
             if (data.Count < 1) return bookings;
 
             //get this weeks bookings
-            data = data.Where(b => b.Date >= date && b.Date < endDate).ToList();
+            data = data.Where(b => b.Date >= startDate && b.Date < endDate).ToList();
 
             var bookingEntries = converter.ConvertDataBookingListToWrapper(data);
 
@@ -84,13 +89,14 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets a list of all unconfirmed bookings for a particular user and week
+        /// Gets all of a users unconfirmed bookings for a week
         /// </summary>
-        /// <returns>Returns a list of all of a user's unconfirmed bookings for a particular week</returns>
+        /// <param name="userId">The users</param>
+        /// <returns>A list of unconfirmed bookins</returns>
         public List<Booking> GetThisWeeksUnconfirmedBookings(Guid? userId)
         {
             //work out the start of the week
-            var date = FindStartDate();
+            var date = FindStartDate(DateTime.Today);
 
             var endDate = date.AddDays(7);
 
@@ -124,6 +130,12 @@ namespace DomainLayer
             return bookings;
         }
 
+        /// <summary>
+        /// Gets a list of resources that are available on the given date and time
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="time">The time slot</param>
+        /// <returns>A list of available resources</returns>
         public List<Resource> GetAvailableResources(DateTime date, Guid? time)
         {
             var db = new ReScrumEntities();
@@ -140,6 +152,14 @@ namespace DomainLayer
             return resources.ToList(); ;
         }
 
+        /// <summary>
+        /// Gets a list of resources that are avalable in given a date and time range
+        /// </summary>
+        /// <param name="startDate">The start date</param>
+        /// <param name="endDate">The end date</param>
+        /// <param name="startSlot">The start time</param>
+        /// <param name="endSlot">The end time</param>
+        /// <returns>A list of available reosurces</returns>
         public List<Resource> GetAvailableResourcesForBlockBooking(DateTime startDate, DateTime endDate, Guid? startSlot, Guid? endSlot)
         {
             var db = new ReScrumEntities();
@@ -162,6 +182,14 @@ namespace DomainLayer
             return resources.ToList(); ;
         }
 
+        /// <summary>
+        /// Gets a list of resources that have at least the capacity given and are available on a given date and time
+        /// </summary>
+        /// <param name="date">The date</param>
+        /// <param name="startSlot">The start time</param>
+        /// <param name="endSlot">The end time</param>
+        /// <param name="capacity">The capcity</param>
+        /// <returns></returns>
         public List<Resource> GetAvailableResourcesForGroupBooking(DateTime date, Guid? startSlot, Guid? endSlot, int capacity)
         {
             var db = new ReScrumEntities();
@@ -186,9 +214,9 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new booking to the database
+        /// Adds a booking to the database
         /// </summary>
-        /// <param name="resource">The new booking to be added</param>
+        /// <param name="booking">The booking to be added</param>
         public void AddBooking(Booking booking)
         {
             var db = new ReScrumEntities();
@@ -213,24 +241,26 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new booking to the database
+        /// Adds a block of bookings to the database
         /// </summary>
-        /// <param name="resource">The new booking to be added</param>
+        /// <param name="startDate">The start date</param>
+        /// <param name="endDate">The end date</param>
+        /// <param name="startTime">The start time</param>
+        /// <param name="endTime">The end time</param>
+        /// <param name="resourceId">The resource</param>
+        /// <param name="userId">The user</param>
         public void AddBlockBooking(DateTime startDate, DateTime endDate, Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId)
         {
             var db = new ReScrumEntities();
 
             var startSlot = db.Slots.Where(s => s.SlotId == startTime).FirstOrDefault();
-            var endSlot = db.Slots.Where(s => s.SlotId == endTime).FirstOrDefault();
-            var user = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
-            var resource = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
+            var endSlot   = db.Slots.Where(s => s.SlotId == endTime).FirstOrDefault();
+            var user      = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            var resource  = db.Resources.Where(r => r.ResourceId == resourceId).FirstOrDefault();
 
             var slotList = db.Slots.Where(s => s.StartTime >= startSlot.StartTime &&
                                                 s.EndTime <= endSlot.EndTime).ToList();
 
-            // If run on October 20, 2006, the example produces the following output:
-            //    CompareTo method returns 1: 10/20/2006 is later than 10/20/2005
-            //    CompareTo method returns -1: 10/20/2006 is earlier than 10/20/2007
             var date = startDate;
             while (date <= endDate)
             {
@@ -256,9 +286,15 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new group booking to the database
+        /// Calls the unconfirmed booking method for each attendee of the group booking
         /// </summary>
-        /// <param name="resource">The new booking to be added</param>
+        /// <param name="date">The date</param>
+        /// <param name="users">The attendees</param>
+        /// <param name="teams">The teams</param>
+        /// <param name="startTime">The start time</param>
+        /// <param name="endTime">The end time</param>
+        /// <param name="resourceId">The resource</param>
+        /// <param name="userId">The user</param>
         public void AddGroupBooking(DateTime date, List<string> users, List<string> teams,  Guid? startTime, Guid? endTime, Guid? resourceId, Guid? userId)
         {
             var db = new ReScrumEntities();
@@ -292,9 +328,14 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new booking to the database
+        /// Adds an uncomfirmed booking for to the database
         /// </summary>
-        /// <param name="resource">The new booking to be added</param>
+        /// <param name="db">The database instance</param>
+        /// <param name="slots">The time slots for the booking</param>
+        /// <param name="user">The user</param>
+        /// <param name="resource">The resource</param>
+        /// <param name="date">The date</param>
+        /// <param name="bookedBy">The person who made the group booking</param>
         public void AddUnconfirmedBooking(ReScrumEntities db, List<DataLayer.Models.Slot> slots, DataLayer.Models.User user, DataLayer.Models.Resource resource, DateTime date, DataLayer.Models.User bookedBy)
         {
             foreach (DataLayer.Models.Slot slot in slots)
@@ -314,10 +355,10 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Gets an booking from the database
+        /// Gets a booking from the database
         /// </summary>
-        /// <param name="BookingId">The booking id</param>
-        /// <returns></returns>
+        /// <param name="BookingId">The booking Id</param>
+        /// <returns>The booking</returns>
         public Booking GetBooking(Guid? BookingId)
         {
             var db = new ReScrumEntities();
@@ -356,9 +397,9 @@ namespace DomainLayer
         }
 
         /// <summary>
-        /// Adds a new booking to the database
+        /// Removed the unconformed booking and adds it to the booking table
         /// </summary>
-        /// <param name="resource">The new booking to be added</param>
+        /// <param name="unconfirmedBookingId">The unconfirmed booking</param>
         public void ConfirmBooking(Guid? unconfirmedBookingId)
         {
             var db = new ReScrumEntities();
@@ -385,10 +426,128 @@ namespace DomainLayer
             db.SaveChanges();
         }
 
-        public DateTime FindStartDate()
+        /// <summary>
+        /// Deletes a booking from the database
+        /// </summary>
+        /// <param name="bookingId">The id of the booking to be removed</param>
+        public void DeleteBooking(Guid? bookingId)
         {
-            var date = DateTime.Today;
+            var db = new ReScrumEntities();
 
+            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
+
+            db.Booking.Remove(booking);
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds attendees to an existing group booking
+        /// </summary>
+        /// <param name="bookingId">The booking the users should be added to</param>
+        /// <param name="attendees">The list of users to be added</param>
+        public void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees)
+        {
+            var db = new ReScrumEntities();
+
+            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
+
+            var slots = new List<DataLayer.Models.Slot>();
+            slots.Add(booking.Slot);
+
+            foreach (string userId in attendees)
+            {
+                var attendee = db.Users.Where(u => u.UserId == new Guid(userId)).FirstOrDefault();
+                AddUnconfirmedBooking(db, slots, attendee, booking.Resource, booking.Date, booking.BookedBy);
+            }
+
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Adds bookings for the users for all of the time slots not already booked
+        /// </summary>
+        /// <param name="date">The start date</param>
+        /// <param name="userId">The user</param>
+        /// <returns>True if a resource is avaible and booking was successful, false otherwise</returns>
+        public bool AutoBook(DateTime date, Guid? userId)
+        {
+            var db = new ReScrumEntities();
+
+            //get the user
+            var user = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+
+            //get active all slots
+            var slotList = db.Slots.Where(s => s.CancellationDate == null).ToList();
+
+            //find the end date
+            var endDate = date.AddDays(4);
+
+            //find the start slot
+            var startSlot = slotList.First();
+            foreach (DataLayer.Models.Slot slot in slotList)
+            {
+                if (startSlot.StartTime.CompareTo(slot.StartTime) == 1)
+                {
+                    startSlot = slot;
+                }
+            }
+
+            //find the end slot
+            var endSlot = slotList.Last();
+            foreach (DataLayer.Models.Slot slot in slotList)
+            {
+                if (endSlot.EndTime.CompareTo(slot.EndTime) == -1 )
+                {
+                    endSlot = slot;
+                }
+            }
+
+            //find resource that is available all week
+            var resourceList = GetAvailableResourcesForBlockBooking(date, endDate, startSlot.SlotId, endSlot.SlotId).ToList();
+
+            if (resourceList.Count < 1) return false;
+            var resource = resourceList.OrderBy(r => r.Capacity).First();
+
+            //add a booking for every time slot that is not already booked in the week
+            while (date <= endDate)
+            {
+                foreach (DataLayer.Models.Slot slot in slotList)
+                {
+                    var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
+                                                b.Slot.SlotId == slot.SlotId &&
+                                                b.Date == date).FirstOrDefault();
+
+                    //Do not want to override exisitng bookings in auto functionality
+                    if (booking == null)
+                    {
+                        booking = new DataLayer.Models.Booking()
+                        {
+                            Date     = date,
+                            Slot     = slot,
+                            Resource = db.Resources.Where(r => r.ResourceId == resource.ResourceId).FirstOrDefault(),
+                            User     = user,
+                            BookedBy = user,
+                        };
+                        db.Booking.Add(booking);
+                    }
+                }
+                date = date.AddDays(1);
+            }
+
+            db.SaveChanges();
+            return true;
+        }
+
+        #region HelperMethods
+
+        /// <summary>
+        /// Finds the week starting date for given date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public DateTime FindStartDate(DateTime date)
+        {
             switch (date.DayOfWeek)
             {
                 case DayOfWeek.Monday:
@@ -430,42 +589,6 @@ namespace DomainLayer
             return date;
         }
 
-        /// <summary>
-        /// Deletes a booking from the database
-        /// </summary>
-        /// <param name="bookingId">The id of the booking to be removed</param>
-        public void DeleteBooking(Guid? bookingId)
-        {
-            var db = new ReScrumEntities();
-
-            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
-
-            db.Booking.Remove(booking);
-
-            db.SaveChanges();
-        }
-
-        /// <summary>
-        /// Adds attendees to an existing group booking
-        /// </summary>
-        /// <param name="bookingId">The booking the users should be added to</param>
-        /// <param name="attendees">The list of users to be added</param>
-        public void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees)
-        {
-            var db = new ReScrumEntities();
-
-            var booking = db.Booking.Where(b => b.BookingId == bookingId).FirstOrDefault();
-
-            var slots = new List<DataLayer.Models.Slot>();
-            slots.Add(booking.Slot);
-
-            foreach (string userId in attendees)
-            {
-                var attendee = db.Users.Where(u => u.UserId == new Guid(userId)).FirstOrDefault();
-                AddUnconfirmedBooking(db, slots, attendee, booking.Resource, booking.Date, booking.BookedBy);
-            }
-
-            db.SaveChanges();
-        }
+        #endregion
     }
 }

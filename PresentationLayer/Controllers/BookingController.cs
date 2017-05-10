@@ -21,15 +21,16 @@ namespace PresentationLayer.Controllers
         ITeamService teamService         = new TeamService();
         IResourceService resourceService = new ResourceService();
         ModelConversitions converter     = new ModelConversitions();
+        DateCalculations dateCalculator  = new DateCalculations();
 
         #endregion
 
         //
-        // GET: /Booking/
+        // GET: /Booking/Index
 
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
-            ViewBag.Message = "Need to be able to add, edit and delete bookings";
+            ViewBag.Message = message;
 
             var userId = Session["UserId"].ToString();
 
@@ -379,6 +380,29 @@ namespace PresentationLayer.Controllers
                 return View("Create");
             }
         }
+
+        public ActionResult AutoBook()
+        {
+            try
+            {
+                var userId = Session["UserId"].ToString();
+                var user = userService.GetUser(new Guid(userId));
+
+                var date = dateCalculator.FindStartDate(DateTime.Today);
+
+                var result = service.AutoBook(date, user.UserId);
+
+                if (!result)
+                    return RedirectToAction("Index", new { message = "No single resource is available to block book for the week." });
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Opps...", new { message = "Something went wrong, please try again or contact the tech team." });
+            }
+        }
+
 
         #region HelperMethods
 

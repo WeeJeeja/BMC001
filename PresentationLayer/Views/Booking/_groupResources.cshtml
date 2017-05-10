@@ -1,77 +1,72 @@
 ﻿@model PresentationLayer.Models.CreateBooking
 
 @*List of resources available*@
-@if (Model.Resources.Count() == 0)
-{
-    <div class="alert-info col-sm-4" style="padding:20px">
-            <p> No resources found, please enter search criteria</p>
-    </div>
-}
-else
-{
-    <div class="alert-success col-sm-10" style="padding:20px">
-        <h3 style="color:black">@ViewBag.Message</h3>
-    </div>
-    <div class="col-md-10">
-        <table class="table table-hover table-responsive bg-success">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Resources.First().Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resources.First().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resources.First().Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resources.First().Capacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resources.First().Location)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model.Resources)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @using (Html.BeginForm("BookGroup", "Booking", FormMethod.Post))
-                    {
-                        @Html.HiddenFor(m => m.GroupBooking.Date)
-                        @Html.HiddenFor(m => m.GroupBooking.EndTime)
-                        @Html.HiddenFor(m => m.GroupBooking.StartTime)
-                        for (int i = 0; i < Model.GroupBooking.SelectedAttendees.Count(); i++)
-                        { 
-                           @Html.HiddenFor(model => Model.GroupBooking.SelectedAttendees[i]) 
-                        }
-                        for (int i = 0; i < Model.GroupBooking.SelectedTeams.Count(); i++)
-                        { 
-                           @Html.HiddenFor(model => Model.GroupBooking.SelectedTeams[i]) 
-                        }
-                        @Html.Hidden("Resource", item.ResourceId)
-                
-                    <button type="submit" class="btn btn-success">Book</button>
+@if(Model.Resources.Count > 0)
+{
+<div class="alert-success col-sm-10" style="padding:20px">
+    <h3 style="color:black">@ViewBag.Message</h3>
+</div>
+<div class="col-md-10">
+    <table class="table table-hover table-responsive bg-success">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resources.First().Location)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Resources)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @using (Html.BeginForm("BookGroup", "Booking", FormMethod.Post))
+                {
+                    @Html.HiddenFor(m => m.GroupBooking.Date)
+                    @Html.HiddenFor(m => m.GroupBooking.EndTime)
+                    @Html.HiddenFor(m => m.GroupBooking.StartTime)
+                    for (int i = 0; i < Model.GroupBooking.SelectedAttendees.Count(); i++)
+                    { 
+                        @Html.HiddenFor(model => Model.GroupBooking.SelectedAttendees[i]) 
                     }
-                </td>
-            </tr>
-        }
-    </table>
-    </div>
+                    for (int i = 0; i < Model.GroupBooking.SelectedTeams.Count(); i++)
+                    { 
+                        @Html.HiddenFor(model => Model.GroupBooking.SelectedTeams[i]) 
+                    }
+                    @Html.Hidden("Resource", item.ResourceId)
+                
+                <button type="submit" class="btn btn-success">Book</button>
+                }
+            </td>
+        </tr>
+    }
+</table>
+</div>
 }
