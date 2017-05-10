@@ -377,7 +377,7 @@ namespace PresentationLayer.Controllers
             }
             catch
             {
-                return View("Create");
+                return RedirectToAction("Index", new { message = "Opps...Something went wrong, please try again or contact the tech team." });
             }
         }
 
@@ -399,7 +399,7 @@ namespace PresentationLayer.Controllers
             }
             catch
             {
-                return RedirectToAction("Opps...", new { message = "Something went wrong, please try again or contact the tech team." });
+                return RedirectToAction("Index", new { message = "Something went wrong, please try again or contact the tech team." });
             }
         }
 

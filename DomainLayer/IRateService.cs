@@ -73,7 +73,7 @@ namespace DomainLayer
         /// <param name="date">The date</param>
         /// <param name="slotId">The time slot</param>
         /// <returns>The number of resources used in a time slot</returns>
-        int GetResourcesUsedInSlot(DateTime date, Guid? slotId);
+        float GetResourcesUsedInSlot(DateTime date, Guid? slotId);
 
         /// <summary>
         /// Calculates the frequency rate for a time slot between a given date

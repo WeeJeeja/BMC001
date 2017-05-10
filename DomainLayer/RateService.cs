@@ -84,11 +84,11 @@ namespace DomainLayer
 
             //Number of hours resource was in use
             var date = startDate;
-            var hoursResourceWasInUse = 0;
+            float hoursResourceWasInUse = 0;
             while (date <= endDate)
             {
                 var hoursUsedInDay = scheduleEntries.Where(b => b.Date == date).ToList();
-                hoursResourceWasInUse += hoursUsedInDay.Count();
+                hoursResourceWasInUse += (float)hoursUsedInDay.Count();
                 date = date.AddDays(1);
             }
 
@@ -139,7 +139,7 @@ namespace DomainLayer
             }
             
             if (float.IsNaN(utilisationRate)) return 0;
-            utilisationRate = utilisationRate / resources.Count();
+            utilisationRate = utilisationRate / (float)resources.Count();
             return utilisationRate;
         }
 
@@ -162,7 +162,7 @@ namespace DomainLayer
                 frequencyRate += CalculateResourceFrequencyRate(startDate, endDate, resource.ResourceId);
             }
             if (float.IsNaN(frequencyRate)) return 0;
-            frequencyRate = frequencyRate / resources.Count();
+            frequencyRate = frequencyRate / (float)resources.Count();
             return frequencyRate;
         }
 
@@ -179,7 +179,7 @@ namespace DomainLayer
 
             /// Occupancy rate: how full the space is compared to its capacity
             float occupancyRate = 0;
-            var resourcesUsedInDateRange = 0;
+            float resourcesUsedInDateRange = 0;
             foreach(DataLayer.Models.Resource resource in resources)
             {
                 //only calculate the occupany rate if the resource was used in the date range
@@ -192,7 +192,7 @@ namespace DomainLayer
             }
 
             if (float.IsNaN(occupancyRate)) return 0;
-            occupancyRate = occupancyRate / resources.Count();
+            occupancyRate = occupancyRate / resourcesUsedInDateRange;
             return occupancyRate;
         }
 
@@ -204,7 +204,7 @@ namespace DomainLayer
         /// <param name="date">The date</param>
         /// <param name="slotId">The time slot</param>
         /// <returns>The number of resources used in a time slot</returns>
-        public int GetResourcesUsedInSlot(DateTime date, Guid? slotId)
+        public float GetResourcesUsedInSlot(DateTime date, Guid? slotId)
         {
             var db = new ReScrumEntities();
 
@@ -215,7 +215,7 @@ namespace DomainLayer
             //Removes multiple bookings for the same resource -> group bookings
             var resourcesBookedInSlot = bookings.GroupBy(x => x.Resource).Select(y => y.First()).Count();
 
-            return resourcesBookedInSlot;
+            return (float)resourcesBookedInSlot;
         }
 
         /// <summary>
@@ -234,12 +234,12 @@ namespace DomainLayer
             //Removes multiple bookings for the same resource -> group bookings
             var resourcesBookedInSlot = GetResourcesUsedInSlot(date, slotId);
 
-            var resources = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate > date).ToList();
+            var resources = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate <= date).ToList();
 
             frequencyRate = (float)resourcesBookedInSlot / (float)resources.Count();
 
             if (float.IsNaN(frequencyRate)) return 0;
-            return frequencyRate * 100;
+            return frequencyRate;
         }
 
         /// <summary>
@@ -267,13 +267,13 @@ namespace DomainLayer
             {
                 var totalOccupants = bookings.Where(r => r.Resource.ResourceId == resource.ResourceId).Count();
 
-                occupancyRate += totalOccupants / resource.Capacity;
+                occupancyRate += (float)totalOccupants/(float)resource.Capacity;
             }
 
             if (float.IsNaN(occupancyRate)) return 0;
             occupancyRate = occupancyRate / resources.Count();
 
-            return occupancyRate * 100;
+            return occupancyRate;
         }
 
         /// <summary>
@@ -287,12 +287,12 @@ namespace DomainLayer
             var db = new ReScrumEntities();
 
             //Utilisation rate: frequency rate * occupancy rate
-            float frequencyRate = CalculateSlotFrequencyRate(date, slotId) / 100;
-            float occupancyRate = CalculateSlotOccupancyRate(date, slotId) / 100;
+            float frequencyRate = CalculateSlotFrequencyRate(date, slotId);
+            float occupancyRate = CalculateSlotOccupancyRate(date, slotId);
 
             var utilisationRate = frequencyRate * occupancyRate;
 
-            return utilisationRate * 100;
+            return utilisationRate;
         }
 
         #endregion

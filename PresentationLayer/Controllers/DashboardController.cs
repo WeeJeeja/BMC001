@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Drawing;
-using PresentationLayer.Models.DahsboardViewModel;
 
 namespace PresentationLayer.Controllers
 {
@@ -21,7 +20,6 @@ namespace PresentationLayer.Controllers
         #region Fields
 
         IBookingService bookingService   = new BookingService();
-        IUserService userService         = new UserService();
         ISlotService slotService         = new SlotService();
         IRateService service             = new RateService();
         IResourceService resourceService = new ResourceService();
@@ -65,13 +63,11 @@ namespace PresentationLayer.Controllers
 
         public ActionResult DayInformation(DateTime date)
         {
-            var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
-
             var model = new DayOverview
             {
-                Frequency   = service.CalculateFrequencyRate(date, date).ToString("0.##\\%"),
-                Occupancy   = service.CalculateOccupancyRate(date, date).ToString("0.##\\%"),
-                Utilisation = service.CalculateUtilisationRate(date, date).ToString("0.##\\%"),
+                Frequency   = (service.CalculateFrequencyRate(date, date) * 100).ToString("0.##\\%"),
+                Occupancy   = (service.CalculateOccupancyRate(date, date) * 100).ToString("0.##\\%"),
+                Utilisation = (service.CalculateUtilisationRate(date, date) * 100).ToString("0.##\\%"),
                 DayChart    = GenerateDayChart(date, date.DayOfWeek + "Chart"),
                 Day         = date.DayOfWeek.ToString(),
                 Date        = date,
@@ -95,9 +91,9 @@ namespace PresentationLayer.Controllers
             var model = new ResourceOverview
             {
                 Resource        = converter.ConvertResourceFromWrapper(resource),
-                Frequency       = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
-                Occupancy       = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
-                Utilisation     = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                Frequency       = (service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId) * 100).ToString("0.##\\%"),
+                Occupancy       = (service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId) * 100).ToString("0.##\\%"),
+                Utilisation     = (service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId) * 100).ToString("0.##\\%"),
                 DateInformation = new DateInformation
                 {
                     StartDate = date,
@@ -317,9 +313,9 @@ namespace PresentationLayer.Controllers
                 chartData.Add(new ChartData
                 {
                     yCategories = slot.Time,
-                    Frequency   = (int)service.CalculateSlotFrequencyRate(date, slot.SlotId),
-                    Occupancy   = (int)service.CalculateSlotOccupancyRate(date, slot.SlotId),
-                    Utilisation = (int)service.CalculateSlotUtilisationRate(date, slot.SlotId)
+                    Frequency   = (int)(service.CalculateSlotFrequencyRate(date, slot.SlotId) * 100),
+                    Occupancy   = (int)(service.CalculateSlotOccupancyRate(date, slot.SlotId) * 100),
+                    Utilisation = (int)(service.CalculateSlotUtilisationRate(date, slot.SlotId) * 100)
                 });
             };
             
@@ -369,131 +365,6 @@ namespace PresentationLayer.Controllers
 
             return dayChart;
         }
-
-        private SlotOverview AddSlotInformationToDayView(DateTime date, Guid? slotId)
-        {
-            var totalResources = resourceService.GetResources(date).Count();
-
-            var resourcesUsed = service.GetResourcesUsedInSlot(date, slotId);
-
-            var resourcesNotUsed = totalResources - resourcesUsed;
-
-            var data = new List<SlotChartData>();
-            data.Add(new SlotChartData
-            {
-                Name = "Number of resources used",
-                Value = resourcesUsed,
-            });
-            data.Add(new SlotChartData
-            {
-                Name = "Number of resources NOT used",
-                Value = resourcesNotUsed,
-            });
-
-            var dataForChart = data.Select(x => new { name = x.Name, y = x.Value });
-
-            var model = new SlotOverview
-            {
-                Frequency = service.CalculateSlotFrequencyRate(date, slotId),
-                Occupancy = service.CalculateSlotOccupancyRate(date, slotId),
-                Utilisation = service.CalculateSlotUtilisationRate(date, slotId),
-            };
-
-            ViewBag.ChartData = dataForChart;
-
-            return model;
-
-        }
-
-        //private Highcharts GenerateSlotFrequencyChart(DateTime date, Guid? slotId, string chartName)
-        //{
-        //    modify data type to make it of array type
-
-        //    var totalResources = resourceService.GetResources(date).Count();
-
-        //    var resourcesUsed = service.GetResourcesUsedInSlot(date, slotId);
-
-        //    var resourcesNotUsed = totalResources - resourcesUsed;
-
-        //    var data = new List<SlotChartData>();
-        //    data.Add(new SlotChartData
-        //    {
-        //        Name = "Number of resources used",
-        //        Value = resourcesUsed,
-        //    });
-        //    data.Add(new SlotChartData
-        //    {
-        //        Name = "Number of resources NOT used",
-        //        Value = resourcesNotUsed,
-        //    });
-
-        //    var dataForChart = data.Select(x => new { name = x.Name, y = x.Value });
-
-            
-        //    chart: 
-        //            credits: {
-        //                enabled: false,
-        //            },
-        //            exporitng: {
-        //                enabled: false,
-        //            },
-
-        //            plotOptions: {
-        //                pie: {
-        //                    allowPointSelect: true,
-        //                    cursor: 'pointer',
-        //                    dataLabels: {
-        //                        enabled: true,
-        //                        format: '<b>{point.name}</b>: {point.percentage.1f} %',
-        //                        style: {
-        //                            color: (Highcharts.theme && Highcharts.theme.constratTestColor) || 'black',
-        //                        },
-        //                    }
-
-        //                }
-        //            },
-        //            series: series,
-        //            title: {
-        //                text: title
-        //            }
-        //        });
-        //    }
-
-        //    instanciate an object of the Highcharts type
-        //    var chart = new Highcharts(chartName)
-        //        define the type of chart 
-        //                .InitChart(new DotNet.Highcharts.Options.Chart { DefaultSeriesType = ChartTypes.Pie })
-        //        overall Title of the chart 
-        //                .SetTitle(new Title { Text = "Rates for " + date.ToShortDateString() })
-        //        small label below the main Title
-        //                .SetSubtitle(new Subtitle { Text = "Frequency, Occupancy and Utilisation" })
-        //                .SetTooltip(new Tooltip
-        //                {
-        //                    Enabled = true,
-        //                    Formatter = "function() { return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y; }"
-        //                })
-        //                .SetPlotOptions(new PlotOptions
-        //                {
-        //                    Pie = new PlotOptionsPie
-        //                    {
-        //                        AllowPointSelect = true,
-        //                        Cursor = Cursors.Pointer,
-        //                        DataLabels = new PlotOptionsPieDataLabels
-        //                        {
-        //                            Enabled = true,
-        //                            Formatter = "<b>{point.name}</b>: {point.percentage.1f} %",
-                                    
-        //                        }
-        //                    }
-        //                })
-        //                .SetSeries(new[]
-        //            {
-        //                new SeriesData = dataForChart,
-        //                new Series {Name = "Pie chart label on series", dataForChart},
-        //            });
-
-        //    return chart;
-        //}
 
         private ResourceRateData AddEntry(wrapper.Booking booking, wrapper.Resource resource, DateTime date)
         {
