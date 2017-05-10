@@ -1,0 +1,51 @@
+﻿@model PresentationLayer.Models.WeekOverview
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
+}
+
+@Html.Partial("_DashboardNavigation", Model.DateInformation)
+
+<div class="container-fluid">
+  <div class="row content">
+    
+    <div class="col-sm-13">
+      <div class="well" style="border-left-width:10px; border-left-color:purple">
+        <h4 style="color:purple">Week Overview</h4>
+        <p>KPI information from <strong style="color:purple">Monday @Model.DateInformation.StartDate.ToShortDateString()</strong> to <strong style="color:purple">Friday @Model.DateInformation.EndDate.ToShortDateString()</strong></p>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+            @(Model.Chart)
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:turquoise">
+            <h4 style="color:turquoise">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:turquoise">@Model.Frequency</strong></p> 
+            <p>Frequency rate: percentage of ime space is used compared to it's availability</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+            <h4 style="color:deeppink">OCCUPANY</h4>
+            <p>Average occupancy rate for the week was <strong style="color:deeppink">@Model.Occupancy</strong></p> 
+            <p>Occupancy rate: how full the space is compared to it's capacity, only calculated for when the resource is in use</p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+            <h4 style="color:darkorange">UTILISATION</h4>
+            <p>Average utilisation rate for the week was <strong style="color:darkorange">@Model.Utilisation</strong></p> 
+            <p>Utilisation rate: Frequency rate * Occupancy rate</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+            @Html.Partial("_resourceOverview", Model) 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

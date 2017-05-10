@@ -1,0 +1,46 @@
+﻿@model PresentationLayer.Models.WeekOverview
+
+<table class="table table-hover bg-info">
+            <tr>
+                <th>
+                    Resource
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Uitilisation rate
+                </th>
+                <th>
+                    Frequency rate
+                </th>
+                <th>
+                    Occupancy rate
+                </th>
+                <th></th>
+            </tr>
+        @foreach (var item in Model.Resources) {
+            <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Utilisation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Frequency)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Occupancy)
+        </td>
+        <td>
+                <button type="button" class="btn btn-info">
+                    @Html.ActionLink("More information", "ResourceInformation", new { resourceId = item.Resource.ResourceId, date = Model.DateInformation.StartDate })
+                </button>
+        </td>
+    </tr>
+}
+</table>

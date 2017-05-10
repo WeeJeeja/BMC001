@@ -1,0 +1,133 @@
+﻿@model PresentationLayer.Models.ResourceOverview
+
+@{
+    ViewBag.Title = "ResourceInfo";
+    Layout = "~/Views/Home/_AdminNavigation.cshtml";
+}
+
+@Html.Partial("_DashboardNavigation", Model.DateInformation)
+
+      <div class="well" style="border-left-width:10px; border-left-color:purple">
+        <h4 style="color:purple">Resource Overview</h4>
+        <p>Booking details for @Model.Resource.Name from <strong style="color:purple">Monday @Model.DateInformation.StartDate.ToShortDateString()</strong> to <strong style="color:purple">Friday @Model.DateInformation.EndDate.ToShortDateString()</strong></p>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:gold; background-color:white" >
+            <h4 style="color:gold">INFORMATION</h4>
+            <p><strong style="color:gold">@Model.Resource.Name</strong> - @Model.Resource.Description
+            Capacity - <strong style="color:gold">@Model.Resource.Capacity</strong></p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:turquoise">
+            <h4 style="color:turquoise">FREQUENCY</h4>
+            <p>Average frequency rate for the week was <strong style="color:turquoise">@Model.Frequency</strong></p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:deeppink">
+            <h4 style="color:deeppink">OCCUPANY</h4>
+            <p>Average occupancy rate for the week was <strong style="color:deeppink">@Model.Occupancy</strong></p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well" style="border-left-width:10px; border-left-color:darkorange">
+            <h4 style="color:darkorange">UTILISATION</h4>
+            <p>Average utilisation rate for the week was <strong style="color:darkorange">@Model.Utilisation</strong></p> 
+          </div>
+        </div>
+      </div>
+
+<body>
+
+    <table class="table table-hover bg-info">
+    <tr>
+        <th>
+            Time
+        </th>
+        <th>
+            Monday
+        </th>
+        <th>
+            Tuesday
+        </th>
+        <th>
+            Wednesday
+        </th>
+        <th>
+            Thursday
+        </th>
+        <th>
+            Friday
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Table)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slot.Time)
+            </td>
+            <td>
+                @if(item.MondayRates == null)
+                {
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
+                }
+                else
+                {
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.MondayRates.BookedBy.Forename) </p>
+                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.MondayRates.NumberOfAttendees) </p>
+                }
+            </td>
+            <td>
+                @if(item.TuesdayRates == null)
+                {
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
+                }
+                else
+                {
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.TuesdayRates.BookedBy.Forename) </p>
+                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.TuesdayRates.NumberOfAttendees) </p>
+                }
+            </td>
+            <td>
+                @if(item.WednesdayRates == null)
+                {
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
+                }
+                else
+                {
+                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.WednesdayRates.BookedBy.Forename)
+                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.WednesdayRates.NumberOfAttendees)
+                }
+            </td>
+            <td>
+                @if(item.ThursdayRates == null)
+                {
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
+                }
+                else
+                {
+                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.ThursdayRates.BookedBy.Forename)
+                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.ThursdayRates.NumberOfAttendees)
+                }
+            </td>
+            <td>
+                @if(item.FridayRates == null)
+                {
+                    <p class="text-danger"><strong>NOT UTILISED</strong></p>
+                }
+                else
+                {
+                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.FridayRates.BookedBy.Forename)
+                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.FridayRates.NumberOfAttendees)
+                }
+            </td>
+        </tr>
+    }
+    </table>
+</body>
+

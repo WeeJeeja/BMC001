@@ -1,0 +1,33 @@
+﻿@model PresentationLayer.Models.DateInformation
+   
+<div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">DASHBOARD</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "WeekInformation" || ViewContext.RouteData.Values["Action"].ToString() == "ResourceInformation" ? "active" : "")">
+                @Html.ActionLink("Overview", "WeekInformation", new { date = Model.StartDate })
+            </li>
+            <li class="@(Model.ActiveDay == "Monday" ? "active" : "")">
+                @Html.ActionLink("Monday", "DayInformation", new { date = Model.StartDate })
+            </li>
+            <li class="@(Model.ActiveDay == "Tuesday" ? "active" : "")">
+                @Html.ActionLink("Tuesday", "DayInformation", new { date = Model.StartDate.AddDays(1) })
+            </li>
+            <li class="@(Model.ActiveDay == "Wednesday" ? "active" : "")">
+                @Html.ActionLink("Wednesday", "DayInformation", new {date = Model.StartDate.AddDays(2) })
+            </li>
+            <li class="@(Model.ActiveDay == "Thursday" ? "active" : "")">
+                @Html.ActionLink("Thursday", "DayInformation", new { date = Model.StartDate.AddDays(3) })
+            </li>
+            <li class="@(Model.ActiveDay == "Friday" ? "active" : "")">
+                @Html.ActionLink("Friday", "DayInformation", new { date = Model.StartDate.AddDays(4) })
+            </li>
+        </ul>
+      </div>
+    </nav>
+</div>
+
+
