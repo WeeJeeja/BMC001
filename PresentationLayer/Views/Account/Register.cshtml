@@ -64,6 +64,22 @@
             @Html.ValidationMessageFor(model => model.Teams)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ConfirmPassword)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+        </div>
+
         <br>
 
         <button type="submit" class="btn btn-success">Register</button>

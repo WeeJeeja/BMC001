@@ -67,6 +67,7 @@ namespace HelperMethods
                 EmployeeNumber  = entry.EmployeeNumber,
                 Forename        = entry.Forename,
                 Surname         = entry.Surname,
+                Email           = entry.Email,
                 JobTitle        = entry.JobTitle,
                 IsLineManager   = entry.IsLineManager,
                 IsAdministrator = entry.IsAdministrator,

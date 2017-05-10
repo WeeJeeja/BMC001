@@ -67,11 +67,7 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult LogOff()
         {
             Session["AuthID"] = null;
@@ -128,7 +124,7 @@ namespace PresentationLayer.Controllers
 
                     var user = converter.ConvertRegistrationToWrapper(model);
 
-                    service.AddUserAndAccount(user, model.Password);
+                    service.AddUserAndAccount(user, model.ConfirmPassword);
                     
                     return RedirectToAction("Login");
                 }

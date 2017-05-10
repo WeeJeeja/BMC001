@@ -40,15 +40,20 @@ namespace PresentationLayer.Models
 
     public class RegisterModel
     {
+        [Required]
         [Display(Name="Employee number")]
         public int EmployeeNumber { get; set; }
 
+        [Required]
         public string Forename { get; set; }
 
+        [Required]
         public string Surname { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
+        [Required]
         [Display(Name = "Job title")]
         public string JobTitle { get; set; }
 
@@ -63,6 +68,7 @@ namespace PresentationLayer.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
