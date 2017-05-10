@@ -33,14 +33,14 @@ namespace PresentationLayer.Controllers
         {
             date = FindStartDate(date);
 
-            var chart = GenerateWeekChart(DateTime.Today, "WeekChart");
+            var chart = GenerateWeekChart(date, "WeekChart");
 
             var model = new WeekOverview
             {
                 Chart           = chart,
-                Frequency       = service.CalculateFrequencyRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                Occupancy       = service.CalculateOccupancyRate(date, date.AddDays(4)).ToString("0.##\\%"),
-                Utilisation     = service.CalculateUtilisationRate(date, date.AddDays(4)).ToString("0.##\\%"),
+                Frequency       = (service.CalculateFrequencyRate(date, date.AddDays(4)) * 100).ToString("0.##\\%"),
+                Occupancy       = (service.CalculateOccupancyRate(date, date.AddDays(4)) * 100).ToString("0.##\\%"),
+                Utilisation     = (service.CalculateUtilisationRate(date, date.AddDays(4)) * 100).ToString("0.##\\%"),
                 DateInformation = new DateInformation
                 {
                     StartDate = date,
@@ -55,9 +55,9 @@ namespace PresentationLayer.Controllers
                 model.Resources.Add(new ResourceOverview
                 {
                     Resource    = resource,
-                    Utilisation = service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
-                    Frequency   = service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
-                    Occupancy   = service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId).ToString("0.##\\%"),
+                    Utilisation = (service.CalculateResourceUtilisationRate(date, date.AddDays(4), resource.ResourceId) *100).ToString("0.##\\%"),
+                    Frequency   = (service.CalculateResourceFrequencyRate(date, date.AddDays(4), resource.ResourceId) *100).ToString("0.##\\%"),
+                    Occupancy   = (service.CalculateResourceOccupancyRate(date, date.AddDays(4), resource.ResourceId) *100).ToString("0.##\\%"),
                 });
             }
             return View(model);
@@ -219,41 +219,41 @@ namespace PresentationLayer.Controllers
                 new ChartData()
                 {
                     yCategories ="Monday", 
-                    Frequency   = (int)service.CalculateFrequencyRate(date, date),
-                    Occupancy   = (int)service.CalculateOccupancyRate(date, date),
-                    Utilisation = (int)service.CalculateUtilisationRate(date, date)
+                    Frequency   = (int)(service.CalculateFrequencyRate(date, date)*100),
+                    Occupancy   = (int)(service.CalculateOccupancyRate(date, date)*100),
+                    Utilisation = (int)(service.CalculateUtilisationRate(date, date)*100)
                 },
                     
                 new ChartData()
                 {
                     yCategories ="Tueday", 
-                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1)),
-                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1)),
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1))
+                    Frequency   = (int)(service.CalculateFrequencyRate(date.AddDays(1), date.AddDays(1))*100),
+                    Occupancy   = (int)(service.CalculateOccupancyRate(date.AddDays(1), date.AddDays(1))*100),
+                    Utilisation = (int)(service.CalculateUtilisationRate(date.AddDays(1), date.AddDays(1))*100)
                 },
                     
                 new ChartData()
                 {
                     yCategories ="Wednesday", 
-                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2)),
-                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2)),
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2))
+                    Frequency   = (int)(service.CalculateFrequencyRate(date.AddDays(2), date.AddDays(2))*100),
+                    Occupancy   = (int)(service.CalculateOccupancyRate(date.AddDays(2), date.AddDays(2))*100),
+                    Utilisation = (int)(service.CalculateUtilisationRate(date.AddDays(2), date.AddDays(2))*100)
                 },
                     
                 new ChartData()
                 {
                     yCategories ="Thursday", 
-                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3)),
-                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3)),
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3))
+                    Frequency   = (int)(service.CalculateFrequencyRate(date.AddDays(3), date.AddDays(3))*100),
+                    Occupancy   = (int)(service.CalculateOccupancyRate(date.AddDays(3), date.AddDays(3))*100),
+                    Utilisation = (int)(service.CalculateUtilisationRate(date.AddDays(3), date.AddDays(3))*100)
                 },
                     
                 new ChartData()
                 {
                     yCategories ="Friday", 
-                    Frequency   = (int)service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4)),
-                    Occupancy   = (int)service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4)),
-                    Utilisation = (int)service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4))
+                    Frequency   = (int)(service.CalculateFrequencyRate(date.AddDays(4), date.AddDays(4))*100),
+                    Occupancy   = (int)(service.CalculateOccupancyRate(date.AddDays(4), date.AddDays(4))*100),
+                    Utilisation = (int)(service.CalculateUtilisationRate(date.AddDays(4), date.AddDays(4))*100)
                 },
                     
             };
