@@ -200,7 +200,6 @@
     <Compile Include="Models\DahsboardViewModel\DateInformation.cs" />
     <Compile Include="Models\DahsboardViewModel\SlotChartData.cs" />
     <Compile Include="Models\DahsboardViewModel\WeekOverview.cs" />
-    <Compile Include="Models\CityPopulation.cs" />
     <Compile Include="Models\DahsboardViewModel\SlotOverview.cs" />
     <Compile Include="Models\DahsboardViewModel\DayOverview.cs" />
     <Compile Include="Models\DahsboardViewModel\ResourceRateData.cs" />
@@ -209,7 +208,6 @@
     <Compile Include="Models\UpdateBooking.cs" />
     <Compile Include="Models\ChartData.cs" />
     <Compile Include="Models\BlockBooking.cs" />
-    <Compile Include="Models\ChartsData.cs" />
     <Compile Include="Models\CreateBooking.cs" />
     <Compile Include="Models\GroupBooking.cs" />
     <Compile Include="Models\SingleBooking.cs" />
@@ -219,7 +217,6 @@
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\UnconfirmedEntry.cs" />
     <Compile Include="Models\TimetableEntry.cs" />
-    <Compile Include="Models\TransactionCount.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -361,12 +358,10 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Resource\Web.config" />
+    <Content Include="Views\Web.config" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
@@ -387,7 +382,6 @@
     <Content Include="Views\Slot\Edit.cshtml" />
     <Content Include="Views\Slot\Create.cshtml" />
     <Content Include="Views\Slot\Details.cshtml" />
-    <Content Include="Views\Dashboard\Test.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\_resources.cshtml" />
@@ -400,7 +394,6 @@
     <Content Include="Views\Booking\_groupBooking.cshtml" />
     <Content Include="Views\Booking\_groupAttendees.cshtml" />
     <Content Include="Views\Booking\_Team.cshtml" />
-    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Team\AddMember.cshtml" />
     <Content Include="Views\Booking\TeamDetails.cshtml" />
     <Content Include="Views\Booking\BookingDetails.cshtml" />
