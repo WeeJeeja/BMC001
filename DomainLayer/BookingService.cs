@@ -38,6 +38,8 @@ namespace DomainLayer
             var data = db.Booking.Where(u => u.User.UserId == userId).ToList();
 
             var bookings = new List<Booking>();
+
+            //if there are no bookings return the empty list
             if (data.Count < 1) return bookings;
 
             //get this weeks bookings
@@ -140,10 +142,12 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
+            //get all resources that are booked the the given date and time
             var unavailableResources  = db.Booking.Where(b =>
                     b.Date            == date &&
                     b.Slot.SlotId     == time).Select(r => r.Resource).ToList();
 
+            //get all resources except those that are already booked
             var availableResources = db.Resources.Where(r => r.CancellationDate == null).ToList()
                                         .Except(unavailableResources).ToList();
 
@@ -168,12 +172,14 @@ namespace DomainLayer
             var startTime = slotService.GetSlot(startSlot);
             var endTime = slotService.GetSlot(endSlot);
 
+            //get all resources that are booked for the given date and time range
             var unavailableResources = db.Booking.Where(b =>
                     b.Date >= startDate &&
                     b.Date <= endDate &&
                     b.Slot.StartTime >= startTime.StartTime &&
                     b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
 
+            //get all resources except those that are already booked
             var availableResources = db.Resources.Where(r => r.CancellationDate == null).
                                         ToList().Except(unavailableResources).ToList();
 
@@ -198,11 +204,13 @@ namespace DomainLayer
             var startTime = slotService.GetSlot(startSlot);
             var endTime = slotService.GetSlot(endSlot);
 
+            //get all resources that are booked for a given date and a time range
             var unavailableResources = db.Booking.Where(b =>
                     b.Date == date &&
                     b.Slot.StartTime >= startTime.StartTime &&
                     b.Slot.EndTime <= endTime.EndTime).Select(r => r.Resource).ToList();
 
+            //get all resources except those that are already booked
             var availableResources = db.Resources.Where(r => r.CancellationDate == null)
                                         .ToList().Except(unavailableResources).ToList();
 
@@ -224,17 +232,22 @@ namespace DomainLayer
             var slot = db.Slots.Where( s => s.SlotId == booking.Slot.SlotId).FirstOrDefault();
             var user = db.Users.Where(u => u.UserId == booking.User.UserId).FirstOrDefault();
 
+            //check if a current booking exist for the user, date and time slot
             var newBooking = db.Booking.Where(b => b.User.UserId == user.UserId &&
                                                 b.Slot.SlotId == slot.SlotId &&
                                                 b.Date == booking.Date).FirstOrDefault();
+
+            //if not create a new booking parameter
             if (newBooking == null) newBooking = new DataLayer.Models.Booking();
 
+            //set/update the booking values
             newBooking.Date     = booking.Date;
             newBooking.Slot     = slot;
             newBooking.Resource = db.Resources.Where(r => r.ResourceId == booking.Resource.ResourceId).FirstOrDefault();
             newBooking.User     = user;
             newBooking.BookedBy = user;
 
+            //if it is a new booking add it (creating new guid id), else the exisitng booking will be updated => no double booking
             if (newBooking.BookingId == null)  db.Booking.Add(newBooking);
 
             db.SaveChanges();
@@ -262,21 +275,26 @@ namespace DomainLayer
                                                 s.EndTime <= endSlot.EndTime).ToList();
 
             var date = startDate;
+            //for every date in the date range given
             while (date <= endDate)
             {
                 foreach (DataLayer.Models.Slot slot in slotList)
                 {
+                    //check if a booking exist for the user on the given date and time
                     var booking = db.Booking.Where(b => b.User.UserId == user.UserId &&
                                                 b.Slot.SlotId == slot.SlotId &&
                                                 b.Date == date).FirstOrDefault();
+                    //if no booking exists create a new booking object
                     if (booking == null) booking = new DataLayer.Models.Booking();
                     
+                    //Add or update booking values
                     booking.Date     = date;
                     booking.Slot     = slot;
                     booking.Resource = resource;
                     booking.User     = user;
                     booking.BookedBy = user;
 
+                    //if a new booking was created add it to the database(giving a new guid id), else update the existing booking
                     if (booking.BookingId == null) db.Booking.Add(booking);
                 }
                 date = date.AddDays(1);
@@ -376,8 +394,10 @@ namespace DomainLayer
                 GroupBooking = entry.GroupBooking,
             };
 
+            //if the booking is for a group the attendees need to be retrieved
             if (booking.GroupBooking == true)
             {
+                //get all confirmed attendees
                 var confirmedBookings = db.Booking.Where(b => b.Date == entry.Date &&
                                                     b.Slot.SlotId == entry.Slot.SlotId &&
                                                     b.Resource.ResourceId == entry.Resource.ResourceId).ToList();
@@ -385,6 +405,7 @@ namespace DomainLayer
                 var confirmedAttendees = confirmedBookings.Select(u => u.User).ToList();
                 booking.ConfirmedAttendees = converter.ConvertDataUserListToWrapper(confirmedAttendees);
 
+                //get all unconfirmed attendees
                 var unconfirmedBookings = db.UnconfirmedBooking.Where(b => b.Date == entry.Date &&
                                                     b.Slot.SlotId == entry.Slot.SlotId &&
                                                     b.Resource.ResourceId == entry.Resource.ResourceId).ToList();
@@ -404,13 +425,18 @@ namespace DomainLayer
         {
             var db = new ReScrumEntities();
 
+            //get the unconfirmed booking
             var unconfirmedBooking = db.UnconfirmedBooking.Where(b => b.UnconfirmedBookingId == unconfirmedBookingId).FirstOrDefault();
 
+            //check to see if the user already has a booking for the date and time given
             var newBooking = db.Booking.Where(b => b.User.UserId == unconfirmedBooking.User.UserId &&
                                                 b.Slot.SlotId == unconfirmedBooking.Slot.SlotId &&
                                                 b.Date == unconfirmedBooking.Date).FirstOrDefault();
+
+            //if no booking exists create a new bookng object, else the exisitng booking will be updated
             if (newBooking == null) newBooking = new DataLayer.Models.Booking();
 
+            //add or update booking object
             newBooking.Date         = unconfirmedBooking.Date;
             newBooking.Slot         = unconfirmedBooking.Slot;
             newBooking.Resource     = unconfirmedBooking.Resource;
@@ -418,6 +444,7 @@ namespace DomainLayer
             newBooking.BookedBy     = unconfirmedBooking.BookedBy;
             newBooking.GroupBooking = true;
 
+            //if it is a new booking add it to the database (give a new guid id), else update the existing booking
             if (newBooking.BookingId == null) db.Booking.Add(newBooking);
 
             //Remove the unconfirmed booking
@@ -474,13 +501,13 @@ namespace DomainLayer
             //get the user
             var user = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
 
-            //get active all slots
+            //get all active slots
             var slotList = db.Slots.Where(s => s.CancellationDate == null).ToList();
 
             //find the end date
             var endDate = date.AddDays(4);
 
-            //find the start slot
+            //find the start time slot
             var startSlot = slotList.First();
             foreach (DataLayer.Models.Slot slot in slotList)
             {
@@ -490,7 +517,7 @@ namespace DomainLayer
                 }
             }
 
-            //find the end slot
+            //find the end time slot
             var endSlot = slotList.Last();
             foreach (DataLayer.Models.Slot slot in slotList)
             {
@@ -503,10 +530,11 @@ namespace DomainLayer
             //find resource that is available all week
             var resourceList = GetAvailableResourcesForBlockBooking(date, endDate, startSlot.SlotId, endSlot.SlotId).ToList();
 
+            //get the resource with the smallest capacity
             if (resourceList.Count < 1) return false;
             var resource = resourceList.OrderBy(r => r.Capacity).First();
 
-            //add a booking for every time slot that is not already booked in the week
+            //add a booking for every time slot that is not already booked in the week => does NOT override existing bookings
             while (date <= endDate)
             {
                 foreach (DataLayer.Models.Slot slot in slotList)
@@ -515,7 +543,7 @@ namespace DomainLayer
                                                 b.Slot.SlotId == slot.SlotId &&
                                                 b.Date == date).FirstOrDefault();
 
-                    //Do not want to override exisitng bookings in auto functionality
+                    //Do not want to override existing bookings in auto functionality
                     if (booking == null)
                     {
                         booking = new DataLayer.Models.Booking()

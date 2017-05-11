@@ -26,6 +26,7 @@ namespace DomainLayer
 
             if (date == null) date = DateTime.Today;
 
+            //get active resources
             var resourceData = db.Resources.Where(r => r.CancellationDate == null || r.CancellationDate < date).ToList();
             var resources = new List<Resource>();
 

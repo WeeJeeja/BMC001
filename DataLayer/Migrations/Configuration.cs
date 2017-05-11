@@ -16,6 +16,7 @@ namespace DataLayer.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
+        //Seed method to populate data into the database on intial creation
         protected override void Seed(DataLayer.ReScrumEntities context)
         {
             #region Adding slots
@@ -34,18 +35,18 @@ namespace DataLayer.Migrations
 
             #region Adding users
 
-            //Add user1 to the databse first so that they can be used as the line manager for all other users
-            var user1 = new User { EmployeeNumber = 10000001, Forename = "Saoirse", Surname = "Kelly", JobTitle = "Graduate Software Engineer", IsLineManager = true, IsAdministrator = true };
-            context.Users.Add(user1);
+            ////Add user1 to the databse first so that they can be used as the line manager for all other users
+            //var user1 = new User { EmployeeNumber = 10000001, Forename = "Saoirse", Surname = "Kelly", JobTitle = "Graduate Software Engineer", IsLineManager = true, IsAdministrator = true };
+            //context.Users.Add(user1);
 
-            context.Users.AddOrUpdate(u   => u.UserId,
-                new User { EmployeeNumber = 10000002, Forename = "Caoimhe", Surname = "Bell", JobTitle = "Receptionist", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
-                new User { EmployeeNumber = 10000003, Forename = "Clodagh", Surname = "McCann", JobTitle = "Placement BA", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
-                new User { EmployeeNumber = 10000004, Forename = "Anthony", Surname = "McCann", JobTitle = "Placement software engineer", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
-                new User { EmployeeNumber = 10000005, Forename = "James", Surname = "Murphy", JobTitle = "Senior  software engineer", IsLineManager = false, IsAdministrator = false, LineManager = user1 }
-                );
+            //context.Users.AddOrUpdate(u   => u.UserId,
+            //    new User { EmployeeNumber = 10000002, Forename = "Caoimhe", Surname = "Bell", JobTitle = "Receptionist", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
+            //    new User { EmployeeNumber = 10000003, Forename = "Clodagh", Surname = "McCann", JobTitle = "Placement BA", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
+            //    new User { EmployeeNumber = 10000004, Forename = "Anthony", Surname = "McCann", JobTitle = "Placement software engineer", IsLineManager = false, IsAdministrator = false, LineManager = user1 },
+            //    new User { EmployeeNumber = 10000005, Forename = "James", Surname = "Murphy", JobTitle = "Senior  software engineer", IsLineManager = false, IsAdministrator = false, LineManager = user1 }
+            //    );
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
             #endregion
 
@@ -61,11 +62,11 @@ namespace DataLayer.Migrations
                 });
             context.SaveChanges();
 
-            //Adds every user in the database to the team
-            foreach (User user in context.Users)
-            {
-                context.Teams.Where(t => t.Name.Equals("BMC001")).FirstOrDefault().Members.Add(user);
-            }
+            ////Adds every user in the database to the team
+            //foreach (User user in context.Users)
+            //{
+            //    context.Teams.Where(t => t.Name.Equals("BMC001")).FirstOrDefault().Members.Add(user);
+            //}
             context.SaveChanges();
 
             #endregion
@@ -75,7 +76,7 @@ namespace DataLayer.Migrations
             context.Resources.AddOrUpdate(r => r.ResourceId,
                 new Resource
                 {
-                    Name = "Desk 1",
+                    Name = "Desk A1",
                     Description = "PC and phone",
                     Category = "Desk",
                     Capacity = 1,
@@ -85,19 +86,29 @@ namespace DataLayer.Migrations
             context.Resources.AddOrUpdate(r => r.ResourceId,
                 new Resource
                 {
-                    Name = "Room 1",
-                    Description = "Conference room with projector",
-                    Category = "Room",
-                    Capacity = 200,
+                    Name = "Spindle",
+                    Description = "Large table, 6 chairs and projector",
+                    Category = "Small meeting room",
+                    Capacity = 6,
                     Location = "x, y",
                 });
 
             context.Resources.AddOrUpdate(r => r.ResourceId,
                 new Resource
                 {
-                    Name = "Desk 2",
+                    Name = "Desk B2",
                     Description = "Empty desk",
                     Category = "Desk",
+                    Capacity = 1,
+                    Location = "x, y",
+                });
+
+            context.Resources.AddOrUpdate(r => r.ResourceId,
+                new Resource
+                {
+                    Name = "CEO Office",
+                    Description = "PC, phone & printer",
+                    Category = "Private office",
                     Capacity = 1,
                     Location = "x, y",
                 });

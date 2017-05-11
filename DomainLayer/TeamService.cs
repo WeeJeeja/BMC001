@@ -4,8 +4,6 @@ using HelperMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
@@ -57,7 +55,6 @@ namespace DomainLayer
 
             var team = new Team
             {
-
                 TeamId          = data.TeamId,
                 Name            = data.Name,
                 Colour          = data.Colour,
@@ -169,8 +166,10 @@ namespace DomainLayer
 
             var team = db.Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
             var members = team.Members.ToList();
+            //get the active users
             var users = db.Users.Where(u => u.CancellationDate == null).ToList();
 
+            //get all users who are not already members of the team
             var nonMembers = users.Except(members);
 
             var potenatialUsers = new List<User>();

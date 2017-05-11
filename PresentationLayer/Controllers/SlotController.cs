@@ -2,8 +2,6 @@
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -15,13 +13,13 @@ namespace PresentationLayer.Controllers
             ISlotService service = new SlotService();
 
         #endregion
-        //
-        // GET: /Slot/
-
+        
+        /// <summary>
+        /// Gets the list of active slots
+        /// </summary>
+        /// <returns>Slot/Index</returns>
         public ActionResult Index()
         {
-            ViewBag.Message = "Need to be able to add an employee and search for existing ones";
-
             var data = service.GetSlots();
             var slots = new List<Slot>();
 
@@ -38,9 +36,11 @@ namespace PresentationLayer.Controllers
             return View(slots);
         }
 
-        //
-        // GET: /Slot/Details/5
-
+        /// <summary>
+        /// Gets the slot details
+        /// </summary>
+        /// <param name="slotId">The slot</param>
+        /// <returns>Slot/Details/SlotId</returns>
         public ActionResult Details(Guid? slotId)
         {
             var data = service.GetSlot(slotId);
@@ -54,17 +54,20 @@ namespace PresentationLayer.Controllers
             return View(slot);
         }
 
-        //
-        // GET: /Slot/Create
-
+        /// <summary>
+        /// Gets the create slot page
+        /// </summary>
+        /// <returns>Slot/Create</returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Slot/Create
-
+        /// <summary>
+        /// Posts the new slot data
+        /// </summary>
+        /// <param name="collection">The for slot data</param>
+        /// <returns>Slot/Index</returns>
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -83,9 +86,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Slot/Edit/5
-
+        /// <summary>
+        /// Gtes the slot edit page
+        /// </summary>
+        /// <param name="slotId">The slot</param>
+        /// <returns>Slot/Edit/SlotId</returns>
         public ActionResult Edit(Guid? slotId)
         {
             var data = service.GetSlot(slotId);
@@ -97,13 +102,14 @@ namespace PresentationLayer.Controllers
             };
 
             return View(slot);
-
-
         }
 
-        //
-        // POST: /Slot/Edit/5
-
+        /// <summary>
+        /// Posts the slot updated data
+        /// </summary>
+        /// <param name="slotId">The slot Id</param>
+        /// <param name="collection">Updated slot data</param>
+        /// <returns>Slot/Index</returns>
         [HttpPost]
         public ActionResult Edit(Guid? slotId, FormCollection collection)
         {
@@ -122,9 +128,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Slot/Delete/5
-
+        /// <summary>
+        /// Gets the slot delete page
+        /// </summary>
+        /// <param name="slotId">The slot Id</param>
+        /// <returns>Slot/Delete/SlotId</returns>
         public ActionResult Delete(Guid? slotId)
         {
             var data = service.GetSlot(slotId);
@@ -138,9 +146,12 @@ namespace PresentationLayer.Controllers
             return View(slot);
         }
 
-        //
-        // POST: /Slot/Delete/5
-
+        /// <summary>
+        /// Posts the slot to be deleted
+        /// </summary>
+        /// <param name="slotId">The slot Id</param>
+        /// <param name="collection">The slot data</param>
+        /// <returns>Slot/Index</returns>
         [HttpPost]
         public ActionResult Delete(Guid? slotId, FormCollection collection)
         {

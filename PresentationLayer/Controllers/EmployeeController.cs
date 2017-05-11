@@ -3,9 +3,6 @@ using PresentationLayer.HelperMethods;
 using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PresentationLayer.Controllers
@@ -20,9 +17,10 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
-        //
-        // GET: /EmployeeController/
-
+        /// <summary>
+        /// Gets the list of active employees
+        /// </summary>
+        /// <returns>Employee/Index</returns>
         public ActionResult Index()
         {
             ViewBag.Message = "Need to be able to add an employee and search for existing ones";
@@ -39,9 +37,11 @@ namespace PresentationLayer.Controllers
             return View(users);
         }
 
-        //
-        // GET: /EmployeeController/Details/5
-
+        /// <summary>
+        /// Gets the employees details
+        /// </summary>
+        /// <param name="userId">The user Id</param>
+        /// <returns>Employee/Details/UserId</returns>
         public ActionResult Details(Guid userId)
         {
             var data = service.GetUser(userId);
@@ -51,17 +51,20 @@ namespace PresentationLayer.Controllers
             return View(user);
         }
 
-        //
-        // GET: /EmployeeController/Create
-
+        /// <summary>
+        /// Gets the create employee page
+        /// </summary>
+        /// <returns>Employee/Create</returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /EmployeeController/Create
-
+        /// <summary>
+        /// Posts the employee data to create
+        /// </summary>
+        /// <param name="collection">The empoyee data</param>
+        /// <returns>Employee/Index</returns>
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -80,9 +83,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /EmployeeController/Edit/id
-
+        /// <summary>
+        /// Gets the employee edit page
+        /// </summary>
+        /// <param name="userId">The user Id</param>
+        /// <returns>Employee/Edit/UserId</returns>
         public ActionResult Edit(Guid userId)
         {
             var data = service.GetUser(userId);
@@ -92,9 +97,12 @@ namespace PresentationLayer.Controllers
             return View(user);
         }
 
-        //
-        // POST: /EmployeeController/Edit/userId
-
+        /// <summary>
+        /// Posts the updated employee data
+        /// </summary>
+        /// <param name="userId">The user Id</param>
+        /// <param name="collection">Updated employee data</param>
+        /// <returns>Employee/Index</returns>
         [HttpPost]
         public ActionResult Edit(Guid userId, FormCollection collection)
         {
@@ -113,9 +121,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /EmployeeControllerapi/Delete/5
-
+        /// <summary>
+        /// Gets the employee delete page
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <returns>Employee/Delete</returns>
         public ActionResult Delete(Guid userId)
         {
             var data = service.GetUser(userId);
@@ -125,9 +135,12 @@ namespace PresentationLayer.Controllers
             return View(user);
         }
 
-        //
-        // POST: /EmployeeControllerapi/Delete/5
-
+        /// <summary>
+        /// Posts the employee to be deleted
+        /// </summary>
+        /// <param name="userId">The userId</param>
+        /// <param name="collection">The form data</param>
+        /// <returns>Employee/Index</returns>
         [HttpPost]
         public ActionResult Delete(Guid userId, FormCollection collection)
         {

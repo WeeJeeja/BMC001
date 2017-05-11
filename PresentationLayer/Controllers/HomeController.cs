@@ -16,6 +16,7 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
+        //****Not used in final solution -> kept for testing purposes*****
         IRateService service = new RateService();
 
 

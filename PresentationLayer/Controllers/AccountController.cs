@@ -24,9 +24,11 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
-        //
-        // GET: /Account/Login
-
+        /// <summary>
+        /// Gets the log in page
+        /// </summary>
+        /// <param name="returnUrl">The return url</param>
+        /// <returns>Account/Login</returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -34,9 +36,12 @@ namespace PresentationLayer.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
-
+        /// <summary>
+        /// Posts log in data
+        /// </summary>
+        /// <param name="model">The log in details</param>
+        /// <param name="returnUrl">The return url</param>
+        /// <returns>Booking/Index</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -77,9 +82,10 @@ namespace PresentationLayer.Controllers
             return RedirectToAction("Login");
         }
 
-        //
-        // GET: /Account/Register
-
+        /// <summary>
+        /// Gets the registration page
+        /// </summary>
+        /// <returns>Account/Register</returns>
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -103,9 +109,11 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/Register
-
+        /// <summary>
+        /// Posts the registration data
+        /// </summary>
+        /// <param name="model">The registration data</param>
+        /// <returns>Account/Login</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]

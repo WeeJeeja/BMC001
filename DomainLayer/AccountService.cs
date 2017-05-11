@@ -2,10 +2,8 @@
 using DomainLayer.WrapperModels;
 using data = DataLayer.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
@@ -36,6 +34,11 @@ namespace DomainLayer
             return user;
         }
 
+        /// <summary>
+        /// Checks the email is not already registered in the database
+        /// </summary>
+        /// <param name="email">The email</param>
+        /// <returns>True or false</returns>
         public bool CheckEmailIsUnique(String email)
         {
             var db = new ReScrumEntities();
@@ -45,6 +48,11 @@ namespace DomainLayer
             return true;
         }
 
+        /// <summary>
+        /// Creates a new user and account
+        /// </summary>
+        /// <param name="user">The user</param>
+        /// <param name="password">The account</param>
         public void AddUserAndAccount(User user, string password)
         {
             var db = new ReScrumEntities();
@@ -74,6 +82,12 @@ namespace DomainLayer
             db.SaveChanges();
         }
 
+        /// <summary>
+        /// Checks the email and password match for a user in the system
+        /// </summary>
+        /// <param name="email">The email</param>
+        /// <param name="password">The password</param>
+        /// <returns>True or false</returns>
         public bool Login(String email, String password)
         {
             var db = new ReScrumEntities();

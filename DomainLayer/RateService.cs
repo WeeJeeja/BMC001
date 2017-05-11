@@ -1,11 +1,8 @@
 ﻿using DataLayer;
-using DomainLayer.WrapperModels;
 using HelperMethods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
@@ -87,6 +84,7 @@ namespace DomainLayer
             float hoursResourceWasInUse = 0;
             while (date <= endDate)
             {
+                //number of hours the resource was in use on "date" => e.g. used for 4 hours on Wednesday, 2 hours on Friday
                 var hoursUsedInDay = scheduleEntries.Where(b => b.Date == date).ToList();
                 hoursResourceWasInUse += (float)hoursUsedInDay.Count();
                 date = date.AddDays(1);
@@ -114,7 +112,6 @@ namespace DomainLayer
             var occupancyRate = CalculateResourceOccupancyRate(startDate, endDate, resourceId);
 
             var utilisationRate = frequencyRate * occupancyRate;
-
 
             if (float.IsNaN(utilisationRate)) return 0;
             return utilisationRate;
