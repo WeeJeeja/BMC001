@@ -9,7 +9,7 @@
 
 @if (ViewBag.Message != null)
 { 
-    <div class="alert alert-warning">
+    <div class="alert alert-danger">
     <strong>Not available! </strong> <p>@ViewBag.Message</p>
     </div>
 }
@@ -23,7 +23,7 @@
     @Html.ActionLink("Auto book", "AutoBook", "Booking", new { Style = "color:white" })
 </button>
 
-<table class="table table-hover table-responsive bg-success">
+<table class="table table-hover table-responsive bg-info">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.TimetableEntries.First().Time)

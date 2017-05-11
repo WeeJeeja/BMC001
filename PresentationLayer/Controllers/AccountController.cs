@@ -67,10 +67,10 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
-            Session["AuthID"] = null;
+            Session["AuthID"] = "";
             Session["UserId"] = null;
             Session["Username"] = null;
 

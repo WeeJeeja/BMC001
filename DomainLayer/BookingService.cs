@@ -445,8 +445,8 @@ namespace DomainLayer
         /// Adds attendees to an existing group booking
         /// </summary>
         /// <param name="bookingId">The booking the users should be added to</param>
-        /// <param name="attendees">The list of users to be added</param>
-        public void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees)
+        /// <param name="userId">The attendee to be added</param>
+        public void AddAttendeeToGroupBooking(Guid? bookingId, Guid? userId)
         {
             var db = new ReScrumEntities();
 
@@ -455,11 +455,8 @@ namespace DomainLayer
             var slots = new List<DataLayer.Models.Slot>();
             slots.Add(booking.Slot);
 
-            foreach (string userId in attendees)
-            {
-                var attendee = db.Users.Where(u => u.UserId == new Guid(userId)).FirstOrDefault();
-                AddUnconfirmedBooking(db, slots, attendee, booking.Resource, booking.Date, booking.BookedBy);
-            }
+            var attendee = db.Users.Where(u => u.UserId == userId).FirstOrDefault();
+            AddUnconfirmedBooking(db, slots, attendee, booking.Resource, booking.Date, booking.BookedBy);
 
             db.SaveChanges();
         }

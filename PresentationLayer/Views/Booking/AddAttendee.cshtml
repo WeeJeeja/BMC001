@@ -42,26 +42,14 @@
                 @Html.DisplayFor(modelItem => item.JobTitle)
             </td>
             <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"
-                               name="SelectedAttendees"
-                               value="@item.UserId" />
-                        </label>
-                    </div>
+                <form method="post">
+                    <input type="hidden" name="bookingId" value="@Model.Booking.BookingId" />
+                    <input type="hidden" name="userId" value="@item.UserId" />
+
+                    <button type="submit" class="btn btn-success">Add attendee</button>
+                </form>
             </td>
         </tr>
         }
 </table>
-    
-    @using (Html.BeginForm("AddAttendee", "Booking", FormMethod.Post))
-                {
-                    @Html.HiddenFor(m => m.Booking)
-                    for (int i = 0; i < Model.SelectedAttendees.Count(); i++)
-                    { 
-                        @Html.HiddenFor(model => Model.SelectedAttendees[i]) 
-                    }
-                    
-                <button type="submit" value="Update" class="btn btn-success">Book</button>
-                }
 

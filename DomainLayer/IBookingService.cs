@@ -119,8 +119,8 @@ namespace DomainLayer
         /// Adds attendees to an existing group booking
         /// </summary>
         /// <param name="bookingId">The booking the users should be added to</param>
-        /// <param name="attendees">The list of users to be added</param>
-        void AddAttendeeToGroupBooking(Guid? bookingId, IList<string> attendees);
+        /// <param name="userId">The attendee to be added</param>
+        void AddAttendeeToGroupBooking(Guid? bookingId, Guid? userId);
 
         /// <summary>
         /// Adds bookings for the users for all of the time slots not already booked

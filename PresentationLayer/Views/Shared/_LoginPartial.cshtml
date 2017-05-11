@@ -3,7 +3,7 @@
 }
 @if (Session.IsNewSession == false)
 {
-    if (@Session["AuthID"].ToString() != null)
+    if (!@Session["AuthID"].Equals(""))
     {
         username = Session["Username"].ToString();
     }

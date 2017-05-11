@@ -26,7 +26,7 @@
             @Html.LabelFor(model => model.Slots)
         </div>
         <div class="editor-field">
-       bookingcontroller     @Html.DropDownList("SingleBooking.Slot",
+            @Html.DropDownList("SingleBooking.Slot",
                        new SelectList(Model.Slots, "SlotId", "Time"))
             @Html.ValidationMessageFor(model => model.Slots)
         </div>

@@ -257,15 +257,10 @@ namespace PresentationLayer.Controllers
         {
             if (!CapacityCheck(booking))
             {
-                ModelState.AddModelError("",
-                    String.Format("Unable to create the group booking. " + Resource(booking).Name + " has a capacity of " +
-                    Resource(booking).Capacity) + ", this booking requires a capacity of " + BookingCapacity(booking));
+                var warningMessage = "Unable to create the group booking. " + Resource(booking).Name + " has a capacity of " +
+                    Resource(booking).Capacity + ", this booking requires a capacity of " + BookingCapacity(booking);
 
-                booking.Slots = GetSlots();
-                booking.GroupBooking.Attendees = GetAttendees();
-                booking.GroupBooking.Teams = GetTeams();
-                
-                return View("Create", booking);
+                return RedirectToAction("Index", new { message = warningMessage });
             }
             try
             {
@@ -367,11 +362,21 @@ namespace PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult AddAttendee(UpdateBooking booking)
+        public ActionResult AddAttendee(Guid? bookingId, Guid? userId)
         {
             try
             {
-                service.AddAttendeeToGroupBooking(booking.Booking.BookingId, booking.SelectedAttendees);
+                var booking = service.GetBooking(bookingId);
+
+                if ((booking.ConfirmedAttendees.Count() + booking.UnconfirmedAttendees.Count()) >= booking.Resource.Capacity)
+                {
+                    var warningMessage = "Unable to add attendee to booking. " + booking.Resource.Name + " has a capacity of " +
+                        booking.Resource.Capacity + ". Confirmed attendees: " + booking.ConfirmedAttendees.Count() + " Unconfirmed attendees: " + booking.UnconfirmedAttendees.Count();
+
+                    return RedirectToAction("Index", new { message = warningMessage });
+                }
+
+                service.AddAttendeeToGroupBooking(bookingId, userId);
 
                 return RedirectToAction("Index");
             }

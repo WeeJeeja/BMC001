@@ -79,7 +79,7 @@
                 else
                 {
                     <p>Booked by: @Html.DisplayFor(modelItem => item.MondayRates.BookedBy.Forename) </p>
-                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.MondayRates.NumberOfAttendees) </p>
+                    <p>Attendees: @Html.DisplayFor(modelItem => item.MondayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
@@ -90,7 +90,7 @@
                 else
                 {
                     <p>Booked by: @Html.DisplayFor(modelItem => item.TuesdayRates.BookedBy.Forename) </p>
-                    <p>Number of attendees: @Html.DisplayFor(modelItem => item.TuesdayRates.NumberOfAttendees) </p>
+                    <p>Attendees: @Html.DisplayFor(modelItem => item.TuesdayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
@@ -100,8 +100,8 @@
                 }
                 else
                 {
-                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.WednesdayRates.BookedBy.Forename)
-                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.WednesdayRates.NumberOfAttendees)
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.WednesdayRates.BookedBy.Forename) </p>
+                    <p>Attendees: @Html.DisplayFor(modelItem => item.WednesdayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
@@ -111,8 +111,8 @@
                 }
                 else
                 {
-                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.ThursdayRates.BookedBy.Forename)
-                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.ThursdayRates.NumberOfAttendees)
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.ThursdayRates.BookedBy.Forename) </p>
+                    <p>Attendees: @Html.DisplayFor(modelItem => item.ThursdayRates.NumberOfAttendees) </p>
                 }
             </td>
             <td>
@@ -122,8 +122,8 @@
                 }
                 else
                 {
-                    <p>Booked by: </p> @Html.DisplayFor(modelItem => item.FridayRates.BookedBy.Forename)
-                    <p>Number of attendees: </p> @Html.DisplayFor(modelItem => item.FridayRates.NumberOfAttendees)
+                    <p>Booked by: @Html.DisplayFor(modelItem => item.FridayRates.BookedBy.Forename) </p>
+                    <p>Attendees: @Html.DisplayFor(modelItem => item.FridayRates.NumberOfAttendees) </p>
                 }
             </td>
         </tr>
