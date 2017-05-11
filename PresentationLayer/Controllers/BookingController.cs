@@ -28,10 +28,13 @@ namespace PresentationLayer.Controllers
         /// </summary>
         /// <param name="message">Warning message</param>
         /// <returns>Booking/Index</returns>
-        public ActionResult Index(string message)
+        public ActionResult Index(string warningMessage, string successMessage)
         {
             //Used to display warning message on the page
-            ViewBag.Message = message;
+            ViewBag.WarningMessage = warningMessage;
+
+            //Used to display success message on the page
+            ViewBag.SuccessMessage = successMessage;
 
             //Gets the userId of the logged in user
             var userId = Session["UserId"].ToString();
@@ -196,7 +199,7 @@ namespace PresentationLayer.Controllers
 
                 service.AddBooking(convertedBooking);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Booking successfully added!"});
             }
             catch
             {
@@ -256,7 +259,7 @@ namespace PresentationLayer.Controllers
                     booking.Resource,
                     user.UserId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Block bookings successfully added!"});
             }
             catch
             {
@@ -308,7 +311,7 @@ namespace PresentationLayer.Controllers
                 var warningMessage = "Unable to create the group booking. " + Resource(booking).Name + " has a capacity of " +
                     Resource(booking).Capacity + ", this booking requires a capacity of " + BookingCapacity(booking);
 
-                return RedirectToAction("Index", new { message = warningMessage });
+                return RedirectToAction("Index", new { warningMessage = warningMessage });
             }
             try
             {
@@ -324,7 +327,7 @@ namespace PresentationLayer.Controllers
                     booking.Resource,
                     user.UserId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Group booking successfully added!" });
             }
             catch(Exception e)
             {
@@ -362,7 +365,7 @@ namespace PresentationLayer.Controllers
 
                 service.ConfirmBooking(unconfirmedBookingId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Group booking successfully confirmed!" });
             }
             catch
             {
@@ -383,7 +386,7 @@ namespace PresentationLayer.Controllers
             {
                 service.DeleteBooking(bookingId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Booking successfully deleted!" });
             }
             catch
             {
@@ -442,16 +445,16 @@ namespace PresentationLayer.Controllers
                     var warningMessage = "Unable to add attendee to booking. " + booking.Resource.Name + " has a capacity of " +
                         booking.Resource.Capacity + ". Confirmed attendees: " + booking.ConfirmedAttendees.Count() + " Unconfirmed attendees: " + booking.UnconfirmedAttendees.Count();
 
-                    return RedirectToAction("Index", new { message = warningMessage });
+                    return RedirectToAction("Index", new { warningMessage = warningMessage });
                 }
 
                 service.AddAttendeeToGroupBooking(bookingId, userId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Attendee successfully added to group booking!" });
             }
             catch
             {
-                return RedirectToAction("Index", new { message = "Opps...Something went wrong, please try again or contact the tech team." });
+                return RedirectToAction("Index", new { warningMessage = "Opps...Something went wrong, please try again or contact the tech team." });
             }
         }
 
@@ -471,13 +474,13 @@ namespace PresentationLayer.Controllers
                 var result = service.AutoBook(date, user.UserId);
 
                 if (!result)
-                    return RedirectToAction("Index", new { message = "No single resource is available to block book for the week." });
+                    return RedirectToAction("Index", new { warningMessage = "No single resource is available to block book for the week." });
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Auto bookings successfully added!" });
             }
             catch
             {
-                return RedirectToAction("Index", new { message = "Something went wrong, please try again or contact the tech team." });
+                return RedirectToAction("Index", new { warningMessage = "Something went wrong, please try again or contact the tech team." });
             }
         }
 

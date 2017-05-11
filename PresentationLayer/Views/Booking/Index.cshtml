@@ -7,13 +7,19 @@
 
 <h2>Resource allocation</h2>
 
-@if (ViewBag.Message != null)
+@if (ViewBag.WarningMessage != null)
 { 
     <div class="alert alert-danger">
-    <strong>Not available! </strong> <p>@ViewBag.Message</p>
+    <strong>Not available! </strong> <p>@ViewBag.WarningMessage</p>
     </div>
 }
 
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        <strong>Success! </strong> <p>@ViewBag.SuccessMessage</p>
+    </div>
+}
 
 <button type="button" class="btn btn-primary">
     @Html.ActionLink("Create new booking", "Create", "Booking", new { Style = "color:white" })

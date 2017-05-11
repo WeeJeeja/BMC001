@@ -18,10 +18,12 @@ namespace PresentationLayer.Controllers
         ModelConversitions converter = new ModelConversitions();
 
         #endregion
-
-        //
-        // GET: /Team/
-
+        
+        /// <summary>
+        /// Team index displays a list of the current active teams
+        /// </summary>
+        /// <param name="successMessage">The success message</param>
+        /// <returns>Team/Index</returns>
         public ActionResult Index(string successMessage = null)
         {
             ViewBag.Message = successMessage;
@@ -34,9 +36,11 @@ namespace PresentationLayer.Controllers
             return View(teams);
         }
 
-        //
-        // GET: /Team/Details/5
-
+        /// <summary>
+        /// Displays the team details
+        /// </summary>
+        /// <param name="teamId">The team Id</param>
+        /// <returns>Team/Details/TeamId</returns>
         public ActionResult Details(Guid? teamId)
         {
             var data = service.GetTeam(teamId);
@@ -46,17 +50,20 @@ namespace PresentationLayer.Controllers
             return View(team);
         }
 
-        //
-        // GET: /Team/Create
-
+        /// <summary>
+        /// Gets the create page
+        /// </summary>
+        /// <returns>Team/Create</returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Team/Create
-
+        /// <summary>
+        /// Creates a new team
+        /// </summary>
+        /// <param name="collection">The team form data</param>
+        /// <returns>Team/Index</returns>
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -67,7 +74,7 @@ namespace PresentationLayer.Controllers
 
                 service.AddTeam(team);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = team.Name + " added successfully." });
             }
             catch
             {
@@ -75,9 +82,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Team/Edit/5
-
+        /// <summary>
+        /// Gets the edit team page
+        /// </summary>
+        /// <param name="teamId">The team id</param>
+        /// <returns>Team/Edit/TeamId</returns>
         public ActionResult Edit(Guid? teamId)
         {
             var data = service.GetTeam(teamId);
@@ -94,9 +103,12 @@ namespace PresentationLayer.Controllers
 
         }
 
-        //
-        // POST: /Team/Edit/5
-
+        /// <summary>
+        /// Posts the team update
+        /// </summary>
+        /// <param name="teamId">The team</param>
+        /// <param name="collection">The team update data</param>
+        /// <returns>Team/Update</returns>
         [HttpPost]
         public ActionResult Edit(Guid? teamId, FormCollection collection)
         {
@@ -107,7 +119,7 @@ namespace PresentationLayer.Controllers
 
                 service.UpdateTeam(team);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = team.Name + "updated successfully!"});
             }
             catch
             {
@@ -115,9 +127,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Team/AddMember/5
-
+        /// <summary>
+        /// Gets the add team memeber page
+        /// </summary>
+        /// <param name="teamId">The team id</param>
+        /// <returns>Team/AddMember/TeamId</returns>
         public ActionResult AddMember(Guid? teamId)
         {
             var data = service.GetTeam(teamId);
@@ -136,9 +150,12 @@ namespace PresentationLayer.Controllers
             return View(team);
         }
 
-        //
-        // POST: /Team/AddMember/5
-
+        /// <summary>
+        /// Adds a member to a team
+        /// </summary>
+        /// <param name="teamId">The team</param>
+        /// <param name="userId">The user</param>
+        /// <returns>Team/Index</returns>
         [HttpPost]
         public ActionResult AddMember(Guid? teamId, Guid? userId)
         {
@@ -149,9 +166,9 @@ namespace PresentationLayer.Controllers
                 var user = userService.GetUser(userId);
                 var team = service.GetTeam(teamId);
 
-                ViewBag.successMessage = user.Forename + " " + user.Surname + " was successfully added to team " + team.Name;
+                var successMessage = user.Forename + " " + user.Surname + " was successfully added to team " + team.Name;
 
-                return RedirectToAction("Index", new { successMessage = ViewBag.successMessage });
+                return RedirectToAction("Index", new { successMessage = successMessage });
             }
             catch
             {
@@ -160,9 +177,11 @@ namespace PresentationLayer.Controllers
         }
 
 
-        //
-        // GET: /Team/Delete/5
-
+        /// <summary>
+        /// Gets the delete page
+        /// </summary>
+        /// <param name="teamId">The team</param>
+        /// <returns>Team/Delete</returns>
         public ActionResult Delete(Guid? teamId)
         {
             var data = service.GetTeam(teamId);
@@ -177,9 +196,12 @@ namespace PresentationLayer.Controllers
             return View(team);
         }
 
-        //
-        // POST: /Team/Delete/5
-
+        /// <summary>
+        /// Deletes a team
+        /// </summary>
+        /// <param name="teamId">The team</param>
+        /// <param name="collection">form data</param>
+        /// <returns>Team/Index</returns>
         [HttpPost]
         public ActionResult Delete(Guid? teamId, FormCollection collection)
         {
@@ -187,7 +209,7 @@ namespace PresentationLayer.Controllers
             {
                 service.DeleteTeam(teamId);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { successMessage = "Team successfully deleted"});
             }
             catch
             {
