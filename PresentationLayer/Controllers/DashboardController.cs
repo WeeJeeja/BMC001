@@ -27,12 +27,20 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Gets the week overview for a date
+        /// </summary>
+        /// <param name="date">The date that will be used to calculate the week starting date from</param>
+        /// <returns>Dashbaord/WeekInformation</returns>
         public ActionResult WeekInformation(DateTime date)
         {
+            //Finds the week start date
             date = FindStartDate(date);
 
+            //Generates utilisation chart for the week
             var chart = GenerateWeekChart(date, "WeekChart");
 
+            //Calculates the frequency, occupancy and utilisation rates for the company for the week
             var model = new WeekOverview
             {
                 Chart           = chart,
@@ -46,8 +54,8 @@ namespace PresentationLayer.Controllers
                 },
             };
 
+            //Calculates the frequency, occupancy and utilisation rates for every resource for the week
             var resources = converter.ConvertResourceListFromWrapper(resourceService.GetResources());
-
             foreach (Resource resource in resources)
             {
                 model.Resources.Add(new ResourceOverview
@@ -61,8 +69,14 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Gets the day overview for a date
+        /// </summary>
+        /// <param name="date">The date to return the day information for</param>
+        /// <returns>Dashbaord/DayInformation</returns>
         public ActionResult DayInformation(DateTime date)
         {
+            //Calculates the frequency, occupancy and utilisation rates for the compnay on the date given
             var model = new DayOverview
             {
                 Frequency   = (service.CalculateFrequencyRate(date, date) * 100).ToString("0.##\\%"),
@@ -73,6 +87,7 @@ namespace PresentationLayer.Controllers
                 Date        = date,
             };
 
+            //Required for dashbaord panel to track whihc tab is active
             model.DateInformation = new DateInformation
             {
                 StartDate = FindStartDate(date),
@@ -82,12 +97,21 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Gets an overview of a resource for a week
+        /// </summary>
+        /// <param name="resourceId">The resource</param>
+        /// <param name="date">The date that will be used to calculate the week starting date from</param>
+        /// <returns>Dashbaord/ResourceOverview</returns>
         public ActionResult ResourceInformation(Guid? resourceId, DateTime date)
         {
+            //Get the resource
             var resource = resourceService.GetResource(resourceId);
             
+            //Find the start date
             date = FindStartDate(date);
 
+            //Calculates the frequency, occupancy and utilisation rates for the resource for the week
             var model = new ResourceOverview
             {
                 Resource        = converter.ConvertResourceFromWrapper(resource),
@@ -100,8 +124,8 @@ namespace PresentationLayer.Controllers
                 },
             };
 
+            //Gets the slots -> required for resource table
             var slots = slotService.GetSlots();
-
             foreach(wrapper.Slot slot in slots)
             {
                 model.Table.Add(new ResourceRateTable
@@ -110,13 +134,14 @@ namespace PresentationLayer.Controllers
                     });
             }
 
+            //Gets all of the bookings a resource had during the week
             var bookings = bookingService.GetThisWeeksBookingsForAResource(resource.ResourceId, date);
 
             #region Add bookings to table
 
             foreach (wrapper.Booking booking in bookings)
             {
-                //all of the nine o'clock bookings
+                //gets all bookings in a time slot -> e.g all of the nine o'clock bookings
                 var entry = model.Table.Where(e => e.Slot.SlotId.Equals(booking.Slot.SlotId)).FirstOrDefault();
 
                 switch (booking.Date.DayOfWeek.ToString())
@@ -205,6 +230,12 @@ namespace PresentationLayer.Controllers
             return date;
         }
 
+        /// <summary>
+        /// Generates the chart for the week
+        /// </summary>
+        /// <param name="startDate">The start date for the chart</param>
+        /// <param name="title">Title of the chart</param>
+        /// <returns>The weekly chart</returns>
         private Highcharts GenerateWeekChart(DateTime startDate, string title)
         {
             var date = FindStartDate(startDate);
@@ -254,12 +285,16 @@ namespace PresentationLayer.Controllers
                     
             };
 
+            // x axis -> Monday to Friday
             var xData = chartData.Select(i => i.yCategories).ToArray();
 
+            // y frequency axis 
             var yDataFrequency = chartData.Select(i => new object[] { i.Frequency }).ToArray();
 
+            // y occupancy axis
             var yDataOccupancy = chartData.Select(i => new object[] { i.Occupancy }).ToArray();
-
+            
+            // y utilisatoion axis
             var yDataUtilisation = chartData.Select(i => new object[] { i.Utilisation }).ToArray();
 
             //instanciate an object of the Highcharts type
@@ -293,6 +328,7 @@ namespace PresentationLayer.Controllers
                 //load the Y values 
                         .SetSeries(new[]
                     {
+                        //Line colours changed to make the dashbaord consistent
                         new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Turquoise},
                         new Series {Name = "Occupancy", Data = new Data(yDataOccupancy),  Color = Color.DeepPink},
                         new Series {Name = "Utilisation", Data = new Data(yDataUtilisation),  Color = Color.DarkOrange},
@@ -301,6 +337,12 @@ namespace PresentationLayer.Controllers
             return chart;
         }
 
+        /// <summary>
+        /// Generates the chart for the day
+        /// </summary>
+        /// <param name="date">The start date</param>
+        /// <param name="chartName">The title for the chart</param>
+        /// <returns>The day chart</returns>
         private Highcharts GenerateDayChart(DateTime date, string chartName)
         {
             var slots = slotService.GetSlots();
@@ -358,6 +400,7 @@ namespace PresentationLayer.Controllers
                 //load the Y values 
                         .SetSeries(new[]
                     {
+                        //line colours changed to make the dashbaord consistent
                         new Series {Name = "Frequency", Data = new Data(yDataFrequency), Color = Color.Turquoise},
                         new Series {Name = "Occupancy", Data = new Data(yDataOccupancy), Color = Color.DeepPink},
                         new Series {Name = "Utilisation", Data = new Data(yDataUtilisation), Color = Color.DarkOrange},
@@ -366,6 +409,13 @@ namespace PresentationLayer.Controllers
             return dayChart;
         }
 
+        /// <summary>
+        /// Adds entry to the resource table
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <param name="resource">The resource</param>
+        /// <param name="date">The date</param>
+        /// <returns>The booking entry to be added to the resource table</returns>
         private ResourceRateData AddEntry(wrapper.Booking booking, wrapper.Resource resource, DateTime date)
         {
             var attendees = 1;

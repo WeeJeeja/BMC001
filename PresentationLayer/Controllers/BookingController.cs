@@ -4,10 +4,8 @@ using PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PresentationLayer.HelperMethods;
-using System.Data;
 
 namespace PresentationLayer.Controllers
 {
@@ -25,18 +23,24 @@ namespace PresentationLayer.Controllers
 
         #endregion
 
-        //
-        // GET: /Booking/Index
-
+        /// <summary>
+        /// Gets the allocation timetable and uncofirmed bookings for the logged in users
+        /// </summary>
+        /// <param name="message">Warning message</param>
+        /// <returns>Booking/Index</returns>
         public ActionResult Index(string message)
         {
+            //Used to display warning message on the page
             ViewBag.Message = message;
 
+            //Gets the userId of the logged in user
             var userId = Session["UserId"].ToString();
 
+            //Gets all of the bookings belonging to the logged in user for the week
             var data = service.GetThisWeeksBookings(new Guid(userId));
-            var bookings = new List<Booking>();
 
+            //Cobverting all of the bookings into view models
+            var bookings = new List<Booking>();
             foreach (wrapper.Booking entry in data)
             {
                 var booking = converter.ConvertBookingFromWrapper(entry);
@@ -44,10 +48,11 @@ namespace PresentationLayer.Controllers
                 bookings.Add(booking);
             }
 
+            //Gets all of the slots
             var slots = slotService.GetSlots();
 
+            //Creates the empty timetable for the week
             var timetable = new Timetable();
-
             timetable.TimetableEntries = CreateEmptyTimetable();
 
             #region Add bookings to timetable
@@ -94,8 +99,10 @@ namespace PresentationLayer.Controllers
 
             #endregion
 
+            //Gets of the logged in users unconfirmed bookings for the week
             var unconfirmedEntries = service.GetThisWeeksUnconfirmedBookings(new Guid(userId));
 
+            //Converts the uncofirmed bookings to view models
             foreach (wrapper.Booking unconfirmedBooking in unconfirmedEntries)
             {
                 timetable.UnconfirmedEntries.Add(new UnconfirmedEntry
@@ -114,10 +121,10 @@ namespace PresentationLayer.Controllers
         }
 
         /// <summary>
-        /// Gets the booking details
+        /// Gets the bookings details
         /// </summary>
-        /// <param name="bookingId">The id of the booking to be returned</param>
-        /// <returns>The booking</returns>
+        /// <param name="bookingId">The booking Id</param>
+        /// <returns>Booking/BookingDetails/BookingId</returns>
         public ActionResult BookingDetails(Guid? bookingId)
         {
             var booking = service.GetBooking(bookingId);
@@ -127,9 +134,10 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Booking/Create
-
+        /// <summary>
+        /// Getsthe create booking page
+        /// </summary>
+        /// <returns>Booking/Create</returns>
         public ActionResult Create()
         {
             var model = new CreateBooking
@@ -145,6 +153,13 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
+        #region Single Booking
+
+        /// <summary>
+        /// Retrieves available resources for a single booking
+        /// </summary>
+        /// <param name="booking">The booking Id</param>
+        /// <returns>Booking/Create/SingleBooking</returns>
         public PartialViewResult RetrieveAvailableResources(CreateBooking booking)
         {
             var availableResources = service.GetAvailableResources(booking.SingleBooking.Date, booking.SingleBooking.Slot);
@@ -162,6 +177,11 @@ namespace PresentationLayer.Controllers
             return PartialView("_resources", booking);
         }
 
+        /// <summary>
+        /// Creates a single booking
+        /// </summary>
+        /// <param name="booking">The booking to be added</param>
+        /// <returns>Booking/Index</returns>
         [HttpPost]
         public ActionResult Book(CreateBooking booking)
         {
@@ -184,6 +204,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        #endregion
+
+        #region BlockBooking
+
+        /// <summary>
+        /// Gets the available resources for a block booking
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <returns>Booking/Create/BlockBooking</returns>
         public PartialViewResult RetrieveAvailableResourcesForBlockBooking(CreateBooking booking)
         {
             var availableResources = service.GetAvailableResourcesForBlockBooking(
@@ -206,6 +235,11 @@ namespace PresentationLayer.Controllers
             return PartialView("_blockResources", booking);
         }
 
+        /// <summary>
+        /// Creates a booking for each time slot in the date range
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <returns>Booking/Index</returns>
         [HttpPost]
         public ActionResult BookBlock(CreateBooking booking)
         {
@@ -230,6 +264,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        #endregion
+
+        #region GroupBooking
+
+        /// <summary>
+        /// Gets the available resources for a group booking
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns></returns>
         public PartialViewResult RetrieveAvailableResourcesForGroupBooking(CreateBooking booking)
         {
             var availableResources = service.GetAvailableResourcesForGroupBooking(
@@ -252,6 +295,11 @@ namespace PresentationLayer.Controllers
             return PartialView("_groupResources", booking);
         }
 
+        /// <summary>
+        /// Create an unconfirmed booking for eevery attendee in the group booking
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <returns>Booking/Index</returns>
         [HttpPost]
         public ActionResult BookGroup(CreateBooking booking)
         {
@@ -286,9 +334,11 @@ namespace PresentationLayer.Controllers
 
         }
 
-        //
-        // GET: /Booking/TeamDetails/5
-
+        /// <summary>
+        /// Gets the team details
+        /// </summary>
+        /// <param name="teamId">The team Id</param>
+        /// <returns>Team/Details</returns>
         public ActionResult TeamDetails(Guid? teamId)
         {
             var data = teamService.GetTeam(teamId);
@@ -298,6 +348,11 @@ namespace PresentationLayer.Controllers
             return View(team);
         }
 
+        /// <summary>
+        /// Confirms a group booking
+        /// </summary>
+        /// <param name="unconfirmedBookingId">The booking</param>
+        /// <returns>Booking/Index</returns>
         public ActionResult ConfirmGroupBooking(Guid? unconfirmedBookingId)
         {
             try
@@ -315,6 +370,13 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Deletes a booking from a users allocation timetable
+        /// </summary>
+        /// <param name="bookingId">The booking</param>
+        /// <returns>Booking/Index</returns>
         public ActionResult Delete(Guid? bookingId)
         {
             try
@@ -329,9 +391,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        //
-        // GET: /Booking/AddAttendee
-
+        /// <summary>
+        /// Gets the add attendee to group booking page
+        /// </summary>
+        /// <param name="bookingId">The booking Id</param>
+        /// <returns>Booking/AddAttendee/BookingId</returns>
         public ActionResult AddAttendee(Guid? bookingId)
         {
             var booking = converter.ConvertBookingFromWrapper(service.GetBooking(bookingId));
@@ -360,7 +424,12 @@ namespace PresentationLayer.Controllers
             return View(model);
         }
 
-
+        /// <summary>
+        /// Adds an attendee to an exisiting group booking
+        /// </summary>
+        /// <param name="bookingId">The bookingId</param>
+        /// <param name="userId">The userId</param>
+        /// <returns>Booking/Index</returns>
         [HttpPost]
         public ActionResult AddAttendee(Guid? bookingId, Guid? userId)
         {
@@ -386,6 +455,10 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        /// <summary>
+        /// Auto books a resource for every empty timeslot in the users timetable
+        /// </summary>
+        /// <returns>Booking/Index</returns>
         public ActionResult AutoBook()
         {
             try
@@ -408,9 +481,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-
         #region HelperMethods
 
+        /// <summary>
+        /// Creates an empty allocation timetable
+        /// </summary>
+        /// <returns>The timetable</returns>
         private List<TimetableEntry> CreateEmptyTimetable()
         {
             var slots = slotService.GetSlots();
@@ -533,6 +609,11 @@ namespace PresentationLayer.Controllers
             return timetable;
         }
 
+        /// <summary>
+        /// Checks if a resource is big enough for a group booking
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <returns>True or false</returns>
         private bool CapacityCheck(CreateBooking booking)
         {
             var resource = resourceService.GetResource(booking.Resource);
@@ -548,6 +629,12 @@ namespace PresentationLayer.Controllers
             return false;
         }
 
+        /// <summary>
+        /// Gets the capcity a booking requires 
+        /// Teams memebers + attendees
+        /// </summary>
+        /// <param name="booking">The booking</param>
+        /// <returns>The number of attendess in the booking</returns>
         private int BookingCapacity(CreateBooking booking)
         {
             var attendeeCount = booking.GroupBooking.SelectedAttendees.Count();
@@ -601,6 +688,10 @@ namespace PresentationLayer.Controllers
             return attendees;
         }
 
+        /// <summary>
+        /// Gets all of the teams and their memebers
+        /// </summary>
+        /// <returns>A list of teams</returns>
         private List<Team> GetTeams()
         {
             List<Team> teams = new List<Team>();
